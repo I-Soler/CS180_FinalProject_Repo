@@ -1,0 +1,104 @@
+{
+    "children": [
+        {
+            "children": null,
+            "components": [
+                {
+                    "_type": "TransformComp",
+                    "local": {
+                        "position": [
+                            0.46666663885116577,
+                            0.0,
+                            0.0
+                        ],
+                        "rotationZ": 0.0,
+                        "scale": [
+                            0.5,
+                            0.5
+                        ]
+                    }
+                },
+                {
+                    "ColliderType": 4,
+                    "Ghost": true,
+                    "Owner": "attack",
+                    "RigidBody": "null",
+                    "Static": false,
+                    "_type": "Collider"
+                }
+            ],
+            "name": "attack",
+            "tag": 1,
+            "uid": 4294967295
+        }
+    ],
+    "components": [
+        {
+            "_type": "TransformComp",
+            "local": {
+                "position": [
+                    -42.66666030883789,
+                    99.75487518310547,
+                    -99.75487518310547
+                ],
+                "rotationZ": 0.0,
+                "scale": [
+                    50.0,
+                    84.57215118408203
+                ]
+            }
+        },
+        {
+            "_type": "Renderable",
+            "model": "Quad.model",
+            "modulationColor": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shader": "TextureMap.shader",
+            "texture": "player.png"
+        },
+        {
+            "_type": "PlayerMovement"
+        },
+        {
+            "_type": "SuperStateComp",
+            "states": [
+                {
+                    "state name": "PlayerIdleState"
+                },
+                {
+                    "state name": "PlayerVerticalUpState"
+                },
+                {
+                    "state name": "PlayerVerticalDownState"
+                },
+                {
+                    "state name": "PlayerHorizontalState"
+                }
+            ]
+        },
+        {
+            "ColliderType": 8,
+            "Ghost": false,
+            "Owner": "Player",
+            "RigidBody": "",
+            "Static": false,
+            "_type": "Collider"
+        },
+        {
+            "Drag": 1.0,
+            "Gravity": 0.20000000298023224,
+            "InvMass": 1.0,
+            "_type": "RigidbodyComp"
+        },
+        {
+            "_type": "PlayerAttack"
+        }
+    ],
+    "name": "Player",
+    "tag": 1,
+    "uid": 4294967295
+}

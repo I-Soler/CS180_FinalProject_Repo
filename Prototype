@@ -1,0 +1,434 @@
+{
+    "name": "main_scene",
+    "spaces": [
+        {
+            "children": [
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    332.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Camera",
+                            "drawOrder": 0,
+                            "viewRectangle": [
+                                1280.0,
+                                720.0
+                            ],
+                            "viewport": [
+                                0.0,
+                                0.0,
+                                1.0,
+                                1.0
+                            ],
+                            "viewportClear": false,
+                            "viewportColor": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ]
+                        }
+                    ],
+                    "name": "Camera",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -255.6663360595703,
+                                    180.9739990234375,
+                                    -180.9739990234375
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    20.0,
+                                    20.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": true,
+                            "Owner": "button1",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider"
+                        },
+                        {
+                            "_type": "PressurePlate",
+                            "id_": "1"
+                        }
+                    ],
+                    "name": "button1\u0000\u0000\u0000\u0000\u0000",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    31.666683197021484,
+                                    142.5371856689453,
+                                    -142.5371856689453
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    48.0,
+                                    51.2400016784668
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "player.png"
+                        },
+                        {
+                            "_type": "PlayerMovement"
+                        },
+                        {
+                            "_type": "SuperStateComp",
+                            "states": [
+                                {
+                                    "state name": "PlayerIdleState"
+                                },
+                                {
+                                    "state name": "PlayerVerticalUpState"
+                                },
+                                {
+                                    "state name": "PlayerVerticalDownState"
+                                },
+                                {
+                                    "state name": "PlayerHorizontalState"
+                                }
+                            ]
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": true,
+                            "Owner": "player",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider"
+                        }
+                    ],
+                    "name": "player\u0000\u0000\u0000\u0000\u0000\u0000",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -162.33335876464844,
+                                    180.5749969482422,
+                                    -180.5749969482422
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    20.0,
+                                    20.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": true,
+                            "Owner": "button2",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider"
+                        },
+                        {
+                            "_type": "PressurePlate",
+                            "id_": "2"
+                        }
+                    ],
+                    "name": "button2\u0000ct 0",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -104.66659545898438,
+                                    90.61199951171875,
+                                    -90.61199951171875
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    20.0,
+                                    20.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": true,
+                            "Owner": "button3",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider"
+                        },
+                        {
+                            "_type": "PressurePlate",
+                            "id_": "3"
+                        }
+                    ],
+                    "name": "button3\u0000ct 1",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -66.00003814697266,
+                                    180.86599731445313,
+                                    -180.86599731445313
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    20.0,
+                                    20.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": true,
+                            "Owner": "button4",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider"
+                        },
+                        {
+                            "_type": "PressurePlate",
+                            "id_": "4"
+                        }
+                    ],
+                    "name": "button4\u0000ct 2",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -210.0,
+                                    90.25399780273438,
+                                    -90.25399780273438
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    20.0,
+                                    20.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": true,
+                            "Owner": "button5",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider"
+                        },
+                        {
+                            "_type": "PressurePlate",
+                            "id_": "5"
+                        }
+                    ],
+                    "name": "button5\u0000ct 3",
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -161.99981689453125,
+                                    -69.21753692626953,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    50.0,
+                                    50.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg"
+                        },
+                        {
+                            "_type": "PressPuzzleController"
+                        }
+                    ],
+                    "name": "presspuzzle\u0000",
+                    "uid": 4294967295
+                }
+            ],
+            "components": null,
+            "name": "Main",
+            "uid": 4294967295
+        },
+        {
+            "children": [
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -55.0,
+                                    -24.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Camera",
+                            "drawOrder": 0,
+                            "viewRectangle": [
+                                1280.0,
+                                720.0
+                            ],
+                            "viewport": [
+                                0.0,
+                                0.0,
+                                1920.0,
+                                1061.0
+                            ],
+                            "viewportClear": true,
+                            "viewportColor": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ]
+                        }
+                    ],
+                    "name": "Editor Camera",
+                    "uid": 4294967295
+                }
+            ],
+            "components": null,
+            "name": "Editor Space",
+            "uid": 4294967295
+        }
+    ]
+}

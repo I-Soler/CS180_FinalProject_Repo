@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Engine\Graphics\AEXGfxSystem.cpp">
+      <Filter>Engine\Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXTexture.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXTextureSampler.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXVertex.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\AEXRtti.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXModel.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXShader.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXInput.cpp">
+      <Filter>Engine\Platform\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXTime.cpp">
+      <Filter>Engine\Platform\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXWindow.cpp">
+      <Filter>Engine\Platform\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXColor.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXFilePath.cpp">
+      <Filter>Engine\Platform\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXOpenSaveFile.cpp">
+      <Filter>Engine\Platform\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\Main.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\AEX.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXPlatform.cpp">
+      <Filter>Engine\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Debug\AEXDebug.cpp">
+      <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Debug\AEXCheckGLError.cpp">
+      <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\AEXSingleton.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\GL\glew.c">
+      <Filter>Extern\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Composition\AEXGameObject.cpp">
+      <Filter>Engine\Composition</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\Components\AEXCamera.cpp">
+      <Filter>Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\Components\AEXRenderable.cpp">
+      <Filter>Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Collisions\AEXCollisionSystem.cpp">
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Collisions\Collisions.cpp">
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Collisions\ContactCollisions.cpp">
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Collisions\LineSegment2D.cpp">
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Collisions\Raycast.cpp">
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\AEXFactory.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Platform\AEXSerialization.cpp">
+      <Filter>Engine\Platform\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\SerializationDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Logic\AEXLogicSystem.cpp">
+      <Filter>Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\Commons.cpp">
+      <Filter>Demos\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Composition\TransformComponent.cpp">
+      <Filter>Engine\Composition</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\RigidbodyComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\AEXPhysicsSystem.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\AEXFactoryRegisterAllTypes.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\ResourceMgr\ImporterFunctions.cpp">
+      <Filter>Engine\ResourceMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\ResourceMgr\ResourceMgr.cpp">
+      <Filter>Engine\ResourceMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\StateMachine\StateMachine.cpp">
+      <Filter>Engine\StateMechine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\StateMachine\AEXStateMachineSystem.cpp">
+      <Filter>Engine\StateMechine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\StateMachine\PlayerStates.cpp">
+      <Filter>Engine\StateMechine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Audio\Audio.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Editor\AEXEditor.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\imgui\imgui.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\imgui\imgui_demo.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\imgui\imgui_draw.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\imgui\imgui_tables.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\imgui\imgui_widgets.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extern\imgui\ImGuizmo.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\SpaceDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoColThings.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoMartaLayers.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\EventSystemDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\FactoryDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\RenderableDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\SimpleDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Core\AEXFactoryRegisterAllTypes.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoEditor.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Audio\AudioSourceComp.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Scene\Scene.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\AEXGui.cpp">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Scene\Scene.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoMarta.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\MessagingSystem\AEXMessagingSystem.cpp">
+      <Filter>Engine\MessagingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\MessagingSystem\Event.cpp">
+      <Filter>Engine\MessagingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\EngineDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\PrototypeDemo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\Door.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Logic\DetachSoul.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\PressPuzzleController.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\PlayerAttack.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\PlayerMovement.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\EnemyHealth.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\PressurePlate.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Engine\Core\AEXBase.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXGraphics.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXGfxSystem.h">
+      <Filter>Engine\Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXGL.h">
+      <Filter>Engine\Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXTexture.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXTextureSampler.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXVertex.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\AEXCore.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\AEXDataTypes.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\AEXRtti.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXModel.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXShader.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\AEX.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXInput.h">
+      <Filter>Engine\Platform\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXTime.h">
+      <Filter>Engine\Platform\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXWindow.h">
+      <Filter>Engine\Platform\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXPlatform.h">
+      <Filter>Engine\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Logic\AEXGameState.h">
+      <Filter>Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXColor.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXFilePath.h">
+      <Filter>Engine\Platform\File</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXOpenSaveFile.h">
+      <Filter>Engine\Platform\File</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Debug\AEXDebug.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Debug\AEXCheckGLError.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\AEXContainers.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\AEXSingleton.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\GL\GL.h">
+      <Filter>Extern\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\GL\glew.h">
+      <Filter>Extern\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\GL\wglew.h">
+      <Filter>Extern\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\STB\stb_image.h">
+      <Filter>Extern\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\STB\stb_image_write.h">
+      <Filter>Extern\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXIntersection.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMath.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMathDefs.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMathDLL.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMtx33.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMtx44.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXQuaternion.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXTransform2D.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXTransform3D.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXVec2.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXVec3.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXVec4.h">
+      <Filter>Extern\AEXMath</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Composition\AEXComposition.h">
+      <Filter>Engine\Composition</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Composition\AEXGameObject.h">
+      <Filter>Engine\Composition</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Composition\AEXComponent.h">
+      <Filter>Engine\Composition</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Demos\Demos.h">
+      <Filter>Demos\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\Components\AEXGfxComps.h">
+      <Filter>Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Collisions\AEXCollisionSystem.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Collisions\Collisions.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Collisions\ContactCollisions.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Collisions\LineSegment2D.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Collisions\Raycast.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Core\AEXFactory.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Platform\AEXSerialization.h">
+      <Filter>Engine\Platform\File</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Demos\Commons.h">
+      <Filter>Demos\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Logic\AEXLogicSystem.h">
+      <Filter>Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Composition\TransformComponent.h">
+      <Filter>Engine\Composition</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\RigidbodyComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\AEXPhysicsSystem.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\ResourceMgr\ResourceMgr.h">
+      <Filter>Engine\ResourceMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\StateMachine\StateMachine.h">
+      <Filter>Engine\StateMechine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\StateMachine\AEXStateMachineSystem.h">
+      <Filter>Engine\StateMechine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\StateMachine\PlayerStates.h">
+      <Filter>Engine\StateMechine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Audio\Audio.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Editor\AEXEditor.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\imconfig.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\imgui.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\imgui_internal.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\ImGuizmo.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\imstb_rectpack.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\imstb_textedit.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Extern\imgui\imstb_truetype.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Audio\AudioSourceComp.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\AEXGui.h">
+      <Filter>Engine\Graphics\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Scene\Scene.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MessagingSystem\AEXMessagingSystem.h">
+      <Filter>Engine\MessagingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MessagingSystem\Event.h">
+      <Filter>Engine\MessagingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MessagingSystem\EventList.h">
+      <Filter>Engine\MessagingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\Door.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Logic\DetachSoul.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\PressPuzzleController.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\PlayerAttack.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\PlayerMovement.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\EnemyHealth.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\PressurePlate.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\BreakableComp.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\BubbleComp.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{f717468b-6b7c-45e3-81bb-2eb550541e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core">
+      <UniqueIdentifier>{5ad3cbb9-0d3f-4cd0-b615-b0ce7c4581c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics">
+      <UniqueIdentifier>{d4818b64-a542-45b8-a008-22091c91192c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Resources">
+      <UniqueIdentifier>{f4f369e6-0978-479f-8211-64982df3380e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\System">
+      <UniqueIdentifier>{24a235f0-c2fa-4efc-811f-4d20013a0f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Platform">
+      <UniqueIdentifier>{0293a444-45dc-4ace-932b-67d0a536542b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Platform\Window">
+      <UniqueIdentifier>{b718b919-758f-4e0d-9fa3-98d8ad47d8cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Platform\Time">
+      <UniqueIdentifier>{bc6a7a20-8e6c-42c4-a3d5-ad6129b2e65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Platform\Input">
+      <UniqueIdentifier>{ab53917e-4af8-4daa-b3ed-1887ccea0b2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Platform\File">
+      <UniqueIdentifier>{3551df55-a20f-4901-a711-0fcefd5d3e98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Logic">
+      <UniqueIdentifier>{5ef11ee5-2d67-496e-a467-75389f290de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos">
+      <UniqueIdentifier>{d387940e-2c45-4b09-b598-d3cf8383b60c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{54bd9f9e-6321-4875-9fee-882f56be6652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Debug">
+      <UniqueIdentifier>{89759b91-0005-4915-90c7-40a1b159fca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\GL">
+      <UniqueIdentifier>{08f6b94a-8ee4-4ff1-a18f-9aa57795f832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\STB">
+      <UniqueIdentifier>{075b54e0-e964-48da-a0c6-4958d12de2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\AEXMath">
+      <UniqueIdentifier>{52ccd9bb-0353-497e-8948-4c537038858e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Composition">
+      <UniqueIdentifier>{049d23bc-9943-4f40-9134-cf666ee8bf28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Commons">
+      <UniqueIdentifier>{2fa92bfd-7b45-4e23-ab46-3678c488d663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Components">
+      <UniqueIdentifier>{292c974d-4f01-4127-b138-b2459a0f764a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Collisions">
+      <UniqueIdentifier>{68870618-0c49-474f-801c-1a8c3bd59177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ResourceMgr">
+      <UniqueIdentifier>{d510305d-b1d3-4158-b1b5-2861e6029cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\StateMechine">
+      <UniqueIdentifier>{c9dbef84-8b02-4f35-bcfa-869d7e007144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio">
+      <UniqueIdentifier>{74cc6326-ec11-4d44-b424-161aaa1d239f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor">
+      <UniqueIdentifier>{297e69f3-3140-4159-aa8d-6ef6a38b14f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\ImGui">
+      <UniqueIdentifier>{37507144-b2bb-482e-8739-0f0883326e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{c515984a-7b80-4da8-bbec-f3c4ab01cd3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\MessagingSystem">
+      <UniqueIdentifier>{06bdea8c-3054-4c53-83bd-8e8e82137623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{b68f6a5e-82c4-4b28-95e2-900d90a69da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameComponents">
+      <UniqueIdentifier>{4365d343-80a8-40d3-9e8c-aa51e75d71d9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Engine\Core\AEXSingleton.inl">
+      <Filter>Engine\Core</Filter>
+    </None>
+    <None Include="src\Extern\aexmath\aexmath\AEXMath.inl">
+      <Filter>Extern\AEXMath</Filter>
+    </None>
+    <None Include="src\Engine\Core\AEXFactory.inl">
+      <Filter>Engine\Core</Filter>
+    </None>
+  </ItemGroup>
+</Project>

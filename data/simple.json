@@ -1,0 +1,82 @@
+[
+    {
+        "children": null,
+        "components": [
+            {
+                "_type": "TransformComp",
+                "local": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotationZ": 0.0,
+                    "scale": [
+                        500.0,
+                        500.0
+                    ]
+                }
+            },
+            {
+                "_type": "Renderable",
+                "model": "quad.model",
+                "modulationColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "shader": "TextureMap.shader",
+                "texture": "Default.png"
+            }
+        ],
+        "name": "",
+        "uid": 4294967295
+    },
+    {
+        "children": null,
+        "components": [
+            {
+                "_type": "TransformComp",
+                "local": {
+                    "position": [
+                        0.0,
+                        0.0,
+                        20.0
+                    ],
+                    "rotationZ": 0.0,
+                    "scale": [
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "_type": "Camera",
+                "drawOrder": 0,
+                "viewRectangle": [
+                    1280.0,
+                    720.0
+                ],
+                "viewport": [
+                    0.0,
+                    0.0,
+                    1280.0,
+                    720.0
+                ],
+                "viewportClear": true,
+                "viewportColor": [
+                    1.0,
+                    0.5,
+                    0.0,
+                    1.0
+                ]
+            },
+            {
+                "_type": "CamController"
+            }
+        ],
+        "name": "",
+        "uid": 4294967295
+    }
+]

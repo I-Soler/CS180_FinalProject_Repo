@@ -1,0 +1,76 @@
+{
+    "children": [
+        {
+            "children": null,
+            "components": [
+                {
+                    "_type": "TransformComp",
+                    "local": {
+                        "position": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotationZ": 0.0,
+                        "scale": [
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "ColliderType": 4,
+                    "Ghost": true,
+                    "Owner": "attakCol",
+                    "RigidBody": "null",
+                    "Static": false,
+                    "_type": "Collider"
+                }
+            ],
+            "name": "attakCol",
+            "tag": 0,
+            "uid": 4294967295
+        }
+    ],
+    "components": [
+        {
+            "_type": "TransformComp",
+            "local": {
+                "position": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotationZ": 0.0,
+                "scale": [
+                    50.0,
+                    50.0
+                ]
+            }
+        },
+        {
+            "_type": "Renderable",
+            "model": "Quad.model",
+            "modulationColor": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shader": "TextureMap.shader",
+            "texture": "Default.jpg"
+        },
+        {
+            "_type": "PlayerAttack"
+        },
+        {
+            "Drag": 1.0,
+            "Gravity": 0.0,
+            "InvMass": 1.0,
+            "_type": "RigidbodyComp"
+        }
+    ],
+    "name": "New Object 0",
+    "tag": 0,
+    "uid": 4294967295
+}

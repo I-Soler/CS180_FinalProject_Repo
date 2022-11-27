@@ -1,0 +1,72 @@
+{
+    "children": null,
+    "components": [
+        {
+            "_type": "TransformComp",
+            "local": {
+                "position": [
+                    -42.66666030883789,
+                    99.75487518310547,
+                    -99.75487518310547
+                ],
+                "rotationZ": 0.0,
+                "scale": [
+                    50.0,
+                    84.57215118408203
+                ]
+            }
+        },
+        {
+            "_type": "Renderable",
+            "model": "Quad.model",
+            "modulationColor": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shader": "TextureMap.shader",
+            "texture": "player.png"
+        },
+        {
+            "_type": "PlayerMovement"
+        },
+        {
+            "_type": "SuperStateComp",
+            "states": [
+                {
+                    "state name": "PlayerIdleState"
+                },
+                {
+                    "state name": "PlayerVerticalUpState"
+                },
+                {
+                    "state name": "PlayerVerticalDownState"
+                },
+                {
+                    "state name": "PlayerHorizontalState"
+                }
+            ]
+        },
+        {
+            "_type": "PlayerAttack"
+        },
+        {
+            "ColliderType": 4,
+            "Ghost": true,
+            "Owner": "Player",
+            "RigidBody": "",
+            "Static": false,
+            "_type": "Collider"
+        },
+        {
+            "Drag": 0.800000011920929,
+            "Gravity": 0.0,
+            "InvMass": 1.0,
+            "_type": "RigidbodyComp"
+        }
+    ],
+    "name": "Player",
+    "tag": 1,
+    "uid": 4294967295
+}

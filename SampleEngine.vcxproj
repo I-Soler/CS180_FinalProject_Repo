@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{444CBE4B-C3E0-4789-9609-B303E6BDECFE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>SampleEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_dbg</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName)_dbg</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <TargetName>EngineDemo</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>$(ProjectName)</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>EngineDemo</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName)</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>AEX_NO_DLL;GLEW_NO_GLU;GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src/extern/;$(ProjectDir)src/;$(ProjectDir)src/extern/aexmath/;$(ProjectDir)src/engine/</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>$(ProjectDir)src\Engine\AEX.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)src\extern\aexmath\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Opengl32.lib;Shlwapi.lib;aexmath_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)extern\GL\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Opengl32.lib;glew32d.lib;</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>AEX_NO_DLL;GLEW_NO_GLU;GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src/extern/;$(ProjectDir)src/;$(ProjectDir)src/extern/aexmath/;$(ProjectDir)src/engine/</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>$(ProjectDir)src\Engine\AEX.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)src\extern\aexmath\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Winmm.lib;Opengl32.lib;Shlwapi.lib;aexmath_d.lib;%(AdditionalDependencies);fmod/lib/fmod64_vc.lib</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)extern\GL\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Opengl32.lib;glew32d.lib;</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>AEX_NO_DLL;GLEW_NO_GLU;GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src/extern/;$(ProjectDir)src/;$(ProjectDir)src/extern/aexmath/;$(ProjectDir)src/engine/</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)src\extern\aexmath\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Opengl32.lib;Shlwapi.lib;Shlwapi.lib;glew32.lib;aexmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib />
+    <Lib />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>AEX_NO_DLL;GLEW_NO_GLU;GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src/extern/;$(ProjectDir)src/;$(ProjectDir)src/extern/aexmath/;$(ProjectDir)src/engine/</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)src\extern\aexmath\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Winmm.lib;Opengl32.lib;Shlwapi.lib;Shlwapi.lib;aexmath.lib;%(AdditionalDependencies);fmod/lib/fmod64_vc.lib</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib />
+    <Lib />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Demos\Commons.cpp" />
+    <ClCompile Include="src\Demos\DemoColThings.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoEditor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoMarta.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\DemoMartaLayers.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\EngineDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\EventSystemDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\FactoryDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\PrototypeDemo.cpp" />
+    <ClCompile Include="src\Demos\RenderableDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\SerializationDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\SimpleDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Demos\SpaceDemo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Engine\AEX.cpp" />
+    <ClCompile Include="src\Engine\Audio\Audio.cpp" />
+    <ClCompile Include="src\Engine\Audio\AudioSourceComp.cpp" />
+    <ClCompile Include="src\Engine\Collisions\AEXCollisionSystem.cpp" />
+    <ClCompile Include="src\Engine\Collisions\Collisions.cpp" />
+    <ClCompile Include="src\Engine\Collisions\ContactCollisions.cpp" />
+    <ClCompile Include="src\Engine\Collisions\LineSegment2D.cpp" />
+    <ClCompile Include="src\Engine\Collisions\Raycast.cpp" />
+    <ClCompile Include="src\Engine\Composition\AEXGameObject.cpp" />
+    <ClCompile Include="src\Engine\Composition\TransformComponent.cpp" />
+    <ClCompile Include="src\Engine\Core\AEXFactory.cpp" />
+    <ClCompile Include="src\Engine\Core\AEXFactoryRegisterAllTypes.cpp" />
+    <ClCompile Include="src\Engine\Core\AEXRtti.cpp" />
+    <ClCompile Include="src\Engine\Core\AEXSingleton.cpp" />
+    <ClCompile Include="src\Engine\Debug\AEXCheckGLError.cpp" />
+    <ClCompile Include="src\Engine\Debug\AEXDebug.cpp" />
+    <ClCompile Include="src\Engine\Editor\AEXEditor.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\PressurePlate.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\Door.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\EnemyHealth.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\PlayerAttack.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\PlayerMovement.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\PressPuzzleController.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXColor.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXGfxSystem.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXGui.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXModel.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXShader.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXTexture.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXTextureSampler.cpp" />
+    <ClCompile Include="src\Engine\Graphics\AEXVertex.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Components\AEXCamera.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Components\AEXRenderable.cpp" />
+    <ClCompile Include="src\Engine\Logic\AEXLogicSystem.cpp" />
+    <ClCompile Include="src\Engine\Logic\DetachSoul.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Engine\MessagingSystem\AEXMessagingSystem.cpp" />
+    <ClCompile Include="src\Engine\MessagingSystem\Event.cpp" />
+    <ClCompile Include="src\Engine\Physics\AEXPhysicsSystem.cpp" />
+    <ClCompile Include="src\Engine\Physics\RigidbodyComponent.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXFilePath.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXInput.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXOpenSaveFile.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXPlatform.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXSerialization.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXTime.cpp" />
+    <ClCompile Include="src\Engine\Platform\AEXWindow.cpp" />
+    <ClCompile Include="src\Demos\Main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Engine\ResourceMgr\ImporterFunctions.cpp" />
+    <ClCompile Include="src\Engine\ResourceMgr\ResourceMgr.cpp" />
+    <ClCompile Include="src\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="src\Engine\StateMachine\AEXStateMachineSystem.cpp" />
+    <ClCompile Include="src\Engine\StateMachine\PlayerStates.cpp" />
+    <ClCompile Include="src\Engine\StateMachine\StateMachine.cpp" />
+    <ClCompile Include="src\Extern\GL\glew.c" />
+    <ClCompile Include="src\Extern\imgui\imgui.cpp" />
+    <ClCompile Include="src\Extern\imgui\ImGuizmo.cpp" />
+    <ClCompile Include="src\Extern\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\Extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\Extern\imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\Extern\imgui\imgui_widgets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Demos\Commons.h" />
+    <ClInclude Include="src\Demos\Demos.h" />
+    <ClInclude Include="src\Engine\AEX.h" />
+    <ClInclude Include="src\Engine\Audio\Audio.h" />
+    <ClInclude Include="src\Engine\Audio\AudioSourceComp.h" />
+    <ClInclude Include="src\Engine\Collisions\AEXCollisionSystem.h" />
+    <ClInclude Include="src\Engine\Collisions\Collisions.h" />
+    <ClInclude Include="src\Engine\Collisions\ContactCollisions.h" />
+    <ClInclude Include="src\Engine\Collisions\LineSegment2D.h" />
+    <ClInclude Include="src\Engine\Collisions\Raycast.h" />
+    <ClInclude Include="src\Engine\Composition\AEXComponent.h" />
+    <ClInclude Include="src\Engine\Composition\AEXComposition.h" />
+    <ClInclude Include="src\Engine\Composition\AEXGameObject.h" />
+    <ClInclude Include="src\Engine\Composition\TransformComponent.h" />
+    <ClInclude Include="src\Engine\Core\AEXBase.h" />
+    <ClInclude Include="src\Engine\Core\AEXContainers.h" />
+    <ClInclude Include="src\Engine\Core\AEXCore.h" />
+    <ClInclude Include="src\Engine\Core\AEXDataTypes.h" />
+    <ClInclude Include="src\Engine\Core\AEXFactory.h" />
+    <ClInclude Include="src\Engine\Core\AEXRtti.h" />
+    <ClInclude Include="src\Engine\Core\AEXSingleton.h" />
+    <ClInclude Include="src\Engine\Debug\AEXCheckGLError.h" />
+    <ClInclude Include="src\Engine\Debug\AEXDebug.h" />
+    <ClInclude Include="src\Engine\Editor\AEXEditor.h" />
+    <ClInclude Include="src\Engine\GameComponents\BreakableComp.h" />
+    <ClInclude Include="src\Engine\GameComponents\BubbleComp.h" />
+    <ClInclude Include="src\Engine\GameComponents\PressurePlate.h" />
+    <ClInclude Include="src\Engine\GameComponents\Door.h" />
+    <ClInclude Include="src\Engine\GameComponents\EnemyHealth.h" />
+    <ClInclude Include="src\Engine\GameComponents\PlayerAttack.h" />
+    <ClInclude Include="src\Engine\GameComponents\PlayerMovement.h" />
+    <ClInclude Include="src\Engine\GameComponents\PressPuzzleController.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXColor.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXGfxSystem.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXGL.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXGraphics.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXGui.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXModel.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXShader.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXTexture.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXTextureSampler.h" />
+    <ClInclude Include="src\Engine\Graphics\AEXVertex.h" />
+    <ClInclude Include="src\Engine\Graphics\Components\AEXGfxComps.h" />
+    <ClInclude Include="src\Engine\Logic\AEXGameState.h" />
+    <ClInclude Include="src\Engine\Logic\AEXLogicSystem.h" />
+    <ClInclude Include="src\Engine\Logic\DetachSoul.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="src\Engine\MessagingSystem\AEXMessagingSystem.h" />
+    <ClInclude Include="src\Engine\MessagingSystem\Event.h" />
+    <ClInclude Include="src\Engine\MessagingSystem\EventList.h" />
+    <ClInclude Include="src\Engine\Physics\AEXPhysicsSystem.h" />
+    <ClInclude Include="src\Engine\Physics\RigidbodyComponent.h" />
+    <ClInclude Include="src\Engine\Platform\AEXFilePath.h" />
+    <ClInclude Include="src\Engine\Platform\AEXInput.h" />
+    <ClInclude Include="src\Engine\Platform\AEXOpenSaveFile.h" />
+    <ClInclude Include="src\Engine\Platform\AEXPlatform.h" />
+    <ClInclude Include="src\Engine\Platform\AEXSerialization.h" />
+    <ClInclude Include="src\Engine\Platform\AEXTime.h" />
+    <ClInclude Include="src\Engine\Platform\AEXWindow.h" />
+    <ClInclude Include="src\Engine\ResourceMgr\ResourceMgr.h" />
+    <ClInclude Include="src\Engine\Scene\Scene.h" />
+    <ClInclude Include="src\Engine\StateMachine\AEXStateMachineSystem.h" />
+    <ClInclude Include="src\Engine\StateMachine\PlayerStates.h" />
+    <ClInclude Include="src\Engine\StateMachine\StateMachine.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXIntersection.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMath.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMathDefs.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMathDLL.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMtx33.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXMtx44.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXQuaternion.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXTransform2D.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXTransform3D.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXVec2.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXVec3.h" />
+    <ClInclude Include="src\Extern\aexmath\aexmath\AEXVec4.h" />
+    <ClInclude Include="src\Extern\GL\GL.h" />
+    <ClInclude Include="src\Extern\GL\glew.h" />
+    <ClInclude Include="src\Extern\GL\wglew.h" />
+    <ClInclude Include="src\Extern\imgui\imconfig.h" />
+    <ClInclude Include="src\Extern\imgui\imgui.h" />
+    <ClInclude Include="src\Extern\imgui\ImGuizmo.h" />
+    <ClInclude Include="src\Extern\imgui\imgui_internal.h" />
+    <ClInclude Include="src\Extern\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\Extern\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\Extern\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\Extern\STB\stb_image.h" />
+    <ClInclude Include="src\Extern\STB\stb_image_write.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Engine\Core\AEXFactory.inl" />
+    <None Include="src\Engine\Core\AEXSingleton.inl" />
+    <None Include="src\Extern\aexmath\aexmath\AEXMath.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

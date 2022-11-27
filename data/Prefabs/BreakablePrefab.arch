@@ -1,0 +1,55 @@
+{
+    "children": null,
+    "components": [
+        {
+            "_type": "TransformComp",
+            "local": {
+                "position": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotationZ": 0.0,
+                "scale": [
+                    50.0,
+                    50.0
+                ]
+            }
+        },
+        {
+            "_type": "Renderable",
+            "model": "Quad.model",
+            "modulationColor": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shader": "TextureMap.shader",
+            "texture": "Rock.jpg"
+        },
+        {
+            "_type": "BreakableComp",
+            "broken texture": "ghost.png",
+            "is broken": false,
+            "react tag": 1
+        },
+        {
+            "Drag": 1.0,
+            "Gravity": 0.0,
+            "InvMass": 1.0,
+            "_type": "RigidbodyComp"
+        },
+        {
+            "ColliderType": 2,
+            "Ghost": false,
+            "Owner": "New Object 0",
+            "RigidBody": "",
+            "Static": true,
+            "_type": "Collider"
+        }
+    ],
+    "name": "New Object 0",
+    "tag": 0,
+    "uid": 4294967295
+}
