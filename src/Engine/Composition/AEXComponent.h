@@ -18,7 +18,7 @@ namespace AEX {
 		virtual void OnCreate() {}		// happens when the object's component is just created. 
 		virtual void Initialize() {}	// happens when the whole scene is created
 		virtual void Shutdown() {}		// happens when the object is about to be destroyed
-		virtual void Update() {}		// default update of the object (might not be used)
+		virtual void Update(void) {}		// default update of the object (might not be used)
 		virtual bool Edit() { return false; }			// happens when a component is changed with the editor
 
 		// Get Parent

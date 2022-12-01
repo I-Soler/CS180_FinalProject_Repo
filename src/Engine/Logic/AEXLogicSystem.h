@@ -2,6 +2,7 @@
 #include <Core/AEXCore.h>
 #include <Composition/AEXComponent.h>
 #include <vector>
+#include <thread>
 
 namespace AEX {
 
@@ -24,9 +25,20 @@ namespace AEX {
 		void AddComp(LogicComp* comp);
 		void RemoveComp(LogicComp* comp);
 		void Update();
-	private:
+
+		std::vector<std::thread> logic_thread_ids;
+		std::vector<logic_thread_info*> logic_thread_infos;
+		static unsigned thread_idx;
+
 		std::vector<LogicComp*> mComponents;
 	};
+	unsigned LogicSystem::thread_idx = 0;
+
+	struct logic_thread_info
+	{
+		unsigned idx;
+	};
+	void LogicUpdate(logic_thread_info*);
 }
 
 #define aexLogic AEX::Singletons::Get<AEX::LogicSystem>()
