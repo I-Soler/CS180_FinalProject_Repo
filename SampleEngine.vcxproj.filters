@@ -206,28 +206,28 @@
       <Filter>Demos</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\Door.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Logic\DetachSoul.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\PressPuzzleController.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\PlayerAttack.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\PlayerMovement.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\EnemyHealth.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\PressurePlate.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Scene\SceneHandler.cpp">
       <Filter>Engine\Scene</Filter>
@@ -236,7 +236,7 @@
       <Filter>Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\Key.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Extern\spine-cpp\src\spine\Animation.cpp">
       <Filter>Extern\spine-cpp</Filter>
@@ -438,10 +438,13 @@
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\InfoScreen.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Button.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -680,28 +683,28 @@
       <Filter>Engine\MessagingSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\Door.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Logic\DetachSoul.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\PressPuzzleController.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\PlayerAttack.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\PlayerMovement.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\EnemyHealth.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\PressurePlate.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\BreakableComp.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Scene\SceneHandler.h">
       <Filter>Engine\Scene</Filter>
@@ -710,7 +713,7 @@
       <Filter>Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\Key.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Extern\spine-cpp\include\spine\Animation.h">
       <Filter>Extern\spine-cpp</Filter>
@@ -969,10 +972,13 @@
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\InfoScreen.h" />
     <ClInclude Include="src\Engine\GameComponents\Button.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\BubbleComp.h">
-      <Filter>Engine\GameComponents</Filter>
+      <Filter>Engine\Logic\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
+      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1063,14 +1069,14 @@
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{b68f6a5e-82c4-4b28-95e2-900d90a69da0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameComponents">
-      <UniqueIdentifier>{4365d343-80a8-40d3-9e8c-aa51e75d71d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Extern\spine-cpp">
       <UniqueIdentifier>{8501f9f4-451b-4cf3-837d-27a590946b42}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Animation">
       <UniqueIdentifier>{daec13f0-cd0b-4006-adaf-85a6435158fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Logic\GameComponents">
+      <UniqueIdentifier>{4365d343-80a8-40d3-9e8c-aa51e75d71d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

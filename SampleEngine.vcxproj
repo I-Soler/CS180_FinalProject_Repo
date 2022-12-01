@@ -394,6 +394,7 @@
     <ClCompile Include="src\Extern\spine-cpp\src\spine\Triangulator.cpp" />
     <ClCompile Include="src\Extern\spine-cpp\src\spine\Updatable.cpp" />
     <ClCompile Include="src\Extern\spine-cpp\src\spine\VertexAttachment.cpp" />
+    <ClCompile Include="Turret.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Demos\Commons.h" />
@@ -575,6 +576,7 @@
     <ClInclude Include="src\Extern\spine-cpp\include\spine\Vertices.h" />
     <ClInclude Include="src\Extern\STB\stb_image.h" />
     <ClInclude Include="src\Extern\STB\stb_image_write.h" />
+    <ClInclude Include="Turret.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Engine\Core\AEXFactory.inl" />
