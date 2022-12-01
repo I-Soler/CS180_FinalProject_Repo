@@ -1,10 +1,10 @@
 #pragma once
 #include <Core/AEXCore.h>
 #include"Logic/AEXLogicSystem.h"
-#include "PressurePlate.h"
 
 namespace AEX
 {
+	struct CollisionStayEvent;
 	class Door : public LogicComp
 	{
 		AEX_RTTI_DECL(Door, LogicComp);
@@ -22,6 +22,12 @@ namespace AEX
 		void StreamRead(const nlohmann::json& j);
 		void StreamWrite(nlohmann::json& j) const;
 
-		void DoorActivated(const PressurePlateEvent& event);
+		void DoorActivated(const CollisionStayEvent& collision);
+	};
+
+	struct DoorEvent : public Event
+	{
+		DoorEvent(std::string receiver) : receiver_(receiver) {}
+		std::string receiver_;
 	};
 }

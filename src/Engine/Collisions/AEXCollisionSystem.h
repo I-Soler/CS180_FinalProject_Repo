@@ -91,6 +91,7 @@ namespace AEX
 		void ResolveCollision(std::list<ContactInfo>& Contacts);
 		void BroadCast(std::list<ContactInfo>& Contacts);
 
+		void clearContacts();
 
 	protected:
 		// Rigid bodise

@@ -1,5 +1,6 @@
 #include <Graphics/AEXShader.h>
 #include <Graphics/AEXTexture.h>
+#include <Graphics/AEXTextureAtlas.h>
 #include <Graphics/AEXModel.h>
 #include <Graphics/AEXGfxSystem.h>
 #include <../Engine/Composition/TransformComponent.h>
@@ -31,13 +32,13 @@ namespace AEX {
 		aexGraphics->RemoveRenderable(this);
 	}
 	void Renderable::Initialize(){
-
-		if(mpTexture == nullptr)
-			mpTexture = aexResources->GetResource<Texture>("Default.jpg");
+		if (mpTexture == nullptr && mpTexAtlas == nullptr)
+			mpTexture = aexResources->GetResource<Texture>("Default.png");
 		if (mpShader == nullptr)
 			mpShader = aexResources->GetResource<ShaderProgram>("TextureMap.shader");
 		if (mpModel == nullptr)
 			mpModel = aexResources->GetResource<Model>("Quad.model");
+
 	}
 	void Renderable::Shutdown()
 	{
@@ -45,26 +46,58 @@ namespace AEX {
 	}
 	bool Renderable::Edit()
 	{
-		if (ImGui::CollapsingHeader("Renderable"))
+		ImGui::ColorEdit4("Color", &mModulationColor.x);
+		ImGui::Checkbox("Is Isometric?", &mbIsIsometric);
+
+		if(ImGui::CollapsingHeader("Set texture"))	// Needs to check if the resource can be set
 		{
-			ImGui::ColorEdit4("Coor", &mModulationColor.x);
-			if(ImGui::CollapsingHeader("Set texture"))	// Needs to check if the resource can be set
+			if (aexEditor->getResource<Texture>(&mpTexture))
 			{
-				if (aexEditor->getResource<Texture>(&mpTexture))
-					return true;
-			}
-			if (ImGui::CollapsingHeader("Set Shader"))	// Needs to check if the resource can be set
-			{
-				if (aexEditor->getResource<ShaderProgram>(&mpShader))
-					return true;
-			}
-			if (ImGui::CollapsingHeader("Set Model"))	// Needs to check if the resource can be set
-			{
-				if (aexEditor->getResource<Model>(&mpModel))
-					return true;
+				mpTexAtlas = nullptr;
+
+				auto sz = AEVec2(mpTexture->get()->GetWidth(), mpTexture->get()->GetHeight());
+				transform->SetWorldScale(sz);
+				return true;
 			}
 		}
-		return false;
+		if (ImGui::CollapsingHeader("Set Shader"))	// Needs to check if the resource can be set
+		{
+			if (aexEditor->getResource<ShaderProgram>(&mpShader))
+				return true;
+		}
+		if (ImGui::CollapsingHeader("Set Model"))	// Needs to check if the resource can be set
+		{
+			if (aexEditor->getResource<Model>(&mpModel))
+				return true;
+		}
+		
+		if (ImGui::CollapsingHeader("Set Atlas"))	// Needs to check if the resource can be set
+		{
+			TResource<TextureAtlas>* temp = nullptr;
+			
+			if (aexEditor->getResource<TextureAtlas>(&mpTexAtlas))
+			{
+				mpTexture = nullptr;
+			}	
+			if (mpTexAtlas && mpTexAtlas->get())
+			{
+				if (ImGui::CollapsingHeader("Choose Region"))
+				{
+					auto regionNames = mpTexAtlas->get()->GetAllRegionNames();
+					for (auto& rn : regionNames) {
+						if (ImGui::Selectable(rn.c_str())) {
+							mAtlasRegionName = rn;
+
+							auto sz = mpTexAtlas->get()->GetRegionSize(rn);
+							transform->SetWorldScale(sz);
+
+							break;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	void Renderable::StreamRead(const nlohmann::json& j)
@@ -86,6 +119,17 @@ namespace AEX {
 			tmp = j["shader"];
 			if (tmp != "null")mpShader = aexResources->GetResource<ShaderProgram>(tmp.c_str());
 		}
+		{
+			tmp = j["textureatlas"];
+			if (tmp != "null") mpTexAtlas = aexResources->GetResource<TextureAtlas>(tmp.c_str());
+		}
+
+		{
+			tmp = j["atlasregion"];
+			if (tmp != "null") mAtlasRegionName = tmp.c_str();
+		}
+
+
 
 		j["modulationColor"] >> mModulationColor;
 	}
@@ -96,6 +140,9 @@ namespace AEX {
 		j["texture"] = mpTexture ? mpTexture->GetName() : "null";
 		j["shader"] = mpShader ? mpShader->GetName() : "null";
 		j["modulationColor"] << mModulationColor;
+		j["textureatlas"] = mpTexAtlas ? mpTexAtlas->GetName() : "null";
+		j["atlasregion"] =  mAtlasRegionName;
+
 	}
 
 	/* RENDERABLE BASE API (OVERLOAD THOSE).
@@ -131,34 +178,45 @@ namespace AEX {
 			else
 				transform->mWorld.mTranslation.z = -1;*/
 
-			transform->mLocal.mTranslation.z = -transform->mLocal.mTranslation.y;
+			if(mbIsIsometric)
+				transform->mLocal.mTranslation.z = -transform->mLocal.mTranslation.y;
+
 			// pass model to world matrix to the shader
 			auto modelMtx = const_cast<Transform*>(&transform->mWorld)->GetMatrix44();
 			mpShader->get()->SetShaderUniform("mtxModel", &modelMtx);
 			mpShader->get()->SetShaderUniform("uModColor", &mModulationColor);
 
-			// set the no sé qué
+			AEMtx33 id;
+			mpShader->get()->SetShaderUniform("mtxTexTransform", &id);
+
+			int texture_unit = 0;
+			mpShader->get()->SetShaderUniform("ts_diffuse", &texture_unit);
 
 			// bind the texture if we have one
 			if (mpTexture) {
-				int texture_unit = 0;
 				mpTexture->get()->Bind();
-				mpShader->get()->SetShaderUniform("ts_diffuse", &texture_unit);
 			}
-			/*else if (mpTexAtlas)
+			else if (mpTexAtlas)
 			{
-				// 1. get the texture corresponding to the region
-				auto texRes = mpTexAtlas->GetPageTexFromRegionName(mRegionName);
+				auto texRes = mpTexAtlas->get()->GetTextureFromRegionName(mAtlasRegionName);
+				if(texRes)
+					texRes->get()->Bind();
+
 				int texture_unit = 0;
-				texRes->get()->Bind(0);
 				mpShader->get()->SetShaderUniform("ts_diffuse", &texture_unit);
 
-				// 2. get the uvs of the region to compute the texTransform
 				AEVec2 uvMin, uvMax;
-				mpTexAtlas->GetUVFromRegion(mRegionName, uvMin, uvMax);
-				auto texTransform = Translate(uvMin) * Scale(uvMax - uvMin);
-				mpShader->get()->SetShaderUniform("texTransform", &texTransform);
-			}*/
+				mpTexAtlas->get()->GetRegionMinMax(mAtlasRegionName, uvMin, uvMax);
+
+				AEMtx33 texTransform = AEMtx33::Translate(uvMin.x, uvMin.y) * AEMtx33::Scale(uvMax.x - uvMin.x, uvMax.y - uvMin.y);
+				mpShader->get()->SetShaderUniform("mtxTexTransform", &texTransform);
+			}
+			else
+			{
+				AEMtx33 id;
+				mpShader->get()->SetShaderUniform("mtxTexTransform", &id);
+
+			}
 		}
 		// unbind step
 		else {

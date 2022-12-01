@@ -50,7 +50,7 @@ namespace AEX
 
 		// Get transform
 		const Transform& World() const { return mWorld; }
-		const TransformComp* Parent() const { return mParentTransform; }
+		TransformComp* Parent() const { return mParentTransform; }
 
 		// Debug Draw in world or local. Default is world
 		void DebugDraw(Color col = Color(0, 0, 0, 0), bool inlocal = false);

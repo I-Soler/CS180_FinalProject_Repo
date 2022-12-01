@@ -8,6 +8,7 @@ namespace AEX {
 	class GameObject : public IBase
 	{
 		friend class Space;
+		friend class Editor;
 
 		AEX_RTTI_DECL(GameObject, IBase);
 

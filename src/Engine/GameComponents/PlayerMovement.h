@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/AEXCore.h>
 #include <Logic/AEXLogicSystem.h>
+#include <map>
 
 namespace AEX
 {
@@ -21,5 +22,7 @@ namespace AEX
 
 		void StreamRead(const nlohmann::json& j);
 		void StreamWrite(nlohmann::json& j) const;
+
+		std::map<std::string, int> items;
 	};
 }

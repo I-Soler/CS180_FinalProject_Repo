@@ -17,23 +17,36 @@
 #include "Audio/Audio.h"
 #include "Audio/AudioSourceComp.h"
 #include "ResourceMgr/ResourceMgr.h"
+#include "Scene/SceneHandler.h"
+#include "Scene/FadeInOut.h"
 
 // Logic
 #include "Logic/AEXLogicSystem.h"
 #include "GameComponents/PlayerMovement.h"
 #include "GameComponents/PlayerAttack.h"
-#include "Engine/Logic/DetachSoul.h"
 #include "GameComponents/Door.h"
 #include "GameComponents/PressurePlate.h"
 #include "GameComponents/PressPuzzleController.h"
 #include "GameComponents/EnemyHealth.h"
 #include "GameComponents/BreakableComp.h"
+#include "GameComponents/InfoScreen.h"
+#include "GameComponents/Button.h"
 #include "GameComponents/BubbleComp.h"
+
+
+#include "Engine/Graphics/AEXTextureAtlas.h"
 
 // Easy access to singleton
 #define aexEngine (AEX::Singletons::Get<AEX::MainEngine>())
 
 namespace AEX{
+
+	struct ChangeScene
+	{
+		bool HasToChange;
+		std::string newScene;
+	};
+
 	class MainEngine : public IBase
 	{
 		AEX_RTTI_DECL(MainEngine, IBase);
@@ -41,6 +54,8 @@ namespace AEX{
 	public:
 		virtual bool Initialize();
 		void Run(IGameState*gameState = nullptr);
+
+		ChangeScene changeScene;
 	};
 }
 

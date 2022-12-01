@@ -1,6 +1,7 @@
 #include "EnemyHealth.h"
 #include <GameComponents/PlayerAttack.h>	// access player's attackCollider
 #include <Physics/RigidbodyComponent.h>
+#include "imgui/imgui.h"
 
 namespace AEX
 {

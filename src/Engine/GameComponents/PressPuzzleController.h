@@ -31,7 +31,7 @@ namespace AEX
 		//vector with all the PressurePlates that the puzzle will have
 		std::vector<PressurePlate*> plates;
 	private:
-		int puzzlesize = 5;
+		int puzzlesize = plates.size();
 		char puzzlesolution[5] = { '1', '2', '3', '4', '5' };
 		int counter = 0;
 

@@ -5,6 +5,8 @@
 
 namespace AEX
 {
+	enum class SelectedFolder {Audio = 1, Images,Model,Prefabs,Scene, Shaders};
+
 	class Editor : public IBase
 	{
 		AEX_RTTI_DECL(Editor, IBase);
@@ -18,7 +20,10 @@ namespace AEX
 		void ImGuizmo();
 		void ObjectManager();
 		void Inspector();
-		void Assets();
+		void Assets(const char* folderPath);
+
+		void ShowFiles(const char* folderPath);
+		void LoadFiles(const char* folderPath);
 
 		void InitEditorCamera();
 		void UpdateEditorCamera();
@@ -28,9 +33,21 @@ namespace AEX
 
 		void ShowObjects(const std::vector<GameObject*> &ObjList, bool indent);
 
-		bool editing = false;
-		AEXTimer timer;
+		// Handle assets functions
+		void HandleAudio(std::string audio);
+		void HandleImage(std::string image);
+		void HandleModel(std::string model);
+		void HandleScene(std::string scene);
+		void HandlePrefab(std::string prefab);
+		void HandleShader(std::string shader);
 
+		void ShowPrefab();
+		//void CreateCam();
+
+		bool editing = false;
+		bool EditCollider = false;
+		int GameObjCounter = 0;
+		AEXTimer timer;
 
 		std::map<unsigned, std::string> tags =
 		{
@@ -38,7 +55,19 @@ namespace AEX
 			{1, "Player"},
 			{2, "Enemy"}
 		};
+
+		SelectedFolder selecFolder;
+
+		std::vector<GameObject*> SelectedObjs;						// Handle selecting objects
+		std::string SceneName = "data/Scenes/New Scene.json";	// Know what's the name of this scene
+		Space* currentSpace;
+
+		std::unordered_map<Space*, GameObject*> mEditorCameras;
 	};
+
+
+
+	std::string AddScenePath(std::string file);
 }
 
 #define aexEditor AEX::Singletons::Get<AEX::Editor>()

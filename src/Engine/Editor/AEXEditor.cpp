@@ -1,16 +1,19 @@
 #include <AEX.h>
 #include <Extern/imgui/imgui.h>
 #include <Extern/imgui/ImGuizmo.h>
+#include <Scene/Scene.h>
 #include "AEXEditor.h"
 #include "Collisions/Collisions.h"
 #include <Platform/AEXSerialization.h>	// save prefabs
 #include <Platform/AEXInput.h>
+#include <filesystem>
+#include <algorithm>
+#include <sstream>
+#include <fstream>
 
 namespace AEX
 {
 	static bool showImGuiDemoWindow = false;
-	static int GameObjCounter = 0;					// for creating new unnamed objects
-	static std::vector<GameObject*> SelectedObjs;	// Handle selecting objects
 
 	//ImGuizmo
 	static ImGuizmo::OPERATION sCurrentGizmoOperation(ImGuizmo::OPERATION::TRANSLATE);
@@ -18,7 +21,7 @@ namespace AEX
 
 	bool Editor::Initialize()
 	{
-		aexScene->LoadFile("Default Scene", false);
+		aexScene->LoadFile("data/Scenes/Default Scene.json", false);
 
 		InitEditorCamera();
 
@@ -33,51 +36,97 @@ namespace AEX
 		// Auto save every 5 mins
 		if (timer.GetTimeSinceStart() >= 60 * 5)
 		{
-			aexScene->SaveFile("Auto saved scene");
+			aexScene->SaveFile("data/Scenes/Auto saved scene.json");
 			timer.Reset();
 		}
 
+		// Ctrl + S
+		if (aexInput->KeyPressed(Keys::KeyCodes::Control) && aexInput->KeyPressed('S'))
+			aexScene->SaveFile(SceneName.c_str());
+
 		Menu();
-		Space* myScene = aexScene->GetSpace("Editor Space");
-		GameObject* camera = myScene->FindObjectByName("Editor Camera");
+		GameObject* camera = mEditorCameras[currentSpace];
 		if (Enabled())
 		{
+			for (auto& it : aexGraphics->mCameras)
+			{
+				if (it == camera->GetComp<Camera>())
+					continue;
+
+				it->SetEnabled(false);
+				TransformComp* tr = it->GetOwner()->GetComp<TransformComp>();
+				aexGraphics->DrawRect(tr->GetWorldPosition().x, tr->GetWorldPosition().y,it->mViewRectangle.x, it->mViewRectangle.y, Color(1, 1, 1, 1));
+			}
 			camera->SetEnabled(true);
+
+			ImGuizmo();
 			UpdateEditorCamera();
 
 			ObjectManager();
 			Inspector();
-			Assets();
-			ImGuizmo();
-			aexResources->ShowFiles("data");
+			ShowFiles("data");
+			Assets("data");
 		}
 		else
+		{
+			for (auto& it : aexGraphics->mCameras)
+				it->SetEnabled(true);
+
 			camera->SetEnabled(false);
+		}
 	}
 	void Editor::Menu()
 	{
 		// Load and save scene
 		ImGui::BeginMainMenuBar();
+
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::Button("New Scene"))
+			{
+				aexScene->SaveFile(SceneName.c_str());	// Save the scene we are working in
+				aexScene->LoadFile("data/Scenes/Default Scene.json");	// Loads the default scene
+				aexScene->SaveFile("data/Scenes/New Scene.json");		// Creates a new scene
+				SceneName = "data/Scenes/New Scene.json";
+
+				SelectedObjs.clear();	// clean inspector
+				InitEditorCamera();	// Init editor camera in the new scene	
+			}
+
+			ImGui::EndMenu();
+		}
+
 		if (ImGui::BeginMenu("Load and Save"))
 		{
 			ImGui::Checkbox("Show Demo Window", &showImGuiDemoWindow);
 
-			static char label[64] = "EditorFileTest";		// enter name to save file
-			ImGui::InputText("Enter File Name", label, 30);
+			static char label[] = "";
+			ImGui::Text("Name of scene : "); ImGui::SameLine();
+			ImGui::Text(SceneName.c_str());
 
+			if (ImGui::InputText("Edit file name", label, 30))
+				SceneName = AddScenePath(label);
+			
 			if (ImGui::Button("Save"))
-				aexScene->SaveFile(label);
-
+				aexScene->SaveFile(SceneName.c_str());
+			
 			if (ImGui::Button("Load"))			// load file using OpenSaveFileDlg
 			{
 				OpenSaveFileDlg dlg;
 				if (dlg.Open("Select Scene File"))
 				{
 					std::string filename = dlg.GetFiles()[0];
-					aexScene->LoadFile(filename.c_str());
-					SelectedObjs.clear();	// Avoid bug
+					SceneName = filename.c_str(); // Store the name
 
-					InitEditorCamera();	// Init editor camera in the new scene
+					/*aexGraphics->ClearCameras();
+					aexGraphics->ClearRenderables();*/
+					for (auto& it : mEditorCameras)	// delete prev camera
+						it.second->Shutdown();
+
+					aexScene->LoadFile(filename.c_str());
+					SelectedObjs.clear();	// Clean inspector
+
+					InitEditorCamera();	// Init editor camera in the new scene	
 				}
 			}
 			ImGui::EndMenu();
@@ -87,10 +136,10 @@ namespace AEX
 		if (ImGui::Button("Start"))
 		{
 			if (!editing)
-				aexScene->SaveFile("TemporalSave");
+				aexScene->SaveFile("data/Scenes/TemporalSave.json");
 
 			aexScene->InitializeSpaces();
-			aexCollision->Initialize();	// PrevFrameContacts must be deleted when restarted, ask Thomas if this is ok
+			aexCollision->clearContacts();	// PrevFrameContacts must be deleted when restarted
 
 			editing = true;
 			SetEnabled(false);
@@ -102,9 +151,15 @@ namespace AEX
 
 		if (ImGui::Button("Stop") && editing)
 		{
-			aexScene->LoadFile("TemporalSave", false);
+			for (auto& it : mEditorCameras)	// delete prev camera
+				it.second->Shutdown();
+
+			aexScene->LoadFile("data/Scenes/TemporalSave.json", false);
 			editing = false;
 			SetEnabled(true);
+
+			//aexScene->InitializeSpaces();
+			InitEditorCamera();
 			SelectedObjs.clear();	// No objects showing on the inspector, otherwise it breaks 
 		}
 
@@ -118,6 +173,7 @@ namespace AEX
 				sCurrentGizmoOperation = ImGuizmo::OPERATION::SCALE;
 			if (ImGui::RadioButton("Rotate", &e, 2))
 				sCurrentGizmoOperation = ImGuizmo::OPERATION::ROTATE;
+			ImGui::Checkbox("Edit collider", &EditCollider);
 			ImGui::EndMenu();
 		}
 
@@ -127,13 +183,16 @@ namespace AEX
 			ImGui::InputText("", Spacelabel, IM_ARRAYSIZE(Spacelabel));
 
 			if (ImGui::Button("Add Space"))
+			{
+
 				aexScene->NewSpace(Spacelabel);
+			}
 
 			ImGui::SameLine();
 			if (ImGui::Button("Delete Space"))
 			{
 				// Some spaces should be non deletable
-				if (strcmp(Spacelabel, "Main") != 0 && strcmp(Spacelabel, "Editor Space") != 0)
+				if (strcmp(Spacelabel, "Main") != 0)
 					aexScene->DestroySpace(Spacelabel);
 				else
 					std::cout << "cant delete those spaces" << std::endl;
@@ -141,8 +200,12 @@ namespace AEX
 
 			if (ImGui::CollapsingHeader("List of spaces"))
 			{
+				// Make currentSpace be changable here
 				for (auto& it : aexScene->GetAllSpaces())
-					ImGui::Text(it->GetName());
+				{
+					if (ImGui::Button(it->GetName()))
+						currentSpace = it;
+				}
 			}
 			ImGui::EndMenu();
 		}
@@ -215,14 +278,13 @@ namespace AEX
 					tr->mLocal.mScale = AEVec2(1, 1);
 					Obj->AddComp(tr);
 					Obj->AddComp(aexFactory->Create<Renderable>());
-					Obj->OnCreate(); Obj->Initialize();
+					Obj->OnCreate(); Obj->Initialize();// don't initialize when in edit mode only when launching the game
 				}
 			}
 
 			// Show all exisiting objects + children in the scene
 			for (auto& it : aexScene->GetAllSpaces())
 			{
-				if (strcmp(it->GetName(), "Editor Space") == 0) continue;		// don't show editor camera
 				const std::vector<GameObject*>& ObjList = it->GetChildren();	// Gets childrens
 				ShowObjects(ObjList, false);
 			}
@@ -263,9 +325,6 @@ namespace AEX
 			{
 				for (auto& it : aexScene->GetAllSpaces())
 				{
-					if (strcmp(it->GetName(), "Editor Space") == 0)	// Edge case
-						continue;
-
 					if (ImGui::Button(it->GetName()))
 					{
 						Space* ObjSpace = SelectedObjs[0]->mOwnerSpace;
@@ -287,10 +346,13 @@ namespace AEX
 				std::string compName = SComp[it]->GetType().GetName();
 				std::string CompDelete = "Delete " + compName;
 
+				ImGui::PushID(SComp[it]);	// Make ImGui not bug when two or more colliders added
 				// The transform component should not be deletable
 				if (compName == "TransformComp")
 				{
-					SComp[it]->Edit();
+					if (ImGui::CollapsingHeader(SComp[it]->GetType().GetName().c_str()))
+						SComp[it]->Edit();
+					ImGui::PopID();
 					continue;
 				}
 
@@ -303,7 +365,12 @@ namespace AEX
 				ImGui::SameLine();
 
 				if (!deleted)
-					SComp[it]->Edit();
+				{
+					if(ImGui::CollapsingHeader(SComp[it]->GetType().GetName().c_str()))
+						SComp[it]->Edit();
+				}
+
+				ImGui::PopID();
 			}
 
 			if (ImGui::TreeNode("Add Component"))
@@ -340,106 +407,287 @@ namespace AEX
 		ImGui::End();
 	}
 
-	void Editor::Assets()
-	{
+	void Editor::Assets(const char* folderPath)
+	{		
 		if (ImGui::Begin("Assets"))
 		{
-			// Save prefab to the user's computer
-			if (ImGui::CollapsingHeader("Create Prefab"))
+			// Variables for the button
+			int buttonCount = 0;
+			auto sz = ImGui::GetContentRegionAvailWidth();
+			ImVec2 btnSz = { 80,80 };
+			auto pad = ImGui::GetStyle().ItemSpacing;
+			u32 btnPerLine = floor(sz / (btnSz.x + pad.x * 2)) - 1;
+
+
+			const std::filesystem::path data{ folderPath };
+			int it = 0;
+			for (auto const& dir_entry : std::filesystem::directory_iterator{ data })	// search for the directory selected
 			{
-				if (SelectedObjs.empty())
-					ImGui::Text("select an object");
+				if (!dir_entry.is_directory())	// Only show directories
+					continue;
 
-				else for (auto& it : SelectedObjs)
+				it++;
+				if (it != static_cast<int>(selecFolder))	// Find the selected directory
+					continue;
+
+				std::string po = dir_entry.path().u8string();
+				const std::filesystem::path SubData{ po.c_str() };
+				void (Editor::*handle)(std::string);
+
+				std::string ImageName = "Default.png";
+				
+				// Temporal ImageName = "Default.png"; until I actually put an image in the folders
+				switch (selecFolder)
 				{
-					ImGui::Text("set prefab named:");
-					static char prefabName[100];
-					if (ImGui::InputText("", prefabName, 100, ImGuiInputTextFlags_EnterReturnsTrue))
-					{
-						nlohmann::json j;
-						it->StreamWrite(j);
-						std::string filename = "data/Prefabs/";
-						filename += prefabName;
-						filename += ".arch";
-						SaveJsonToFile(j, filename.c_str());
-					}
-				}
-			}
-
-			// Load prefab from the user's computer
-			if (ImGui::CollapsingHeader("Instantiate Prefab"))
-			{
-				static TResource<Archetype>* selectedPrefab = nullptr;
-				static unsigned prefabCounter = 0;
-				if (aexEditor->getResource<Archetype>(&selectedPrefab))
+				case AEX::SelectedFolder::Audio:
 				{
-					// instantiate prefab when clicking on it
-					GameObject* prefObj = aexScene->GetMainSpace()->NewObject("whatever");
-					prefObj->StreamRead(selectedPrefab->GetRawResource()->prefab_json);
-
-					if (prefabCounter > 0)
-					{
-						std::string prefName = prefObj->GetName();
-						prefName += prefabCounter + 'a';
-						prefObj->SetName(prefName.c_str());
-					}
-					++prefabCounter;
-
-					prefObj->OnCreate();
-					prefObj->Initialize();
-					GameObjCounter++;
+					ImageName = "AudioIcon.png";
+					handle = &Editor::HandleAudio;
+					break;
 				}
-			}
-
-			// Update prefab to the user's computer
-			if (ImGui::CollapsingHeader("Update Prefab"))
-			{
-				if (SelectedObjs.empty())
-					ImGui::Text("select an object");
-				else if (SelectedObjs.size() > 1)
-					ImGui::Text("select only one object");
-
-				else
+				case AEX::SelectedFolder::Images:	// Empty, image will be set later
 				{
-					TResource<Archetype>* selectedPrefab = nullptr;
-					if (ImGui::CollapsingHeader("UPDATE") && aexEditor->getResource<Archetype>(&selectedPrefab))
-					{
-						nlohmann::json& j = selectedPrefab->GetRawResource()->prefab_json;
-						printf("%s\n", selectedPrefab->GetFilePath().mFullPath.c_str());
-
-						// overwrite object into prefab json file
-						j.clear();
-						SelectedObjs[0]->StreamWrite(j);
-						SaveJsonToFile(j, selectedPrefab->GetFilePath().mFullPath.c_str());
-					}
+					handle = &Editor::HandleImage;
+					break;
 				}
+
+				case AEX::SelectedFolder::Model:
+				{
+					ImageName = "ModelIcon.png";
+					ImageName = "Default.png";
+					handle = &Editor::HandleModel;
+					break;
+				}
+				case AEX::SelectedFolder::Prefabs:
+				{
+					ShowPrefab();
+					ImageName = "PrefabIcon.png";
+					ImageName = "Default.png";
+					handle = &Editor::HandlePrefab;
+					break;
+				}
+				case AEX::SelectedFolder::Scene:
+				{
+					ImageName = "sceneIcon.png";
+					handle = &Editor::HandleScene;
+					break;
+				}
+				case AEX::SelectedFolder::Shaders:
+				{
+					ImageName = "ShaderIcon.png";
+					ImageName = "Default.png";
+					handle = &Editor::HandleShader;
+					break;
+				}
+				}
+
+				int ID = 0;
+
+				for (auto const& dir_entry : std::filesystem::directory_iterator{ SubData })
+				{
+					// Set variables and stuff
+					std::string name = dir_entry.path().filename().u8string();
+					if (selecFolder == AEX::SelectedFolder::Images)
+						ImageName = name;
+
+					auto img = aexResources->GetResource<Texture>(ImageName.c_str());
+					buttonCount++;
+
+					// Group to show image and text
+					ImGui::BeginGroup();
+					ImGui::PushID(ID);	ID++;
+					if (ImGui::ImageButton((ImTextureID)img->get()->GetGLHandle(), ImVec2(80, 80), { 0,0 }, { 1,-1 }))
+						(*this.*handle)(name);
+					ImGui::PopID();
+					name.resize(11);
+					name += "..";
+					ImGui::Text(name.c_str());	
+					ImGui::EndGroup();
+					
+
+					// For making new lines for the buttons
+					if (buttonCount == btnPerLine)
+						buttonCount = -1;
+					else 
+						ImGui::SameLine();		// currently does not check if it's last position
+				}
+				ImGui::Text("");	// Make the last SameLine() from the images to not affect the names	
+				ImGui::SameLine();		// currently does not check if it's last position
 			}
 		}
 		ImGui::End();
 	}
 
+	//ImGui window to show the files in data
+	void Editor::ShowFiles(const char* folderPath)
+	{
+		auto resources = aexResources;
+		ImGui::Begin("Resources");
+
+		// Loads asset from the user's computer
+		if (ImGui::Button("Add asset"))
+		{
+			OpenSaveFileDlg dlg;
+			if (dlg.Open("Select File"))
+			{
+				std::string filename = dlg.GetFiles()[0];
+				aexResources->LoadResource(filename.c_str(), false);
+			}
+		}
+
+		ImVec2 end = ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y);
+
+		resources->wPos = AEVec2(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y);
+		resources->wScale = AEVec2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
+
+		resources->mouse = ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), end);
+		if (!ImGui::IsAnyItemHovered())
+		{
+			resources->drag = false;
+		}
+
+		LoadFiles(folderPath);
+
+		ImGui::End();
+	}
+
+	//loads the files and if a new one is dropped also loads it
+	void Editor::LoadFiles(const char* folderPath)
+	{
+		// imGui things to select the wanted folder
+		ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+		static int selection_mask = (1 << 2);
+		int node_clicked = -1;
+		int it = 0;
+
+		auto resources = aexResources;
+
+		const std::filesystem::path data{ folderPath };
+		bool opened = false;
+
+		for (auto const& dir_entry : std::filesystem::directory_iterator{ data })
+		{
+			if (dir_entry.is_directory())
+			{
+				it++;
+				std::string po = dir_entry.path().u8string();
+
+				// complex ImGui things
+				// Determine with tree is selected
+				{
+				// Disable the default "open on single-click behavior" + set Selected flag according to our selection.
+				ImGuiTreeNodeFlags node_flags = base_flags;
+				const bool is_selected = (selection_mask & (1 << it)) != 0;
+				if (is_selected)
+					node_flags |= ImGuiTreeNodeFlags_Selected;
+
+				// open with double click or arrow
+				opened = ImGui::TreeNodeEx((void*)(intptr_t)it, node_flags, po.c_str(), it);
+				if (ImGui::IsItemClicked())
+				{
+					node_clicked = it;
+					selecFolder = static_cast<SelectedFolder>(it);
+				}
+				}
+				std::string bar = "\\";
+
+				if (ImGui::IsItemHovered() && resources->drag)
+				{
+					for (auto it : resources->dragdropfiles)
+					{
+						FilePath fp(it.c_str());
+						std::fstream file;
+
+						file.open(it, std::ios_base::in | std::ios::binary);
+						auto ss = std::ostringstream{};
+
+						if (file.is_open())
+						{
+							ss << file.rdbuf();
+							file.close();
+						}
+
+						file.open(po.c_str() + bar + fp.mFilename + fp.mExtension, std::ios_base::out | std::ios::binary);
+
+						file.write(ss.str().c_str(), ss.str().size());
+
+						file.close();
+
+
+						// load current file
+						resources->LoadResource((po.c_str() + bar + fp.mFilename + fp.mExtension).c_str(), true);
+						resources->drag = false;
+					}
+				}
+
+				if (opened)
+				{
+					LoadFiles(po.c_str());
+					ImGui::TreePop();
+				}
+			}
+			else
+			{
+				std::string pe = dir_entry.path().filename().u8string();
+
+				if (dir_entry.path().extension() == ".json")
+				{
+					continue;
+				}
+
+				opened = ImGui::TreeNodeEx(pe.c_str(), ImGuiTreeNodeFlags_Leaf);
+
+				if (opened)
+					ImGui::TreePop();
+			}
+		}
+
+		if (node_clicked != -1)
+		{
+			// Update selection state
+			// (process outside of tree loop to avoid visual inconsistencies during the clicking frame)
+			if (ImGui::GetIO().KeyCtrl)
+				selection_mask ^= (1 << node_clicked);          // CTRL+click to toggle
+			else //if (!(selection_mask & (1 << node_clicked))) // Depending on selection behavior you want, may want to preserve selection when clicking on item that is part of the selection
+				selection_mask = (1 << node_clicked);           // Click to single-select
+		}
+	}
+
+
 	void Editor::InitEditorCamera()
 	{
-		Space* EditorSpace = aexScene->NewSpace("Editor Space");
+		mEditorCameras.clear();
+		currentSpace = aexScene->GetMainSpace();
+		                                       
+		auto scene = aexScene;
+		auto allSpaces = scene->GetAllSpaces();
 
-		GameObject* cam = EditorSpace->NewObject("Editor Camera");
+		// go through the existing spaces inside the scene
+		// for each space, create an editor camera and store. 
+		for (auto &sp : allSpaces)
+		{
+			auto camObj = aexFactory->Create<GameObject>();
+			camObj->mOwnerSpace = sp;
+			camObj->mParent = sp;		// because of the mParent and owner mess
+			auto tr = camObj->NewComp<TransformComp>();
+			tr->SetWorldPosition(AEVec3(tr->GetWorldPosition().x, tr->GetWorldPosition().y, 500));
 
-		auto tr = (TransformComp*)cam->AddComp(aexFactory->Create<TransformComp>());
-		auto c = (Camera*)cam->AddComp(aexFactory->Create<Camera>());
-		c->mViewRectangle = { 1280,720 };
-		//c->mViewport = { 0,0, (f32)aexWindow->GetWidth(), (f32)aexWindow->GetHeight() };
-		c->mViewport = { 0,0, 1, 1 };
+			auto cam = camObj->NewComp<Camera>();
+			cam->mViewRectangle = { 1280,720 };
+			cam->mViewport = { 0,0, 1, 1 };
+			camObj->OnCreate();
 
+			//...
+			// initiliaze the camera
+			//...
 
-		tr->SetWorldPosition(AEVec3(tr->GetWorldPosition().x, tr->GetWorldPosition().y, 500));
-
-		cam->OnCreate(); cam->Initialize();
+			mEditorCameras[sp] = camObj;
+		}
 	}
 
 	void Editor::UpdateEditorCamera()
 	{
-		Space* myScene = aexScene->GetSpace("Editor Space");
-		GameObject* camObj = myScene->FindObjectByName("Editor Camera");
+		GameObject* camObj = mEditorCameras[currentSpace];
 		Camera* cam = camObj->GetComp <Camera>();
 		TransformComp* tr = camObj->GetComp<TransformComp>();
 
@@ -463,7 +711,7 @@ namespace AEX
 			cam->mViewRectangle *= 1.01f;
 
 		// Check click of the map
-		if (!input->MousePressed(0))
+		if (!input->MousePressed(0) || ImGuizmo::IsUsing())
 			return;
 
 		//SelectedObjs.clear();
@@ -475,8 +723,6 @@ namespace AEX
 		// Go through all objects
 		for (auto& it : aexScene->GetAllSpaces())
 		{
-			if (strcmp(it->GetName(), "Editor Space") == 0) continue;	// cant select editor camera
-
 			for (auto& it2 : it->GetChildren())
 			{
 				TransformComp* tr = it2->GetComp<TransformComp>();
@@ -499,12 +745,24 @@ namespace AEX
 			return;
 
 		// Get things for the ImGuizmo
-		Space* myScene = aexScene->GetSpace("Editor Space");
-		GameObject* camera = myScene->FindObjectByName("Editor Camera");
-		GameObject* obj = SelectedObjs[0];
+		GameObject* camObj = mEditorCameras[currentSpace];
 
-		Camera* cam = camera->GetComp<Camera>();
-		TransformComp* tr = obj->GetComp<TransformComp>();
+		TransformComp* tr;
+		GameObject* obj;
+		Camera* cam = camObj->GetComp<Camera>();;
+
+		if (EditCollider)
+			tr = SelectedObjs[0]->GetComp<Collider>();
+		
+		if(!EditCollider || tr == nullptr)
+		{
+			EditCollider = false;
+
+			obj = SelectedObjs[0];
+
+			tr = obj->GetComp<TransformComp>();
+		}
+
 
 		// change Editing mode
 		if (aexInput->KeyTriggered('C'))
@@ -554,7 +812,14 @@ namespace AEX
 		if (ImGuizmo::IsUsing()) {
 			for (auto& it : SelectedObjs)
 			{
-				tr = it->GetComp<TransformComp>();
+				if (EditCollider)
+					tr = it->GetComp<Collider>();
+				if (!EditCollider || tr == nullptr)
+				{
+					EditCollider = false;
+
+					tr = it->GetComp<TransformComp>();
+				}
 
 				switch (sCurrentGizmoOperation)
 				{
@@ -619,6 +884,48 @@ namespace AEX
 
 			}
 
+			// drag drop
+			{
+				if (ImGui::BeginDragDropSource()) {
+
+					ImGui::Text(ObjList[it]->GetName());
+					ImGui::SetDragDropPayload("DND_OBJ_PTR", &ObjList[it], sizeof(GameObject*));
+					ImGui::EndDragDropSource();
+				}
+
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (ImGui::AcceptDragDropPayload("DND_OBJ_PTR"))
+					{
+						// set this object to parent
+						GameObject* obj = *(GameObject**) ImGui::GetDragDropPayload()->Data;
+						if (obj != ObjList[it])
+						{
+							// remove transform from the hierarchy
+							auto tr = obj->GetComp<TransformComp>();
+							if (tr)
+							{
+								// remove parent if we have it
+								if (tr->Parent())
+									tr->Parent()->RemoveChildTransform(tr);
+							}
+
+							ObjList[it]->AddChild(obj);
+
+							// adjust transform hierarchy
+							if (tr) {
+
+								// our new parent has a transform
+								if (auto newParentTr = ObjList[it]->GetComp <TransformComp>()) {
+									newParentTr->AddChildTransform(tr);
+								}
+							}
+						}
+					}
+					ImGui::EndDragDropTarget();
+				}
+			}
+
 			// Use recursion to show the childrens of the object
 			const std::vector<GameObject*>& ChildrenList = ObjList[it]->GetChildren();
 			if (ChildrenList.size() != 0)
@@ -628,40 +935,112 @@ namespace AEX
 		if (indent)
 			ImGui::Unindent();
 	}
-}
 
-//tr = it->GetComp<TransformComp>();
-//
-//AEVec3 pos, sca, rot;
-//ImGuizmo::DecomposeMatrixToComponents(model.v, pos.v, rot.v, sca.v);
-//
-//static AEVec3 initialPos;
-//static AEVec3 initialWorldPos;
-//static bool firstPressed = true;
-//
-//if (firstPressed && aexInput->MousePressed(0))
-//{
-//	initialPos = pos;
-//	initialWorldPos = tr->GetWorldPosition();
-//	firstPressed = false;
-//}
-//if (aexInput->MouseReleased(0))
-//{
-//
-//	firstPressed = true;
-//}
-//
-//switch (sCurrentGizmoOperation)
-//{
-//case ImGuizmo::TRANSLATE:
-//	tr->SetWorldPosition(initialWorldPos + pos - initialPos);
-//	break;
-//case ImGuizmo::ROTATE:
-//	tr->SetWorldOrientation(DegToRad(rot.z));
-//	break;
-//case ImGuizmo::SCALE:
-//	tr->SetWorldScale({ sca.x, sca.y });
-//	break;
-//default:
-//	break;
-//}
+	void Editor::HandleAudio(std::string audio)
+	{
+
+	}
+	void Editor::HandleImage(std::string image)
+	{
+
+	}
+	void Editor::HandleModel(std::string model)
+	{
+
+	}
+	void Editor::HandleScene(std::string scene)
+	{
+		std::string path = "data/Scenes/";
+		path += scene;
+
+		aexScene->SaveFile(SceneName.c_str());	// Save the scene we are working in
+		aexScene->LoadFile(path.c_str());		// Loads the default scene
+		SceneName = path.c_str();				// Override the current scene name
+
+		SelectedObjs.clear(); // avoid inspector crashing
+		InitEditorCamera();	// Init editor camera in the new scene	
+	}
+	void Editor::HandlePrefab(std::string prefab)
+	{
+
+	}
+	void Editor::HandleShader(std::string shader)
+	{
+
+	}
+
+	void Editor::ShowPrefab()
+	{
+		// Save prefab to the user's computer
+			// Quitar de aqui cuando se decida donde ponerlo
+		if (ImGui::Button("Create Prefab"))
+		{
+			if (!SelectedObjs.empty()) for (auto& it : SelectedObjs)
+			{
+				nlohmann::json j;
+				it->StreamWrite(j);
+				std::string filename = "data/Prefabs/";
+				filename += it->GetName();
+				filename += ".arch";
+				SaveJsonToFile(j, filename.c_str());
+			}
+		}
+
+		// Load prefab from the user's computer
+		if (ImGui::CollapsingHeader("Instantiate Prefab"))
+		{
+			static TResource<Archetype>* selectedPrefab = nullptr;
+			static unsigned prefabCounter = 0;
+			if (aexEditor->getResource<Archetype>(&selectedPrefab))
+			{
+				// instantiate prefab when clicking on it
+				GameObject* prefObj = aexScene->GetMainSpace()->NewObject("whatever");
+				prefObj->StreamRead(selectedPrefab->get()->prefab_json);
+
+				if (prefabCounter > 0)
+				{
+					std::string prefName = prefObj->GetName();
+					prefName += prefabCounter + 'a';
+					prefObj->SetName(prefName.c_str());
+				}
+				++prefabCounter;
+
+				prefObj->OnCreate();
+				prefObj->Initialize();
+				GameObjCounter++;
+			}
+		}
+
+		// Update prefab to the user's computer
+		if (ImGui::CollapsingHeader("Update Prefab"))
+		{
+			if (SelectedObjs.empty())
+				ImGui::Text("select an object");
+			else if (SelectedObjs.size() > 1)
+				ImGui::Text("select only one object");
+
+			else
+			{
+				TResource<Archetype>* selectedPrefab = nullptr;
+				if (ImGui::CollapsingHeader("UPDATE") && aexEditor->getResource<Archetype>(&selectedPrefab))
+				{
+					nlohmann::json& j = selectedPrefab->get()->prefab_json;
+					printf("%s\n", selectedPrefab->GetFilePath().mFullPath.c_str());
+
+					// overwrite object into prefab json file
+					j.clear();
+					SelectedObjs[0]->StreamWrite(j);
+					SaveJsonToFile(j, selectedPrefab->GetFilePath().mFullPath.c_str());
+				}
+			}
+		}
+	}
+
+
+	std::string AddScenePath(std::string file)
+	{
+		file.insert(0, "data/Scenes/");
+		file += ".json";
+		return file;
+	}
+}

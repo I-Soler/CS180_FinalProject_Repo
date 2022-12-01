@@ -28,22 +28,18 @@ namespace AEX
 	}
 	bool RigidbodyComp::Edit()
 	{
-		if (ImGui::CollapsingHeader("Rigid Body"))
-		{
-			float mass = 1.0f / mInvMass;
-			ImGui::InputFloat("Mass", &mass);
-			if(ImGui::InputFloat("Gravity", &mGravity))
-				mHasGravity = true;
-			ImGui::InputFloat("Drag", &mDrag);
+		float mass = 1.0f / mInvMass;
+		ImGui::InputFloat("Mass", &mass);
+		if(ImGui::InputFloat("Gravity", &mGravity))
+			mHasGravity = true;
+		ImGui::InputFloat("Drag", &mDrag);
 
 
-			if(mass <= 0)
-				mass = 0.01f;
+		if(mass <= 0)
+			mass = 0.01f;
 
-			mInvMass = 1 / mass;
-			return true;
-		}
-		return false;
+		mInvMass = 1 / mass;
+		return true;	
 	}
 	void RigidbodyComp::OnCreate()
 	{

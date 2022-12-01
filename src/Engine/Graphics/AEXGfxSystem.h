@@ -25,12 +25,17 @@ namespace AEX
 	class Model;
 	struct AEMtx44;
 
+	// forward declare the space
+	class Space;
+
 	// ---------------------------------------------------------------------------
 	// CLASS: Graphics: Main system for the graphics engine
 	class  Graphics : public IBase
 	{
 		AEX_RTTI_DECL(Graphics, IBase);
 		AEX_SINGLETON(Graphics);
+
+		friend class Editor;
 	public:
 
 		// ISystem Inherited
@@ -85,7 +90,7 @@ namespace AEX
 
 		Camera* mCurrentCamera = nullptr;
 		std::list<Camera*> mCameras;
-		std::list<Renderable*> mRenderables;
+		std::unordered_map<Space*, std::list<Renderable*>> mRenderables;
 
 		bool InitializeOpenGL();
 		void TerminateOpenGL();

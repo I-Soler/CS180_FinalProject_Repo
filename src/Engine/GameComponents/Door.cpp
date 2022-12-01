@@ -1,6 +1,8 @@
 #include "Door.h"
 #include "iostream"
-
+#include "Engine/Graphics/Components/AEXGfxComps.h"
+#include "Collisions/AEXCollisionSystem.h"
+#include "imgui/imgui.h"
 
 namespace AEX
 {
@@ -14,7 +16,7 @@ namespace AEX
 	}
 	void Door::OnCreate()
 	{		
-		mEvents.subscribe<PressurePlateEvent, Door>(this, &Door::DoorActivated);
+		mEvents.subscribe<CollisionStayEvent, Door>(this, &Door::DoorActivated);
 	}
 	void Door::Initialize()
 	{
@@ -24,6 +26,9 @@ namespace AEX
 	}
 	void Door::Shutdown()
 	{
+		std::string evName = typeid(CollisionStayEvent).name();
+
+		mEvents.unsubscribe(*mEvents.AllEvents[evName][0], evName);
 		RemoveFromSystem();
 	}
 	bool Door::Edit()
@@ -36,10 +41,18 @@ namespace AEX
 	void Door::StreamWrite(nlohmann::json& j) const
 	{
 	}
-	void Door::DoorActivated(const PressurePlateEvent& event)
+	void Door::DoorActivated(const CollisionStayEvent& collision)
 	{
-		// Check if this door is the one affected by the button
-		if (strcmp(event.receiver_.c_str(),GetName()) != 0)	
-			std::cout << "Abrete sesamo " << std::endl;
+		if (collision.Contact.obj[0]->GetOwner() == GetOwner() || collision.Contact.obj[1]->GetOwner() == GetOwner())
+		{
+			if (this->GetOwner()->GetComp<Collider>()->Ghost == false)
+			{
+				
+			}
+			else if (this->GetOwner()->GetComp<Collider>()->Ghost == true)
+			{
+				//change scenes
+			}
+		}
 	}
 }

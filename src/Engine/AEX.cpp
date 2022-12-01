@@ -30,9 +30,16 @@ namespace AEX{
 		auto resMgr = aexResources;
 		resMgr->LoadFolder("data/Models", false);
 		resMgr->LoadFolder("data/Shaders", false);
- 		resMgr->LoadFolder("data/Images", true);
+		resMgr->LoadFolder("data/Images", true);
+		resMgr->LoadFolder("data/Spine/Background", false);
+		resMgr->LoadFolder("data/Spine/spineboy", false);
 		resMgr->LoadFolder("data/Audio", false);
 		resMgr->LoadFolder("data/Prefabs", true);
+		resMgr->LoadFolder("EditorData", true);
+
+		changeScene.HasToChange = false;
+		changeScene.newScene = " ";
+
 		// all good -> return true
 		return true;
 	}
@@ -77,6 +84,12 @@ namespace AEX{
 			scene->DeleteAllSpaceDeadObjects();
 
 			editor->Update();
+
+			if(changeScene.HasToChange)
+			{
+				changeScene.HasToChange = false;
+				aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
+			}
 
 			if (!editor->Enabled())
 			{

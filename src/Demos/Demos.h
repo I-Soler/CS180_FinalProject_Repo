@@ -83,3 +83,12 @@ class PrototypeDemo : public AEX::IGameState
 	virtual void Render();
 	virtual void Shutdown();
 };
+
+class SpineDemo : public AEX::IGameState
+{
+	virtual void Initialize();
+	virtual void LoadResources();
+	virtual void Update();
+	virtual void Render();
+	virtual void Shutdown();
+};

@@ -18,6 +18,7 @@
         },
         {
             "_type": "Renderable",
+            "atlasregion": "",
             "model": "Quad.model",
             "modulationColor": [
                 1.0,
@@ -26,7 +27,8 @@
                 1.0
             ],
             "shader": "TextureMap.shader",
-            "texture": "Rock.jpg"
+            "texture": "Rock.jpg",
+            "textureatlas": "null"
         },
         {
             "_type": "BreakableComp",
@@ -46,7 +48,19 @@
             "Owner": "New Object 0",
             "RigidBody": "",
             "Static": true,
-            "_type": "Collider"
+            "_type": "Collider",           
+            "local": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotationZ": 0.0,
+                "scale": [
+                    1.0,
+                    1.0
+                ]
+            }
         }
     ],
     "name": "New Object 0",

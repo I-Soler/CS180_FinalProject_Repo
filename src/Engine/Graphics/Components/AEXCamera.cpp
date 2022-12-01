@@ -24,15 +24,11 @@ namespace AEX{
 		RemoveFromSystem();
 	}
 	bool Camera::Edit(){
-
-		if (ImGui::CollapsingHeader("Camera"))
-		{
-			// Set color
-			float col1[3] = { mViewportColor.r, mViewportColor.g, mViewportColor.b };
-			ImGui::ColorEdit3("Background", col1);
-			mViewportColor.r = col1[0]; mViewportColor.g = col1[1]; mViewportColor.b = col1[2];
-		}
-
+		// Set color
+		float col1[3] = { mViewportColor.r, mViewportColor.g, mViewportColor.b };
+		ImGui::ColorEdit3("Background", col1);
+		mViewportColor.r = col1[0]; mViewportColor.g = col1[1]; mViewportColor.b = col1[2];
+		
 		return true;
 	}
 

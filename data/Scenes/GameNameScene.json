@@ -54,19 +54,20 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    0.0,
-                                    0.0,
-                                    -0.0
+                                    -41.198116302490234,
+                                    -254.88003540039063,
+                                    -7.0615692138671875
                                 ],
                                 "rotationZ": 0.0,
                                 "scale": [
-                                    50.0,
-                                    50.0
+                                    653.3582153320313,
+                                    522.8296508789063
                                 ]
                             }
                         },
                         {
                             "_type": "Renderable",
+                            "atlasregion": "",
                             "model": "Quad.model",
                             "modulationColor": [
                                 1.0,
@@ -75,80 +76,11 @@
                                 1.0
                             ],
                             "shader": "TextureMap.shader",
-                            "texture": "Default.jpg"
-                        },
-                        {
-                            "_type": "BubbleComp",
-                            "max speed": 5.0
-                        },
-                        {
-                            "Drag": 1.0,
-                            "Gravity": 0.0,
-                            "InvMass": 1.0,
-                            "_type": "RigidbodyComp"
-                        },
-                        {
-                            "ColliderType": 4,
-                            "Ghost": false,
-                            "Owner": "New Object 0",
-                            "RigidBody": "",
-                            "Static": false,
-                            "_type": "Collider"
+                            "texture": "Default.jpg",
+                            "textureatlas": "null"
                         }
                     ],
-                    "name": "New Object 0",
-                    "tag": 0,
-                    "uid": 4294967295
-                }
-            ],
-            "components": null,
-            "name": "Main",
-            "tag": 0,
-            "uid": 4294967295
-        },
-        {
-            "children": [
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    0.0,
-                                    -8.0,
-                                    500.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    1.0,
-                                    1.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Camera",
-                            "drawOrder": 0,
-                            "viewRectangle": [
-                                1280.0,
-                                720.0
-                            ],
-                            "viewport": [
-                                0.0,
-                                0.0,
-                                1.0,
-                                1.0
-                            ],
-                            "viewportClear": true,
-                            "viewportColor": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ]
-                        }
-                    ],
-                    "name": "Editor Camera",
+                    "name": "background\u0000\u0000",
                     "tag": 0,
                     "uid": 4294967295
                 },
@@ -161,44 +93,107 @@
                                 "position": [
                                     0.0,
                                     0.0,
-                                    500.0
+                                    -0.0
                                 ],
                                 "rotationZ": 0.0,
                                 "scale": [
-                                    1.0,
-                                    1.0
+                                    50.0,
+                                    50.0
                                 ]
                             }
                         },
                         {
-                            "_type": "Camera",
-                            "drawOrder": 0,
-                            "viewRectangle": [
-                                1280.0,
-                                720.0
-                            ],
-                            "viewport": [
-                                0.0,
-                                0.0,
+                            "ChangeToScene": "MainMenu",
+                            "ChangesWithTime": true,
+                            "TimeToChange": 6.0,
+                            "TimeToFade": 3.0,
+                            "_type": "SceneHandler"
+                        }
+                    ],
+                    "name": "SceneHandler",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -39.48245620727539,
+                                    -312.33270263671875,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    683.3432006835938,
+                                    700.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
                                 1.0,
                                 1.0
                             ],
-                            "viewportClear": true,
-                            "viewportColor": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ]
+                            "shader": "TextureMap.shader",
+                            "texture": "GameName.png",
+                            "textureatlas": "null"
                         }
                     ],
-                    "name": "Editor Camera",
+                    "name": "BackGroundNa",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    4.666675567626953,
+                                    -272.1206970214844,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    786.7445678710938,
+                                    562.7373657226563
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Black.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "Fade"
+                        }
+                    ],
+                    "name": "Fade\u0000bject 0",
                     "tag": 0,
                     "uid": 4294967295
                 }
             ],
             "components": null,
-            "name": "Editor Space",
+            "name": "Main",
             "tag": 0,
             "uid": 4294967295
         }

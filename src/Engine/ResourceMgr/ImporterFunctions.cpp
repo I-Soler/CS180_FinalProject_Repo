@@ -4,7 +4,14 @@
 #include "json/json.hpp"
 #include <Audio/Audio.h>
 #include <fstream>
+#include "Engine/Graphics/AEXTextureAtlas.h"
+#include "Animation/SpineComps.h"
+#include "spine/TextureLoader.h"
+#include "spine/Atlas.h"
 
+#include "Animation/SpineComps.h"
+#include "spine/TextureLoader.h"
+#include "spine/Atlas.h"
 namespace AEX
 {
 	//texture importer -------------------------------------------------------------------------
@@ -105,8 +112,8 @@ namespace AEX
 				auto pix = aexResources->LoadResourceType<Shader>(pixel.c_str());
 				auto vert = aexResources->LoadResourceType<Shader>(vertex.c_str());
 
-				newShaderProgram->SetShader(pix->GetRawResource(), false);
-				newShaderProgram->SetShader(vert->GetRawResource(), true);
+				newShaderProgram->SetShader(pix->get(), false);
+				newShaderProgram->SetShader(vert->get(), true);
 
 				// set to the resource
 				newRes->SetRawResource(newShaderProgram, false);
@@ -142,13 +149,14 @@ namespace AEX
 				// by default, we're going to make a quad
 				// Create a quad by default
 				f32 h = 0.5f;
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, h), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, -h), AEX::AEVec2(0, 0), AEX::Color(1, 1, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, -h), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
 
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, h), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, -h), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, h), AEX::AEVec2(1, 1), AEX::Color(0, 0, 1)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, 1.0f), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, 0.0f), AEX::AEVec2(0, 0), AEX::Color(1, 1, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, 0.0f), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
+
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, 1.0f), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, 0.0f), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, 1.0f), AEX::AEVec2(1, 1), AEX::Color(0, 0, 1)));
 				newModel->UploadToGPU();
 
 				newRes->SetRawResource(newModel, false);
@@ -163,6 +171,7 @@ namespace AEX
 		return Model::TYPE().GetName().c_str();
 	}
 
+	//sound importer --------------------------------------------------------------------------
 	IResource* SoundImporter::ImportFromFile(const char* filename, bool softLoad)
 	{
 		TResource<Sound>* newSoundRes = new TResource<Sound>;
@@ -178,7 +187,31 @@ namespace AEX
 		return Sound::TYPE().GetName().c_str();
 	}
 
-	IResource* ArchetypeImporter::ImportFromFile(const char* filename, bool softLoad)
+
+	//atlas importer --------------------------------------------------------------------------
+	IResource* AtlasImporter::ImportFromFile(const char* filename, bool softLoad)
+	{
+		TResource<TextureAtlas>* newRes = new TResource<TextureAtlas>;
+		if (!softLoad)
+		{
+			TextureAtlas* TexAtlas = aexFactory->Create<TextureAtlas>();
+
+			if (TexAtlas)
+			{
+				TexAtlas->mInternalAtlas = new spine::Atlas(spine::String(filename), &spine::sTextureLoader, true);
+				newRes->SetRawResource(TexAtlas, false);
+			}
+		}
+
+		return newRes;
+	}
+
+	const char* AtlasImporter::GetResourceTypeName()
+	{
+		return "TextureAtlas";
+	}
+
+   	IResource* ArchetypeImporter::ImportFromFile(const char* filename, bool softLoad)
 	{
 		TResource<Archetype>* newArchRes = new TResource<Archetype>;
 		if (!softLoad)

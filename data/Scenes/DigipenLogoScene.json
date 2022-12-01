@@ -1,0 +1,164 @@
+{
+    "name": "main_scene",
+    "spaces": [
+        {
+            "children": [
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -13.333343505859375,
+                                    23.103206634521484,
+                                    500.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Camera",
+                            "drawOrder": 0,
+                            "viewRectangle": [
+                                1280.0,
+                                720.0
+                            ],
+                            "viewport": [
+                                0.0,
+                                0.0,
+                                1.0,
+                                1.0
+                            ],
+                            "viewportClear": false,
+                            "viewportColor": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ]
+                        }
+                    ],
+                    "name": "Camera",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -32.000003814697266,
+                                    -248.49562072753906,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    539.4930419921875,
+                                    522.8296508789063
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "DigipenLogo.png",
+                            "textureatlas": "null"
+                        }
+                    ],
+                    "name": "background\u00000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    -0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    50.0,
+                                    50.0
+                                ]
+                            }
+                        },
+                        {
+                            "ChangeToScene": "LogoScene",
+                            "ChangesWithTime": true,
+                            "TimeToChange": 5.0,
+                            "TimeToFade": 3.0,
+                            "_type": "SceneHandler"
+                        }
+                    ],
+                    "name": "SceneHandler",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -6.000053405761719,
+                                    -259.822998046875,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1076.0,
+                                    1221.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Black.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "Fade"
+                        }
+                    ],
+                    "name": "Fade\u0000\u0000ject 0",
+                    "tag": 0,
+                    "uid": 4294967295
+                }
+            ],
+            "components": null,
+            "name": "Main",
+            "tag": 0,
+            "uid": 4294967295
+        }
+    ]
+}

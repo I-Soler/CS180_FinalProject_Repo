@@ -1,5 +1,5 @@
 #pragma once
-#include "Event.h"
+#include "IEvent.h"
 
 namespace AEX
 {
@@ -61,7 +61,7 @@ namespace AEX
 		void trigger_event(const Event& event);
 
 
-	protected:
 		std::map<std::string, std::vector<HandlerFunction*>> AllEvents;
+	protected:
 	};
 }

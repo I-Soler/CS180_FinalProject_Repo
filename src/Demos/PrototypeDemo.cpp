@@ -37,7 +37,7 @@ void PrototypeDemo::LoadResources()
 void PrototypeDemo::Initialize()
 {
 
-#pragma region
+#pragma region// Add player, soul and camera
 
 	// Scene created with default Space
 	aexScene->SetName("main_scene");

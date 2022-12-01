@@ -107,32 +107,28 @@ namespace AEX
 
 	bool SuperStateComp::Edit()
 	{
-
-		if (ImGui::CollapsingHeader("SuperStateComp"))
+		for (u32 i = 0; i < mStates.size(); ++i)
 		{
-			for (u32 i = 0; i < mStates.size(); ++i)
+			if (ImGui::CollapsingHeader(mStates[i]->GetName()) && ImGui::Button("Delete state"))
 			{
-				if (ImGui::CollapsingHeader(mStates[i]->GetName()) && ImGui::Button("Delete state"))
-				{
-					RemoveState(mStates[i]);
-					break;
-				}
+				RemoveState(mStates[i]);
+				break;
 			}
-			if (ImGui::CollapsingHeader("Create state"))
+		}
+		if (ImGui::CollapsingHeader("Create state"))
+		{
+			//AddState
+			auto allTypes = Rtti::GetAllTypes();
+			for (auto it = allTypes.begin(); it != allTypes.end(); ++it)
 			{
-				//AddState
-				auto allTypes = Rtti::GetAllTypes();
-				for (auto it = allTypes.begin(); it != allTypes.end(); ++it)
+				if (!it->second.IsDerivedFrom(State::TYPE()))
+					continue;
+				if (ImGui::Button(it->second.GetName().c_str()))
 				{
-					if (!it->second.IsDerivedFrom(State::TYPE()))
-						continue;
-					if (ImGui::Button(it->second.GetName().c_str()))
-					{
-						State* newState = (State*)aexFactory->Create(it->second.GetName().c_str());
-						newState->SetName(it->second.GetName().c_str());
-						AddState(newState);
-						return true;
-					}
+					State* newState = (State*)aexFactory->Create(it->second.GetName().c_str());
+					newState->SetName(it->second.GetName().c_str());
+					AddState(newState);
+					return true;
 				}
 			}
 		}

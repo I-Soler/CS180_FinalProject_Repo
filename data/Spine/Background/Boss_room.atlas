@@ -1,0 +1,105 @@
+Boss_room.png
+size:9803,1480
+filter:Linear,Linear
+pma:true
+Altar_01
+bounds:9375,34,209,252
+Amount of fish_01
+bounds:4306,64,468,476
+Button_down_01
+bounds:8237,8,195,105
+Button_up_01 copia 2
+bounds:8237,115,196,110
+Coral burbuja 2
+bounds:2,2,166,394
+Fish_01
+bounds:954,450,83,40
+Fish_spine_01
+bounds:1039,450,83,40
+Fish_spine_01 copia
+bounds:954,408,83,40
+Mini amount of fish_01
+bounds:9634,1288,154,94
+Mini amount of fish_01 copia
+bounds:9634,1384,154,94
+Puerta 1
+bounds:3665,14,473,526
+Vidriera pequeña
+bounds:5345,27,212,627
+Vidriera_
+bounds:954,492,558,986
+alfombra PPULPO
+bounds:729,36,429,360
+alfombra ballena
+bounds:1329,7,1368,483
+alfombra lisa_
+bounds:8276,1130,1356,348
+alfombra pez 1
+bounds:2,398,950,1080
+arco 1
+bounds:6672,740,685,738
+arcos piedra
+bounds:4776,656,1894,822
+barandilla 2
+bounds:8510,834,826,294
+barandilla esq 1
+bounds:8982,560,633,272
+barandilla esq 2
+bounds:9105,288,630,270
+cadena
+bounds:5559,28,596,626
+cadena2
+bounds:4776,25,567,629
+columna
+bounds:2699,19,236,508
+columna cola 1
+bounds:3379,6,284,534
+columna cola 2
+bounds:7936,223,289,542
+coral burbujas
+bounds:8227,422,232,343
+coral burbujas2
+bounds:8276,785,232,343
+escalera
+bounds:7016,23,549,715
+escalera2
+bounds:7728,767,546,711
+lamp
+bounds:9608,901,193,227
+lamp_flipped
+bounds:9586,59,193,227
+lampara medusa
+bounds:2937,34,220,493
+lampara medusa2
+bounds:3159,38,218,489
+lampara tentaculo 1
+bounds:7359,764,367,714
+lampara tentaculo 1 2
+bounds:7567,49,367,713
+lampara tentaculo 2
+bounds:6587,95,427,559
+lampara tentaculo 2 2
+bounds:6157,94,428,560
+maceta pulpo
+bounds:9105,18,268,268
+maceta pulpo copia
+bounds:9338,860,268,268
+pot octopus extended 01
+bounds:8227,227,299,193
+pot octopus extended 01 copy
+bounds:7936,28,299,193
+puerta boss abierta
+bounds:1514,529,1857,949
+puerta boss cerrada
+bounds:3373,542,1401,936
+sofa boss
+bounds:170,15,557,381
+offsets:0,0,557,399
+trap door close
+bounds:8461,469,519,314
+trap door open
+bounds:8528,194,575,273
+ventana larga
+bounds:4140,57,164,483
+ventana larga 2
+bounds:1160,2,167,488

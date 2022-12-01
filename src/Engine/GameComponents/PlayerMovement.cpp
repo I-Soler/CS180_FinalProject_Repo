@@ -33,12 +33,8 @@ namespace AEX
 	}
 	bool PlayerMovement::Edit()
 	{
-		if (ImGui::CollapsingHeader("Player Movement"))
-		{
-			ImGui::Text("No variables to set");
-			return true;
-		}
-		return false;
+		ImGui::Text("No variables to set");
+		return true;
 	}
 	void PlayerMovement::Update()
 	{

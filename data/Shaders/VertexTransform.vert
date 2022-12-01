@@ -8,12 +8,14 @@ out vec2 UV;		// texture coordinates (output to pixel shader)
 out vec4 vtxCol;
 uniform mat4 mtxModel;	// model view projection
 uniform mat4 mtxViewProj;	// model view projection
+uniform mat3 mtxTexTransform;
 
 void main()
 {
 	// vertex shaders must at least write to gl_Position
 	gl_Position =  (mtxViewProj * mtxModel * vec4(vertexPos,0,1)); 
 
-	UV = vertexUV;
+	//preguntar a thomas
+	UV = vec2(mtxTexTransform * vec3(vertexUV, 1));
 	vtxCol = vertexColor;
 }

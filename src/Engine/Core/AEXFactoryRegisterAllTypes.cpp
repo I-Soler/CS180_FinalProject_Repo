@@ -1,4 +1,5 @@
 #include <AEX.h>
+#include "../Animation/SpineComps.h"
 
 namespace AEX
 {
@@ -29,11 +30,16 @@ namespace AEX
 		Register<PlayerMovement>();
 		Register<PlayerAttack>();
 		//Register<DetachSoul>(); RIP
+		Register<SceneHandler>();
+		//Register<DetachSoul>();
 		Register<Door>();
 		Register<EnemyHealth>();
 		Register<PressurePlate>();
 		Register<PressPuzzleController>();
 		Register<BreakableComp>();
+		Register<InfoScreen>();
+		Register<Fade>();
+		Register<Button>();
 		Register<BubbleComp>();
 
 		//Audio Components and Resources
@@ -47,5 +53,10 @@ namespace AEX
 		Register<PlayerVerticalUpState>();
 		Register<PlayerVerticalDownState>();
 		Register<DummyState>();
+
+		//Spine
+		Register<SkeletonAnimComp>();
+		Register<SkeletonRenderable>();
+		Register<TextureAtlas>();
 	}
 }

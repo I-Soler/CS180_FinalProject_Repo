@@ -50,20 +50,16 @@ namespace AEX
 
 	bool TransformComp::Edit()
 	{
-		if (ImGui::CollapsingHeader("Transform"))
-		{
-			ImGui::DragFloat3("translation", mLocal.mTranslation.v);
-			ImGui::DragFloat2("Scale", mLocal.mScale.v);
+		ImGui::DragFloat3("translation", mLocal.mTranslation.v);
+		ImGui::DragFloat2("Scale", mLocal.mScale.v);
 
-			// Convert to degrees before showing, then reconvert to radians if it changed
-			float orientationTr = RadToDeg(mLocal.mOrientation);
-			if (ImGui::DragFloat("Orientation", &orientationTr))
-				mLocal.mOrientation = DegToRad(orientationTr);
+		// Convert to degrees before showing, then reconvert to radians if it changed
+		float orientationTr = RadToDeg(mLocal.mOrientation);
+		if (ImGui::DragFloat("Orientation", &orientationTr))
+			mLocal.mOrientation = DegToRad(orientationTr);
 
 
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	void TransformComp::Shutdown()
@@ -79,7 +75,16 @@ namespace AEX
 		for (auto it = mChildren.begin(); it != mChildren.end(); ++it)
 			if (*it == tr)
 				return;
+		if (tr->mParentTransform)
+			tr->mParentTransform->RemoveChildTransform(tr);
 		mChildren.push_back(tr);
+		tr->mParentTransform = this;
+		// adjust world transform
+		auto prevWorld = tr->mWorld;
+		tr->SetWorldPosition(prevWorld.mTranslation);
+		tr->SetWorldScale(prevWorld.mScale);
+		tr->SetWorldOrientation(prevWorld.mOrientation);
+
 	}
 	void TransformComp::RemoveChildTransform(TransformComp* tr)
 	{
@@ -88,6 +93,7 @@ namespace AEX
 			it != mParentTransform->mChildren.end(); ++it)
 			if (*it == tr)
 			{
+				tr->mParentTransform = nullptr;
 				mParentTransform->mChildren.erase(it);
 				break;
 			}

@@ -24,7 +24,19 @@
                     "Owner": "attack",
                     "RigidBody": "null",
                     "Static": false,
-                    "_type": "Collider"
+                    "_type": "Collider" ,           
+                    "local": {
+                    "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                    ],
+                "rotationZ": 0.0,
+                "scale": [
+                    1.0,
+                    1.0
+                ]
+            }
                 }
             ],
             "name": "attack",
@@ -50,6 +62,7 @@
         },
         {
             "_type": "Renderable",
+            "atlasregion": "",
             "model": "Quad.model",
             "modulationColor": [
                 1.0,
@@ -58,7 +71,8 @@
                 1.0
             ],
             "shader": "TextureMap.shader",
-            "texture": "player.png"
+            "texture": "player.png",
+            "textureatlas": "null"
         },
         {
             "_type": "PlayerMovement"
@@ -86,7 +100,19 @@
             "Owner": "Player",
             "RigidBody": "",
             "Static": false,
-            "_type": "Collider"
+            "_type": "Collider",            
+            "local": {
+                "position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotationZ": 0.0,
+                "scale": [
+                    1.0,
+                    1.0
+                ]
+            }
         },
         {
             "Drag": 1.0,

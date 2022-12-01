@@ -71,36 +71,34 @@ namespace AEX
 	}
 	bool AudioSourceComp::Edit()
 	{
-		if (ImGui::CollapsingHeader("Audio Source"))
+		// display sound name
+		std::string str;
+		mSound == nullptr ? str = "No sound" : str = "Sound: " + std::string(mSound->GetName());
+		ImGui::Text(str.c_str());
+
+		// set sound
+		TResource<Sound>* tSound = nullptr;
+		if (ImGui::CollapsingHeader("Set sound"))
 		{
-			// display sound name
-			std::string str;
-			mSound == nullptr ? str = "No sound" : str = "Sound: " + std::string(mSound->GetName());
-			ImGui::Text(str.c_str());
-
-			// set sound
-			TResource<Sound>* tSound = nullptr;
-			if (ImGui::CollapsingHeader("Set sound"))
+			if (aexEditor->getResource<Sound>(&tSound))
 			{
-				if (aexEditor->getResource<Sound>(&tSound))
-				{
-					SetSound(tSound);
-					return true;
-				}
+				SetSound(tSound);
+				return true;
 			}
-
-			if (ImGui::Button("Play"))
-				Play();
-
-			// set other variables
-			if (ImGui::Checkbox("Pause", &mIsPaused))
-				SetPause(mIsPaused);
-			if (ImGui::Checkbox("Loop", &mIsLooping))
-				SetLoop(mIsLooping);
-			if (ImGui::SliderFloat("Volumen", &mVolume, 0.0f, 1.0f))
-				SetVolume(mVolume);
-			ImGui::Checkbox("Allow Multiple", &mAllowMultiple);
 		}
+
+		if (ImGui::Button("Play"))
+			Play();
+
+		// set other variables
+		if (ImGui::Checkbox("Pause", &mIsPaused))
+			SetPause(mIsPaused);
+		if (ImGui::Checkbox("Loop", &mIsLooping))
+			SetLoop(mIsLooping);
+		if (ImGui::SliderFloat("Volumen", &mVolume, 0.0f, 1.0f))
+			SetVolume(mVolume);
+		ImGui::Checkbox("Allow Multiple", &mAllowMultiple);
+		
 		return true;
 	}
 	float AudioSourceComp::GetVolume()

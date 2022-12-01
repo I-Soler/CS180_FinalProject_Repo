@@ -66,60 +66,56 @@ namespace AEX     // For the Collider class
 
 		Update();
 
-		if (ImGui::CollapsingHeader("Collider"))
+		// divide by 8 so the editor shows the correct RadioButton
+		static int e = mColliderType / 8;	
+		ImGui::Text("Shape");
+		ImGui::RadioButton("Circle", &e, 0); ImGui::SameLine();
+		ImGui::RadioButton("AABB", &e, 1);
+
+		float scaleTr[2] = { mLocal.mScale.x,mLocal.mScale.y };
+		float translationTr[2] = { mLocal.mTranslation.x,mLocal.mTranslation.y };
+		//float orientationTr = mLocal.mOrientation;
+
+		ImGui::InputFloat2("Offset", translationTr);
+		ImGui::InputFloat2("Size", scaleTr);		
+		//ImGui::InputFloat("Orientation", &orientationTr);
+
+		SetScale(AEVec2(scaleTr[0], scaleTr[1]));
+		SetPosition(AEVec2(translationTr[0], translationTr[1]));
+		//SetOrientation(orientationTr);
+
+		switch (e)
 		{
-			// divide by 8 so the editor shows the correct RadioButton
-			static int e = mColliderType / 8;	
-			ImGui::Text("Shape");
-			ImGui::RadioButton("Circle", &e, 0); ImGui::SameLine();
-			ImGui::RadioButton("AABB", &e, 1);
-
-			float scaleTr[2] = { mLocal.mScale.x,mLocal.mScale.y };
-			float translationTr[2] = { mLocal.mTranslation.x,mLocal.mTranslation.y };
-			//float orientationTr = mLocal.mOrientation;
-
-			ImGui::InputFloat2("Offset", translationTr);
-			ImGui::InputFloat2("Size", scaleTr);		
-			//ImGui::InputFloat("Orientation", &orientationTr);
-
-			SetScale(AEVec2(scaleTr[0], scaleTr[1]));
-			SetPosition(AEVec2(translationTr[0], translationTr[1]));
-			//SetOrientation(orientationTr);
-
-			switch (e)
-			{
-			case 0:
-				mColliderType = CT_CIRCLE;
-				break;
-			case 1:
-				mColliderType = CT_OBB;
-				break;
-			}
-
-			bool BeforeCheckStatic = Static;
-
-			ImGui::Checkbox("Ghost", &Ghost);
-			ImGui::Checkbox("Static", &Static);
-
-			// Object can't be Non Ghost and Non Static without RigidBody
-			if (!Ghost && !Static && mRigidBody == nullptr)
-				Ghost = true;
-
-
-			// A collider can change if it's static on update
-			// If this happens, it needs to be removed from it's old Colision list
-			// and get added to it's corresponding one
-			if (Static != BeforeCheckStatic)
-			{
-				Static = BeforeCheckStatic;
-				aexCollision->RemoveCol(this);
-				Static = !BeforeCheckStatic;
-				aexCollision->AddCol(this);
-			}
-			return true;
+		case 0:
+			mColliderType = CT_CIRCLE;
+			break;
+		case 1:
+			mColliderType = CT_OBB;
+			break;
 		}
 
-		return false;
+		bool BeforeCheckStatic = Static;
+
+		ImGui::Checkbox("Ghost", &Ghost);
+		ImGui::Checkbox("Static", &Static);
+
+		// Object can't be Non Ghost and Non Static without RigidBody
+		if (!Ghost && !Static && mRigidBody == nullptr)
+			Ghost = true;
+
+
+		// A collider can change if it's static on update
+		// If this happens, it needs to be removed from it's old Colision list
+		// and get added to it's corresponding one
+		if (Static != BeforeCheckStatic)
+		{
+			Static = BeforeCheckStatic;
+			aexCollision->RemoveCol(this);
+			Static = !BeforeCheckStatic;
+			aexCollision->AddCol(this);
+		}
+
+		return true;
 	}
 	void Collider::StreamRead(const nlohmann::json& j)
 	{
@@ -138,6 +134,8 @@ namespace AEX     // For the Collider class
 		mColliderType = j["ColliderType"];
 		Static = j["Static"];
 		Ghost = j["Ghost"];
+
+		TransformComp::StreamRead(j);
 	}
 	void Collider::StreamWrite(nlohmann::json& j) const
 	{
@@ -147,6 +145,8 @@ namespace AEX     // For the Collider class
 		j["ColliderType"] = mColliderType;
 		j["Static"] = Static;
 		j["Ghost"] = Ghost;
+
+		TransformComp::StreamWrite(j);
 	}
 
 	void Collider::DrawColliders()
@@ -216,8 +216,6 @@ namespace AEX     // For the Collision System class
 		mFrameContacts = &mContacts[0];
 		mPrevContacts = &mContacts[1];
 
-		// Clean contacts from previous scene
-		mPrevContacts->clear();	
 		return true;
 	}
 
@@ -427,6 +425,11 @@ namespace AEX     // For the Collision System class
 		/*
 			loop to find the new contact in the previous frame contact
 		*/
+	}
+
+	void CollisionSystem::clearContacts()
+	{
+		mPrevContacts->clear();
 	}
 
 	bool PointvsAABB(Collider* c1, Collider* c2, ContactInfo* output)

@@ -46,10 +46,11 @@ namespace AEX
 
 			mRawResource = (RES_TYPE*)rawRes;
 		}
-		RES_TYPE* GetRawResource() override
+		IBase*  GetRawResource() override
 		{
-			return dynamic_cast<RES_TYPE*>(mRawResource);
+			return dynamic_cast<IBase*>(mRawResource);
 		}
+	
 	public:
 		~TResource() override
 		{
@@ -110,6 +111,12 @@ namespace AEX
 	class SoundImporter : public IResourceImporter
 	{
 		AEX_RTTI_DECL(SoundImporter, IResourceImporter);
+		IResource* ImportFromFile(const char* filename, bool softLoad = false) override;
+		const char* GetResourceTypeName() override;
+	};
+	class AtlasImporter : public IResourceImporter
+	{
+		AEX_RTTI_DECL(AtlasImporter, IResourceImporter);
 		IResource* ImportFromFile(const char* filename, bool softLoad = false) override;
 		const char* GetResourceTypeName() override;
 	};

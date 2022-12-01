@@ -49,9 +49,6 @@ namespace AEX
 	}
 	bool BreakableComp::Edit()
 	{
-		if (!ImGui::CollapsingHeader("Breakable"))
-			return false;
-
 		// set texture that will have after breaking object
 		if (ImGui::CollapsingHeader("Set broken texture")
 			&& aexEditor->getResource<Texture>(&mBrokenTex))

@@ -63,6 +63,7 @@ namespace AEX {
 
 	class Model;
 	class Texture;
+	class TextureAtlas;
 	class ShaderProgram;
 	class Renderable : public IComp {
 		AEX_RTTI_DECL(Renderable, IComp);
@@ -72,6 +73,9 @@ namespace AEX {
 		TResource<Texture>* mpTexture = nullptr;			// (optional): texture image to apply to the basic shader. (if null, uses only modulation color). 
 		Color mModulationColor					// modulation color. 
 			= Color(1, 1, 1, 1);
+		bool mbIsIsometric = false;
+		TResource<TextureAtlas>* mpTexAtlas = nullptr;
+		std::string mAtlasRegionName; 
 
 		// IComp API
 		void OnCreate()override;

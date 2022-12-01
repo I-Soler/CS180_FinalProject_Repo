@@ -10,6 +10,7 @@
 #include <Platform\AEXWindow.h>		// Window
 #include <Debug\AEXDebug.h>			// Debug
 #include <Platform\AEXFilePath.h>		// File path
+#include <Scene/Scene.h>
 #include "AEXGraphics.h"				// ALL GRAPHICS
 #include "ResourceMgr/ResourceMgr.h"
 
@@ -53,7 +54,7 @@ namespace AEX
 
 				// TODO(change this back once merging with the new resource manger
 				//gLineShader = aexResources->GetResource<ShaderProgram>("Line.shader")->GetRawResource();
-				gLineShader = aexResources->LoadResourceType<ShaderProgram>("data/Shaders/Line.shader")->GetRawResource();
+				gLineShader = aexResources->LoadResourceType<ShaderProgram>("data/Shaders/Line.shader")->get();
 
 			}
 		}
@@ -300,8 +301,11 @@ namespace AEX
 			// SET CURRENT CAMERA
 			mCurrentCamera = cam;
 
+			// Get the space camera
+			auto & renList = mRenderables[cam->GetOwnerSpace()];
+
 			// DRAW RENDERABLES
-			for (auto ren : mRenderables) {
+			for (auto ren : renList) {
 				// ignore disabled renderables
 				if (ren->Enabled() == false)continue;
 
@@ -538,16 +542,18 @@ namespace AEX
 	}
 	void Graphics::AddRenderable(Renderable* ren) {
 
+		auto& renList = mRenderables[ren->GetOwnerSpace()];
 		// remove duplicates: Warning this is slow and should be removed when in release
-		mRenderables.remove(ren); 
+		renList.remove(ren); 
 
 		// add to renderable list
-		mRenderables.push_back(ren);
+		renList.push_back(ren);
 	}
 	void Graphics::RemoveRenderable(Renderable* ren) {
 
 		// simply remove
-		mRenderables.remove(ren);
+		auto& renList = mRenderables[ren->GetOwnerSpace()];
+		renList.remove(ren);
 	}
 	void Graphics::ClearRenderables() {
 		mRenderables.clear();

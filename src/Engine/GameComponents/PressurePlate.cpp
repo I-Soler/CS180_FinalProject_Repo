@@ -3,6 +3,7 @@
 #include "Engine/Graphics/Components/AEXGfxComps.h"
 #include <iostream>
 #include "Collisions/AEXCollisionSystem.h"
+#include <Debug/AEXDebug.h>
 
 // REMOVE THIS AREBEK
 #include "Platform/AEXInput.h"
@@ -26,7 +27,14 @@ namespace AEX
 
 		ResetPressurePlate();
 
-		pressPuzzle = aexScene->FindObjectByNameInAnySpace("presspuzzle")->GetComp<PressPuzzleController>();
+		// Make pop up for user that he needs to make a presspuzzle
+		auto obj = aexScene->FindObjectByNameInAnySpace("presspuzzle");
+		if (obj == nullptr) {
+			//DebugAssert(false, "Pressure Plate needs a an object to link!\n");
+			return;
+		}
+		pressPuzzle = obj->GetComp<PressPuzzleController>();
+
 		pressPuzzle->AddPressurePlate(this);
 	}
 	void PressurePlate::Update()
@@ -38,12 +46,34 @@ namespace AEX
 	}
 	bool PressurePlate::Edit()
 	{
-		if (ImGui::CollapsingHeader("PressurePlate"))
+		//ImGui::InputText("Put name of affected object", receiver_, 30);
+		ImGui::InputText("Put PressurePlateID", id_, 2);
+		if (nullptr == pressPuzzle)
 		{
-			//ImGui::InputText("Put name of affected object", receiver_, 30);
-			ImGui::InputText("Put PressurePlateID", id_, 2);
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
+			ImGui::Text("Please set a pressure puzzle!");
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (ImGui::AcceptDragDropPayload("DND_OBJ_PTR"))
+				{
+					// set this object to parent
+					GameObject* obj = *(GameObject**)ImGui::GetDragDropPayload()->Data;
+					if (auto comp = obj->GetComp<PressPuzzleController>())
+					{
+						pressPuzzle = comp;
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
+			ImGui::PopStyleColor();
 		}
-		return false;
+		else
+		{
+			ImGui::Text("PuzzleController %s", pressPuzzle->GetOwner()->GetName());
+
+		}
+
+		return true;
 	}
 	void PressurePlate::StreamRead(const nlohmann::json& j)
 	{

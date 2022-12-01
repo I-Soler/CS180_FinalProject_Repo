@@ -20,6 +20,7 @@ namespace AEX
 		mImporters[".model"] = new ModelImporter;
 		mImporters[".mp3"] = new SoundImporter;
 		mImporters[".arch"] = new ArchetypeImporter;
+		mImporters[".atlas"] = new AtlasImporter;
 
 		// return success
 		return true;
@@ -58,6 +59,14 @@ namespace AEX
 		else if (fp.mExtension == ".shader")
 		{
 			a = "ShaderProgram";
+		}
+		else if (fp.mExtension == ".mp3")
+		{
+			a = "Sound";
+		}
+		else if (fp.mExtension == ".atlas")
+		{
+			a = "TextureAtlas";
 		}
 
 		auto it = mAllResources[a].find(name);
@@ -213,7 +222,7 @@ namespace AEX
 			// register it
 			resMap[resName] = resource;
 		}
-
+		
 		// set the resource metada
 		resource->SetName(resName.c_str());
 		resource->mFilepath = fp;
@@ -249,108 +258,6 @@ namespace AEX
 			dragdropfiles = files;
 		}
 		return;
-	}
-
-	//ImGui window to show the files in data
-	void ResourceManager::ShowFiles(const char* folderPath)
-	{
-		ImGui::Begin("Resources");
-
-		// Loads asset from the user's computer
-		if (ImGui::Button("Add asset"))
-		{
-			OpenSaveFileDlg dlg;
-			if (dlg.Open("Select File"))
-			{
-				std::string filename = dlg.GetFiles()[0];
-				aexResources->LoadResource(filename.c_str(), false);
-			}
-		}
-
-		ImVec2 end = ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x, ImGui::GetWindowPos().y + ImGui::GetWindowSize().y);
-
-		wPos = AEVec2(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y);
-		wScale = AEVec2(ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
-
-		mouse = ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(), end);
-		if (!ImGui::IsAnyItemHovered())
-		{
-			drag = false;
-		}
-
-		LoadFiles(folderPath);
-
-		ImGui::End();
-	}
-
-	//loads the files and if a new one is dropped also loads it
-	void ResourceManager::LoadFiles(const char* folderPath)
-	{
-		const std::filesystem::path data{ folderPath };
-		bool opened = false;
-
-		for (auto const& dir_entry : std::filesystem::directory_iterator{ data })
-		{
-			if (dir_entry.is_directory())
-			{
-				std::string po = dir_entry.path().u8string();
-				if (po.c_str() == "Scenes")
-				{
-					continue;
-				}
-				opened = ImGui::TreeNodeEx(po.c_str());
-				std::string bar = "\\";
-
-				if (ImGui::IsItemHovered() && drag)
-				{
-					for (auto it : dragdropfiles)
-					{
-						FilePath fp(it.c_str());
-						std::fstream file;
-
-						file.open(it, std::ios_base::in | std::ios::binary);
-						auto ss = std::ostringstream{};
-
-						if (file.is_open())
-						{
-							ss << file.rdbuf();
-							file.close();
-						}
-
-						file.open(po.c_str() + bar + fp.mFilename + fp.mExtension, std::ios_base::out | std::ios::binary);
-
-						file.write(ss.str().c_str(), ss.str().size());
-
-						file.close();
-
-
-						// load current file
-						LoadResource((po.c_str() + bar + fp.mFilename + fp.mExtension).c_str(), true);
-						drag = false;
-					}
-				}
-
-				if (opened)
-				{
-					LoadFiles(po.c_str());
-					ImGui::TreePop();
-				}
-			}
-			else
-			{
-				std::string pe = dir_entry.path().filename().u8string();
-
-				if (dir_entry.path().extension() == ".json")
-				{
-					continue;
-				}
-
-				opened = ImGui::TreeNodeEx(pe.c_str(), ImGuiTreeNodeFlags_Leaf);
-
-				if (opened)
-					ImGui::TreePop();
-			}
-		}
 	}
 
 }

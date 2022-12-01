@@ -275,10 +275,10 @@ namespace AEX
 	}
 	void Scene::LoadFile(const char* fileName, bool initSpaces)
 	{
-		DestroyAllSpaces();
-
 		nlohmann::json j;
 		ReadJsonFromFile(j, fileName);
+
+		DestroyAllSpaces();
 		StreamRead(j);
 
 		if (initSpaces)
