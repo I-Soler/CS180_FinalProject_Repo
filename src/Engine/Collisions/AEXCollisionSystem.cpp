@@ -67,7 +67,7 @@ namespace AEX     // For the Collider class
 		Update();
 
 		// divide by 8 so the editor shows the correct RadioButton
-		static int e = mColliderType / 8;	
+		int e = mColliderType / 8;	
 		ImGui::Text("Shape");
 		ImGui::RadioButton("Circle", &e, 0); ImGui::SameLine();
 		ImGui::RadioButton("AABB", &e, 1);
