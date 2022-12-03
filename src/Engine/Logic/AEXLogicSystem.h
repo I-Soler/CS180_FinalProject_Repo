@@ -2,7 +2,6 @@
 #include <Core/AEXCore.h>
 #include <Composition/AEXComponent.h>
 #include <vector>
-#include <thread>
 
 namespace AEX {
 
@@ -15,33 +14,19 @@ namespace AEX {
 		void RemoveFromSystem() override;
 	};
 
-	struct logic_thread_info
-	{
-		LogicComp* thisPtr = nullptr;
-		bool* timeToJoinAll = nullptr;
-		bool timeToJoinThis = false;
-	};
 	class LogicSystem : public IBase
 	{
 		AEX_RTTI_DECL(LogicSystem, IBase);
 		AEX_SINGLETON(LogicSystem) {}
 
-	public: 
+	public:
 		bool Initialize() { return true; }
 		void AddComp(LogicComp* comp);
 		void RemoveComp(LogicComp* comp);
 		void Update();
-		void Shutdown();	// join all threads
-
-		// a thread assigned to each LogicComp
-		std::map<LogicComp*, std::thread> logic_thread_ids;
-		std::map<LogicComp*, logic_thread_info> logic_thread_infos;
-		bool timeToJoinSystem = false;
-
+	private:
 		std::vector<LogicComp*> mComponents;
 	};
-
-	void LogicUpdate(logic_thread_info*);
 }
 
 #define aexLogic AEX::Singletons::Get<AEX::LogicSystem>()

@@ -1,4 +1,5 @@
 #pragma once
+#include <thread>
 #include <Core/AEXCore.h>
 #include <Logic/AEXLogicSystem.h>				// LogicComp
 #include <Physics/RigidbodyComponent.h>		// RigidbodyComp
@@ -7,6 +8,18 @@
 
 namespace AEX
 {
+	class BubbleComp;
+	struct thread_info
+	{
+		// bubble info
+		BubbleComp* thisPtr = nullptr;
+		AEVec2 pos;
+		float radius;
+
+		// shot info
+		AEVec2 origin, dir;
+	};
+
 	class BubbleComp : public LogicComp
 	{
 		AEX_RTTI_DECL(BubbleComp, LogicComp);
@@ -24,8 +37,19 @@ namespace AEX
 		void StreamRead(const nlohmann::json& j);
 		void StreamWrite(nlohmann::json& j) const;
 
-	private:
-		float mMaxSpeed;
+		float mSpeed;
 		RigidbodyComp* mRgbd;
+		TransformComp* mTr;
+
+		// thread variables
+		std::vector<std::thread> thread_ids;
+		//std::vector<thread_info> thread_infos;
+		bool dodgeMoving = false;
+		float dodgeAngle = 0.0f;
+
+		static bool shotDone;
 	};
+
+	void Dodge(thread_info);
+
 }

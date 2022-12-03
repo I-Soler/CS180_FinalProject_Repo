@@ -1,6 +1,6 @@
 #ifndef RAYCAST_H_
 #define RAYCAST_H_
-
+#include <Collisions/LineSegment2D.h>
 
 
 namespace AEX
