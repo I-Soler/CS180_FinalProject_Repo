@@ -35,6 +35,7 @@ namespace AEX
 
 		State* AddState(const char* stateName);
 		State* AddState(State*);
+		State* AddState(const char* stateName, State*);
 		void RemoveState(State* state);
 		State* GetState(const char* stateName);
 		State* GetState(State* state);

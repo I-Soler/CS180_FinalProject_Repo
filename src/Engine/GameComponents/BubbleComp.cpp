@@ -46,12 +46,15 @@ namespace AEX
 		// if bubble goes too far from center, make it go to center
 
 		// clamp max speed
+		//std::cout << "Updating..." << std::endl;
 
 		// add random force in both x and y
-		mRgbd->AddForce( {((float)(rand() % 100) - 49.5f )/ 1.0f, ((float)(rand() % 100) - 49.5f) / 1.0f } );
+		if (mRgbd != nullptr)
+			mRgbd->AddForce( {((float)(rand() % 10) - 4.5f )/ 100.0f, ((float)(rand() % 10) - 4.5f) / 100.0f } );
 	}
 	void BubbleComp::Shutdown()
 	{
+		RemoveFromSystem();
 		// register breakable collider to CollisionStayEvent for breaking it
 		//mOwner->mEvents.unsubscribe(MemberFunctionHandler<BreakableComp, CollisionStayEvent>(this, &BreakableComp::Break), "struct AEX::CollisionStayEvent");
 	}

@@ -17,7 +17,9 @@ namespace AEX {
 
 	struct logic_thread_info
 	{
-		unsigned idx;
+		LogicComp* thisPtr = nullptr;
+		bool* timeToJoinAll = nullptr;
+		bool timeToJoinThis = false;
 	};
 	class LogicSystem : public IBase
 	{
@@ -29,10 +31,12 @@ namespace AEX {
 		void AddComp(LogicComp* comp);
 		void RemoveComp(LogicComp* comp);
 		void Update();
+		void Shutdown();	// join all threads
 
-		std::vector<std::thread> logic_thread_ids;
-		std::vector<logic_thread_info*> logic_thread_infos;
-		static unsigned thread_idx;
+		// a thread assigned to each LogicComp
+		std::map<LogicComp*, std::thread> logic_thread_ids;
+		std::map<LogicComp*, logic_thread_info> logic_thread_infos;
+		bool timeToJoinSystem = false;
 
 		std::vector<LogicComp*> mComponents;
 	};

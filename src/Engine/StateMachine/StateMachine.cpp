@@ -192,6 +192,12 @@ namespace AEX
 		return newState;
 	}
 
+	State* SuperStateComp::AddState(const char* stateName, State* state)
+	{
+		state->SetName(stateName);
+		return AddState(state);
+	}
+
 	void SuperStateComp::RemoveState(State* state)
 	{
 		State* removedState = GetState(state);		// State destructor

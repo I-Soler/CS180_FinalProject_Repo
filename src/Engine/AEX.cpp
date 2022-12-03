@@ -135,7 +135,9 @@ namespace AEX{
 			//}
 		}
 
+
 		gameState->Shutdown();
+		aexLogic->Shutdown();	// join all logic threads
 
 		// unload resources
 		gameState->FreeResources();
