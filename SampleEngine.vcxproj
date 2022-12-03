@@ -273,6 +273,7 @@
     <ClCompile Include="src\Engine\Editor\AEXEditor.cpp" />
     <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp" />
     <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\Bullet.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Button.cpp" />
     <ClCompile Include="src\Engine\GameComponents\InfoScreen.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Key.cpp" />
@@ -282,6 +283,7 @@
     <ClCompile Include="src\Engine\GameComponents\PlayerAttack.cpp" />
     <ClCompile Include="src\Engine\GameComponents\PlayerMovement.cpp" />
     <ClCompile Include="src\Engine\GameComponents\PressPuzzleController.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\Turret.cpp" />
     <ClCompile Include="src\Engine\Graphics\AEXColor.cpp" />
     <ClCompile Include="src\Engine\Graphics\AEXGfxSystem.cpp" />
     <ClCompile Include="src\Engine\Graphics\AEXGui.cpp" />
@@ -423,6 +425,7 @@
     <ClInclude Include="src\Engine\Editor\AEXEditor.h" />
     <ClInclude Include="src\Engine\GameComponents\BreakableComp.h" />
     <ClInclude Include="src\Engine\GameComponents\BubbleComp.h" />
+    <ClInclude Include="src\Engine\GameComponents\Bullet.h" />
     <ClInclude Include="src\Engine\GameComponents\Button.h" />
     <ClInclude Include="src\Engine\GameComponents\InfoScreen.h" />
     <ClInclude Include="src\Engine\GameComponents\Key.h" />
@@ -432,6 +435,7 @@
     <ClInclude Include="src\Engine\GameComponents\PlayerAttack.h" />
     <ClInclude Include="src\Engine\GameComponents\PlayerMovement.h" />
     <ClInclude Include="src\Engine\GameComponents\PressPuzzleController.h" />
+    <ClInclude Include="src\Engine\GameComponents\Turret.h" />
     <ClInclude Include="src\Engine\Graphics\AEXColor.h" />
     <ClInclude Include="src\Engine\Graphics\AEXGfxSystem.h" />
     <ClInclude Include="src\Engine\Graphics\AEXGL.h" />

@@ -32,6 +32,9 @@
 #include "GameComponents/InfoScreen.h"
 #include "GameComponents/Button.h"
 #include "GameComponents/BubbleComp.h"
+#include "GameComponents/Bullet.h"
+#include "GameComponents/Turret.h"
+
 
 
 #include "Engine/Graphics/AEXTextureAtlas.h"

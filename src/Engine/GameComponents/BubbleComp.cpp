@@ -107,6 +107,7 @@ namespace AEX
 		RemoveFromSystem();
 		// register breakable collider to CollisionStayEvent for breaking it
 		//mOwner->mEvents.unsubscribe(MemberFunctionHandler<BreakableComp, CollisionStayEvent>(this, &BreakableComp::Break), "struct AEX::CollisionStayEvent");
+		RemoveFromSystem();
 	}
 	bool BubbleComp::Edit()
 	{

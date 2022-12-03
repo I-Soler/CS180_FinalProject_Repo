@@ -23,7 +23,9 @@ namespace AEX {
 
 	void LogicSystem::Update()
 	{
-		for (auto comp : mComponents) {
+		// If a new component is created while on this loop, dont update it till next frame
+		std::vector<AEX::LogicComp*> tempCompList= mComponents;	
+		for (auto comp : tempCompList) {
 			if (comp->GetOwner()->Enabled())
 				comp->Update();
 		}
