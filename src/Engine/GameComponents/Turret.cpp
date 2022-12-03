@@ -18,7 +18,7 @@ namespace AEX
 	}
 	void TurretComp::Update()
 	{
-		if (timer.GetTimeSinceStart() >= 4)	// make a bullet each 5 seconds
+		if (timer.GetTimeSinceStart() >= 5)	// make a bullet each 5 seconds
 		{
 			Space* mainSp = aexScene->GetMainSpace();				// Get space where object will be added
 
@@ -27,7 +27,7 @@ namespace AEX
 			// Every object must have a Transform and a Renderable by default
 			TransformComp* tr = aexFactory->Create<TransformComp>();
 
-			tr->mLocal.mScale = AEVec2(4, 4);
+			tr->mLocal.mScale = AEVec2(10, 10);
 			tr->mLocal.mTranslation = ParentTr->mWorld.mTranslation;
 			tr->mLocal.mOrientation = ParentTr->mWorld.mOrientation;
 			Obj->AddComp(tr);	Obj->NewComp<BulletComp>();

@@ -20,5 +20,6 @@ namespace AEX
 
 		TransformComp* tr;
 		AEXTimer timer;
+		AEVec2 dir;
 	};
 }
