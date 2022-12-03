@@ -40,7 +40,10 @@ namespace AEX
 		Register<InfoScreen>();
 		Register<Fade>();
 		Register<Button>();
+
 		Register<BubbleComp>();
+		Register<TurretComp>();
+		Register<BulletComp>();
 
 		//Audio Components and Resources
 		Register<Sound>();

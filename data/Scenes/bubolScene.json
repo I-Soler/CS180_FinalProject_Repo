@@ -311,7 +311,7 @@
                             "ColliderType": 4,
                             "Ghost": false,
                             "Owner": "bubble",
-                            "RigidBody": "null",
+                            "RigidBody": "",
                             "Static": false,
                             "_type": "Collider",
                             "local": {
@@ -339,6 +339,46 @@
                         }
                     ],
                     "name": "bubble\u0000ect 1",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    174.66680908203125,
+                                    204.26028442382813,
+                                    0.0
+                                ],
+                                "rotationZ": 2.1754775047302246,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp"
+                        }
+                    ],
+                    "name": "turret\u0000ect 0",
                     "tag": 0,
                     "uid": 4294967295
                 }

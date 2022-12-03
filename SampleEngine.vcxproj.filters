@@ -443,7 +443,10 @@
     <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp">
       <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Turret.cpp">
+    <ClCompile Include="src\Engine\GameComponents\Turret.cpp">
+      <Filter>Engine\Logic\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\Bullet.cpp">
       <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
@@ -977,7 +980,10 @@
     <ClInclude Include="src\Engine\GameComponents\BubbleComp.h">
       <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Turret.h">
+    <ClInclude Include="src\Engine\GameComponents\Turret.h">
+      <Filter>Engine\Logic\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\Bullet.h">
       <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
