@@ -3,6 +3,8 @@
 #include <Core/AEXContainers.h>
 namespace AEX {
 
+	unsigned LogicSystem::thread_idx = 0;
+
 	void LogicSystem::AddComp(LogicComp* comp)
 	{
 		// avoid duplicates
@@ -11,9 +13,8 @@ namespace AEX {
 
 		// create new thread for this logic update
 		logic_thread_infos.push_back(new logic_thread_info);
-		logic_thread_infos[logic_thread_infos.size() - 1]->idx = thread_idx++;
-		logic_thread_info* ptr = logic_thread_infos[logic_thread_infos.size() - 1];
-		logic_thread_ids.push_back(std::thread(LogicUpdate, ptr));
+		logic_thread_infos.back()->idx = thread_idx++;
+		logic_thread_ids.push_back(std::thread(LogicUpdate, logic_thread_infos.back()));
 	}
 
 	void LogicSystem::RemoveComp(LogicComp* comp)

@@ -15,6 +15,10 @@ namespace AEX {
 		void RemoveFromSystem() override;
 	};
 
+	struct logic_thread_info
+	{
+		unsigned idx;
+	};
 	class LogicSystem : public IBase
 	{
 		AEX_RTTI_DECL(LogicSystem, IBase);
@@ -32,12 +36,7 @@ namespace AEX {
 
 		std::vector<LogicComp*> mComponents;
 	};
-	unsigned LogicSystem::thread_idx = 0;
 
-	struct logic_thread_info
-	{
-		unsigned idx;
-	};
 	void LogicUpdate(logic_thread_info*);
 }
 

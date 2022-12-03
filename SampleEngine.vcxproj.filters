@@ -440,6 +440,9 @@
     <ClCompile Include="src\Engine\GameComponents\Button.cpp">
       <Filter>Engine\GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp">
+      <Filter>Engine\GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Core\AEXBase.h">
@@ -966,6 +969,9 @@
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\InfoScreen.h" />
     <ClInclude Include="src\Engine\GameComponents\Button.h">
+      <Filter>Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameComponents\BubbleComp.h">
       <Filter>Engine\GameComponents</Filter>
     </ClInclude>
   </ItemGroup>

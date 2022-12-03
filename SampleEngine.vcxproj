@@ -272,6 +272,7 @@
     <ClCompile Include="src\Engine\Debug\AEXDebug.cpp" />
     <ClCompile Include="src\Engine\Editor\AEXEditor.cpp" />
     <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp" />
+    <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Button.cpp" />
     <ClCompile Include="src\Engine\GameComponents\InfoScreen.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Key.cpp" />
@@ -421,6 +422,7 @@
     <ClInclude Include="src\Engine\Debug\AEXDebug.h" />
     <ClInclude Include="src\Engine\Editor\AEXEditor.h" />
     <ClInclude Include="src\Engine\GameComponents\BreakableComp.h" />
+    <ClInclude Include="src\Engine\GameComponents\BubbleComp.h" />
     <ClInclude Include="src\Engine\GameComponents\Button.h" />
     <ClInclude Include="src\Engine\GameComponents\InfoScreen.h" />
     <ClInclude Include="src\Engine\GameComponents\Key.h" />
