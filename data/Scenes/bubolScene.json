@@ -381,6 +381,126 @@
                     "name": "turret\u0000ect 0",
                     "tag": 0,
                     "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -296.6665344238281,
+                                    217.15379333496094,
+                                    0.0
+                                ],
+                                "rotationZ": -2.3807449340820313,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp"
+                        }
+                    ],
+                    "name": "turret 2\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    181.33360290527344,
+                                    -200.18838500976563,
+                                    0.0
+                                ],
+                                "rotationZ": 0.966836154460907,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp"
+                        }
+                    ],
+                    "name": "turret 3\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -305.9998474121094,
+                                    -219.18927001953125,
+                                    0.0
+                                ],
+                                "rotationZ": -0.7825163006782532,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp"
+                        }
+                    ],
+                    "name": "turret 4\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
                 }
             ],
             "components": null,
