@@ -12,7 +12,7 @@ namespace AEX
 
 	void BubbleComp::OnCreate()
 	{
-		mSpeed = 5.0f;	// still to be tested
+		mSpeed = 50.0f;	// still to be tested
 		mRgbd = nullptr;
 	}
 	void BubbleComp::Initialize()
@@ -72,6 +72,8 @@ namespace AEX
 			t_info.thisPtr = this;
 			t_info.pos = { mTr->GetPosition().x, mTr->GetPosition().y };
 			t_info.radius = mTr->GetScale().x;
+			t_info.origin = TurretComp::lastBulletPos;
+			t_info.dir = TurretComp::lastBulletDir;
 			//thread_infos.push_back(t_info);
 			thread_ids.push_back(std::thread(Dodge, t_info));
 		}
@@ -104,7 +106,7 @@ namespace AEX
 				it->join();
 			thread_ids.clear();
 		}
-		RemoveFromSystem();
+
 		// register breakable collider to CollisionStayEvent for breaking it
 		//mOwner->mEvents.unsubscribe(MemberFunctionHandler<BreakableComp, CollisionStayEvent>(this, &BreakableComp::Break), "struct AEX::CollisionStayEvent");
 		RemoveFromSystem();
@@ -131,8 +133,8 @@ namespace AEX
 		// try to dodge in every directions
 		for (angle = 0.0f; angle < TWO_PI; angle += 0.1f)
 		{
-			AEVec2 newPos(ti.origin.x + 10.0f * Cos(angle), ti.origin.y + 10.0f * Sin(angle));
-			if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
+			AEVec2 newPos(ti.origin.x + 30.0f * Cos(angle), ti.origin.y + 30.0f * Sin(angle));
+			if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) != -1)
 			{
 				// dodge
 				ti.thisPtr->dodgeMoving = true;

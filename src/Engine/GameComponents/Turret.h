@@ -19,8 +19,9 @@ namespace AEX
 		bool Edit() override;
 
 		AEXTimer timer;
-
 		TransformComp* ParentTr;
 
+		static AEVec2 lastBulletPos;
+		static AEVec2 lastBulletDir;
 	};
 }

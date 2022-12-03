@@ -2,6 +2,8 @@
 #include <cstdlib>							// rand
 #include <Collisions/AEXCollisionSystem.h>	// Collider
 #include "Bullet.h"
+#include "BubbleComp.h"
+#include "Turret.h"
 //#include <Graphics/AEXTexture.h>				// Texture
 
 namespace AEX
@@ -13,13 +15,16 @@ namespace AEX
 	{
 		timer.Start();
 		tr = mOwner->GetComp<TransformComp>();
-		dir = AEVec2(1.5 * sin(-tr->mLocal.mOrientation), 1.5 * cos(-tr->mLocal.mOrientation));
+		dir = AEVec2(2.5 * sin(-tr->mLocal.mOrientation), 2.5 * cos(-tr->mLocal.mOrientation));
 	}
 	void BulletComp::Update()
 	{
+		// remember to bubbles that there is still at least 1 bullet on screen
+		BubbleComp::shotDone = true;
+
 		tr->Translate(dir);
 
-		if (timer.GetTimeSinceStart() >= 8)	// make bullet die in 10 seconds
+		if (timer.GetTimeSinceStart() >= 5)	// make bullet die in 10 seconds
 		{
 			Space* space = mOwner->mOwnerSpace;
 			space->DeleteObject(mOwner);
@@ -28,6 +33,7 @@ namespace AEX
 	void BulletComp::Shutdown()
 	{
 		RemoveFromSystem();
+		BubbleComp::shotDone = false;
 	}
 	bool BulletComp::Edit()
 	{
