@@ -5,7 +5,7 @@
 #include <Collisions/AEXCollisionSystem.h>	// Collider
 #include <Collisions/Raycast.h>
 #include "Graphics/Components/AEXGfxComps.h"
-//#include <Graphics/AEXTexture.h>				// Texture
+#include "Bullet.h"
 
 namespace AEX
 {
@@ -22,6 +22,8 @@ namespace AEX
 	}
 	void BubbleComp::Initialize()
 	{
+		mOwner->mEvents.subscribe<CollisionEnterEvent, BubbleComp>(this, &BubbleComp::Die);
+
 		// rigidbody for collisions and movement
 		mRgbd = mOwner->GetComp<RigidbodyComp>();
 		if (mRgbd == nullptr)
@@ -128,7 +130,9 @@ namespace AEX
 		}
 
 		// register breakable collider to CollisionStayEvent for breaking it
-		//mOwner->mEvents.unsubscribe(MemberFunctionHandler<BreakableComp, CollisionStayEvent>(this, &BreakableComp::Break), "struct AEX::CollisionStayEvent");
+		std::string evName = typeid(CollisionEnterEvent).name();
+
+		mOwner->mEvents.unsubscribe(*mOwner->mEvents.AllEvents[evName][0], evName);
 		RemoveFromSystem();
 	}
 	bool BubbleComp::Edit()
@@ -144,6 +148,12 @@ namespace AEX
 	void BubbleComp::StreamWrite(nlohmann::json& j) const
 	{
 		j["speed"] = mSpeed;
+	}
+
+	void BubbleComp::Die(const CollisionEnterEvent& collision)
+	{
+		if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
+			mOwner->mOwnerSpace->DeleteObject(mOwner);
 	}
 
 	// FUNCTION READ IN MULTITHREDING

@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "BubbleComp.h"
 #include "Graphics/Components/AEXGfxComps.h"
+#include "imgui/imgui.h"
 
 namespace AEX
 {
@@ -13,31 +14,37 @@ namespace AEX
 	}
 	void TurretComp::Initialize()
 	{
-		timer.Pause();
+		timer.Start();
+		RotTimer.Start();
 		ParentTr = mOwner->GetComp<TransformComp>();
 
-		// add turret and set shooting false
 		BubbleComp::turrets[this] = false;
-		shootDelay = BubbleComp::turrets.size() * SHOOT_MARGIN + 5.0f;
 	}
 	void TurretComp::Update()
 	{
-		// wait a bit before shooting first time
-		if (!firstShootDone)
+		if (RotClockWise)
 		{
-			if (timer.isPaused_)
-				timer.Start();
-			else if (timer.GetTimeSinceStart() >= shootDelay)
+			ParentTr->mLocal.mOrientation += 0.01;
+			if (RotTimer.GetTimeSinceStart() > 2)
 			{
-				Shoot();
-				firstShootDone = true;
+				RotClockWise = false;
+				RotTimer.Reset();
+			}
+		}
+		else
+		{
+			ParentTr->mLocal.mOrientation -= 0.01;
+			if (RotTimer.GetTimeSinceStart() > 2)
+			{
+				RotClockWise = true;
+				RotTimer.Reset();
 			}
 		}
 
-		if (timer.GetTimeSinceStart() >= 5)	// make a bullet each 5 seconds
-		{
+
+		if (timer.GetTimeSinceStart() >= 5 + shootDelay)	// make a bullet each 5 seconds
 			Shoot();
-		}
+		
 	}
 	void TurretComp::Shoot()
 	{
@@ -58,10 +65,19 @@ namespace AEX
 		bulletPos = tr->mLocal.mTranslation;
 		bulletDir = { Cos(tr->mLocal.mOrientation + PI / 2.0f), Sin(tr->mLocal.mOrientation + PI / 2.0f) };
 
-		// this shot done true
 		BubbleComp::turrets[this] = true;
 
 		timer.Reset();
+	}
+
+	void TurretComp::StreamRead(const nlohmann::json& j)
+	{
+		shootDelay = j["shootDelay"];
+	}
+
+	void TurretComp::StreamWrite(nlohmann::json& j) const
+	{
+		j["shootDelay"] = shootDelay;
 	}
 
 	void TurretComp::Shutdown()
@@ -70,6 +86,7 @@ namespace AEX
 	}
 	bool TurretComp::Edit()
 	{
+		ImGui::DragFloat("Delay", &shootDelay, 0, 4);
 		return false;
 	}
 }

@@ -33,7 +33,7 @@ namespace AEX {
 	}
 	void Renderable::Initialize(){
 		if (mpTexture == nullptr && mpTexAtlas == nullptr)
-			mpTexture = aexResources->GetResource<Texture>("Default.png");
+			mpTexture = aexResources->GetResource<Texture>("bubble_tex.png");
 		if (mpShader == nullptr)
 			mpShader = aexResources->GetResource<ShaderProgram>("TextureMap.shader");
 		if (mpModel == nullptr)

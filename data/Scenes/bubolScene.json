@@ -311,7 +311,7 @@
                             "ColliderType": 4,
                             "Ghost": false,
                             "Owner": "bubble",
-                            "RigidBody": "",
+                            "RigidBody": "null",
                             "Static": false,
                             "_type": "Collider",
                             "local": {
@@ -375,7 +375,8 @@
                             "textureatlas": "null"
                         },
                         {
-                            "_type": "TurretComp"
+                            "_type": "TurretComp",
+                            "shootDelay": 0.0
                         }
                     ],
                     "name": "turret\u0000ect 0",
@@ -393,7 +394,7 @@
                                     217.15379333496094,
                                     0.0
                                 ],
-                                "rotationZ": -2.3807449340820313,
+                                "rotationZ": -2.535595178604126,
                                 "scale": [
                                     100.0,
                                     100.0
@@ -415,7 +416,8 @@
                             "textureatlas": "null"
                         },
                         {
-                            "_type": "TurretComp"
+                            "_type": "TurretComp",
+                            "shootDelay": 2.0
                         }
                     ],
                     "name": "turret 2\u0000\u0000\u0000\u0000",
@@ -455,7 +457,8 @@
                             "textureatlas": "null"
                         },
                         {
-                            "_type": "TurretComp"
+                            "_type": "TurretComp",
+                            "shootDelay": 4.0
                         }
                     ],
                     "name": "turret 3\u0000\u0000\u0000\u0000",
@@ -495,7 +498,8 @@
                             "textureatlas": "null"
                         },
                         {
-                            "_type": "TurretComp"
+                            "_type": "TurretComp",
+                            "shootDelay": 6.0
                         }
                     ],
                     "name": "turret 4\u0000\u0000\u0000\u0000",

@@ -4,8 +4,8 @@
 #include <Logic/AEXLogicSystem.h>				// LogicComp
 #include <Physics/RigidbodyComponent.h>		// RigidbodyComp
 #include "Turret.h"
-//#include <Collisions/AEXCollisionSystem.h>		// Collider, CollisionStayEvent
-//#include <Graphics/Components/AEXGfxComps.h>	// Renderable, Texture
+#include <Collisions/AEXCollisionSystem.h>		// Collider, CollisionEnter
+
 
 namespace AEX
 {
@@ -40,6 +40,8 @@ namespace AEX
 
 		void StreamRead(const nlohmann::json& j);
 		void StreamWrite(nlohmann::json& j) const;
+
+		void Die(const CollisionEnterEvent& collision);
 
 		float mSpeed;
 		RigidbodyComp* mRgbd;

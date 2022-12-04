@@ -6,7 +6,6 @@
 
 namespace AEX
 {
-	#define SHOOT_MARGIN 1.0f
 
 	class TurretComp : public LogicComp
 	{
@@ -22,12 +21,17 @@ namespace AEX
 
 		void Shoot();
 
+		void StreamRead(const nlohmann::json& j);
+		void StreamWrite(nlohmann::json& j) const;
+
 		AEXTimer timer;
 		TransformComp* ParentTr;
 
 		AEVec2 bulletPos;
 		AEVec2 bulletDir;
 		float shootDelay = 0.0f;
-		bool firstShootDone = false;
+
+		bool RotClockWise = true;
+		AEXTimer RotTimer;
 	};
 }
