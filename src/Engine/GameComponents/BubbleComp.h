@@ -9,6 +9,9 @@
 
 namespace AEX
 {
+	// maximum distance to join another bubble
+	#define	MAX_DIST_SQ 22500.0f	// 100 x 100
+
 	class BubbleComp;
 	struct thread_info
 	{
@@ -44,11 +47,14 @@ namespace AEX
 
 		// thread variables
 		std::vector<std::thread> thread_ids;
-		//std::vector<thread_info> thread_infos;
+		AEXTimer mTimer;
 		bool dodgeMoving = false;
 		float dodgeAngle = 0.0f;
+		bool canJoin = true;	// sets to false if another bubble is going to join to this
 
+		// static interface
 		static bool shotDone;
+		static std::list<GameObject*> otherBubbles;
 	};
 
 	void Dodge(thread_info);

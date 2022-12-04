@@ -9,11 +9,14 @@
 namespace AEX
 {
 	bool BubbleComp::shotDone = false;
+	std::list<GameObject*> BubbleComp::otherBubbles;
 
 	void BubbleComp::OnCreate()
 	{
-		mSpeed = 50.0f;	// still to be tested
+		mSpeed = 80.0f;
 		mRgbd = nullptr;
+		mTimer.Pause();
+		otherBubbles.push_back(mOwner);
 	}
 	void BubbleComp::Initialize()
 	{
@@ -77,23 +80,35 @@ namespace AEX
 			//thread_infos.push_back(t_info);
 			thread_ids.push_back(std::thread(Dodge, t_info));
 		}
-
+		// avoid bullet moving
 		if (dodgeMoving)
 		{
-			if (!shotDone)
-				dodgeMoving = false;
-			if (mRgbd != nullptr)
+			if (mRgbd != nullptr && mTimer.isPaused_ == true)
 			{
 				// move away from bullet
-				mRgbd->AddForce({ mSpeed * Cos(dodgeAngle), mSpeed * Sin(dodgeAngle) });
+				mRgbd->AddForce({ mSpeed * Cos(dodgeAngle) * 30.0f, mSpeed * Sin(dodgeAngle) * 30.0f });
+				mTimer.Reset();
+				mTimer.Start();
+			}
+			else
+			{
+				// dodge for 1 second
+				if (mTimer.GetTimeSinceStart() >= 0.5f && mRgbd != nullptr)
+				{
+					// reset dodge force
+					mRgbd->mVelocity = { 0.0f, 0.0f, 0.0f };
+					mTimer.Reset();
+					mTimer.Pause();
+					dodgeMoving = false;
+				}
 			}
 		}
 
 		// add random force in both x and y
 		else if (mRgbd != nullptr)
 		{
-			float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
-			float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+			float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f) / 10.0f;	// between 0 and 2PI
+			float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f) / 10.0f;	// between 0 and 2PI
 			mRgbd->AddForce( { x_dir, y_dir } );
 		}
 	}
@@ -128,22 +143,67 @@ namespace AEX
 
 	void Dodge(thread_info ti)
 	{
+		/*..........Can we dodge bullet moving away from it?..........*/
 		AEVec2 result;	// dummy
 		float angle = 0.0f;
 		// try to dodge in every directions
-		for (angle = 0.0f; angle < TWO_PI; angle += 0.1f)
+		if (ti.thisPtr->dodgeMoving == false &&
+			RayCastCircle(ti.origin, ti.dir, ti.pos, ti.radius + 30.0f, &result) != -1)
 		{
-			AEVec2 newPos(ti.origin.x + 30.0f * Cos(angle), ti.origin.y + 30.0f * Sin(angle));
-			if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) != -1)
+			// 8 loops
+			for (angle = 0.0f; angle < TWO_PI; angle += PI / 4.0f)
 			{
-				// dodge
-				ti.thisPtr->dodgeMoving = true;
-				ti.thisPtr->dodgeAngle = angle;
-				return;
-			}
+				// check ways to avoid collision
+				AEVec2 newPos(ti.pos.x + 60.0f * Cos(angle), ti.pos.y + 60.0f * Sin(angle));
+				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
+				{
+					// dodge
+					ti.thisPtr->dodgeMoving = true;
+					ti.thisPtr->dodgeAngle = angle;
+					return;
+				}
+			}	// if no dodge angle was found, try something else
 		}
 
+		/*..........Can we avoid bullet joining to another bubble?..........*/
 		// try to attach to another bubble
+		if(ti.thisPtr->canJoin)
+		for (auto it = BubbleComp::otherBubbles.begin(); it != BubbleComp::otherBubbles.end(); ++it)
+		{
+			// not join to itself
+			if (*it == ti.thisPtr->GetOwner()) continue;
+			// other bubble too far away for joining
+			TransformComp* otherTr = (*it)->GetComp<TransformComp>();
+			if (otherTr == nullptr) return;
+			if ((otherTr->GetPosition() - ti.pos).LengthSq() >= MAX_DIST_SQ) continue;
+
+			// simulate what would happen if we joined this bubble 1.41
+
+			// midpoint between two bubbles
+			AEVec2 newPos = (AEVec2(otherTr->GetPosition().x, otherTr->GetPosition().y) + ti.pos) / 2.0f;
+			// radius of new joined circle
+			float newRadius = (otherTr->GetScale().x + ti.radius) * 0.8f;
+			// check collision
+			if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) != -1)
+			{	// can dodge this way, then do it!
+				if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
+
+				// in case this other bubble tries to join us
+				(*it)->GetComp<BubbleComp>()->canJoin = false;
+
+				// delete other bubble
+				if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
+				(*it)->mOwnerSpace->DeleteObject(*it);
+
+				// update this bubble as a union of both
+				auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
+				tr->SetScale({ newRadius, newRadius });
+				tr->SetPosition(newPos);
+
+				BubbleComp::otherBubbles.erase(it);
+				break;
+			}
+		}
 
 		// pop
 	}

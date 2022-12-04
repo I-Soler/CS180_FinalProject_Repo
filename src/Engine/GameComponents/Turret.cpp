@@ -21,7 +21,7 @@ namespace AEX
 	}
 	void TurretComp::Update()
 	{
-		if (timer.GetTimeSinceStart() >= 10)	// make a bullet each 5 seconds
+		if (timer.GetTimeSinceStart() >= 5)	// make a bullet each 5 seconds
 		{
 			Space* mainSp = aexScene->GetMainSpace();				// Get space where object will be added
 
@@ -38,7 +38,7 @@ namespace AEX
 			Obj->OnCreate(); Obj->Initialize();
 
 			lastBulletPos = tr->mLocal.mTranslation;
-			lastBulletDir = { Cos(tr->mLocal.mOrientation), Sin(tr->mLocal.mOrientation) };
+			lastBulletDir = { Cos(tr->mLocal.mOrientation + PI / 2.0f), Sin(tr->mLocal.mOrientation + PI / 2.0f) };
 
 			timer.Reset();
 		}

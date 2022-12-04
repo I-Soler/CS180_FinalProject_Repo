@@ -54,8 +54,8 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    -44.00001525878906,
-                                    -87.78766632080078,
+                                    0.0,
+                                    -119.64601135253906,
                                     0.0
                                 ],
                                 "rotationZ": 0.0,
@@ -94,8 +94,8 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    -74.66667938232422,
-                                    90.61939239501953,
+                                    148.66683959960938,
+                                    67.25679016113281,
                                     0.0
                                 ],
                                 "rotationZ": 0.0,
@@ -121,7 +121,7 @@
                         },
                         {
                             "_type": "BubbleComp",
-                            "speed": 50.0
+                            "speed": 80.0
                         },
                         {
                             "Drag": 1.0,
@@ -151,6 +151,73 @@
                         }
                     ],
                     "name": "New Object 1",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    35.99994659423828,
+                                    11.327430725097656,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    50.0,
+                                    50.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "BubbleComp",
+                            "speed": 80.0
+                        },
+                        {
+                            "Drag": 1.0,
+                            "Gravity": 0.0,
+                            "InvMass": 1.0,
+                            "_type": "RigidbodyComp"
+                        },
+                        {
+                            "ColliderType": 4,
+                            "Ghost": false,
+                            "Owner": "New Object 1 clone",
+                            "RigidBody": "",
+                            "Static": false,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "New Object 1 clone",
                     "tag": 0,
                     "uid": 4294967295
                 }

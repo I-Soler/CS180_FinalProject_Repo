@@ -24,7 +24,7 @@ namespace AEX
 
 		tr->Translate(dir);
 
-		if (timer.GetTimeSinceStart() >= 5)	// make bullet die in 10 seconds
+		if (timer.GetTimeSinceStart() >= 5)	// make bullet die in 5 seconds
 		{
 			Space* space = mOwner->mOwnerSpace;
 			space->DeleteObject(mOwner);
