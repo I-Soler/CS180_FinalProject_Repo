@@ -150,13 +150,13 @@ namespace AEX
 				// Create a quad by default
 				f32 h = 0.5f;
 
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, 1.0f), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, 0.0f), AEX::AEVec2(0, 0), AEX::Color(1, 1, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, 0.0f), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, h), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, -h), AEX::AEVec2(0, 0), AEX::Color(1, 1, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, -h), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
 
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, 1.0f), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, 0.0f), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
-				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, 1.0f), AEX::AEVec2(1, 1), AEX::Color(0, 0, 1)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(-h, h), AEX::AEVec2(0, 1), AEX::Color(1, 0, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, -h), AEX::AEVec2(1, 0), AEX::Color(0, 1, 0)));
+				newModel->AddVertex(AEX::Vertex(AEX::AEVec2(h, h), AEX::AEVec2(1, 1), AEX::Color(0, 0, 1)));
 				newModel->UploadToGPU();
 
 				newRes->SetRawResource(newModel, false);
