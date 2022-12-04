@@ -53,8 +53,8 @@ namespace AEX
 		bool canJoin = true;	// sets to false if another bubble is going to join to this
 
 		// static interface
-		static bool shotDone;
 		static std::list<GameObject*> otherBubbles;
+		static std::map<TurretComp*, bool> turrets;
 	};
 
 	void Dodge(thread_info);

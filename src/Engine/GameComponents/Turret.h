@@ -6,6 +6,8 @@
 
 namespace AEX
 {
+	#define SHOOT_MARGIN 1.0f
+
 	class TurretComp : public LogicComp
 	{
 		AEX_RTTI_DECL(TurretComp, LogicComp);
@@ -18,10 +20,14 @@ namespace AEX
 		void Shutdown() override;
 		bool Edit() override;
 
+		void Shoot();
+
 		AEXTimer timer;
 		TransformComp* ParentTr;
 
-		static AEVec2 lastBulletPos;
-		static AEVec2 lastBulletDir;
+		AEVec2 bulletPos;
+		AEVec2 bulletDir;
+		float shootDelay = 0.0f;
+		bool firstShootDone = false;
 	};
 }

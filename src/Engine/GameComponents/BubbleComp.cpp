@@ -8,8 +8,8 @@
 
 namespace AEX
 {
-	bool BubbleComp::shotDone = false;
 	std::list<GameObject*> BubbleComp::otherBubbles;
+	std::map<TurretComp*, bool> BubbleComp::turrets;
 
 	void BubbleComp::OnCreate()
 	{
@@ -17,6 +17,7 @@ namespace AEX
 		mRgbd = nullptr;
 		mTimer.Pause();
 		otherBubbles.push_back(mOwner);
+		turrets.clear();
 	}
 	void BubbleComp::Initialize()
 	{
@@ -68,39 +69,42 @@ namespace AEX
 		// clamp max speed
 
 		// check collision if a shot was done
-		if (shotDone && thread_ids.empty())
+		if (thread_ids.empty())
 		{
-			// create thread
-			thread_info t_info;
-			t_info.thisPtr = this;
-			t_info.pos = { mTr->GetPosition().x, mTr->GetPosition().y };
-			t_info.radius = mTr->GetScale().x;
-			t_info.origin = TurretComp::lastBulletPos;
-			t_info.dir = TurretComp::lastBulletDir;
-			//thread_infos.push_back(t_info);
-			thread_ids.push_back(std::thread(Dodge, t_info));
+			// dodge every shooting turrets
+			for (auto it = turrets.begin(); it != turrets.end(); ++it)
+			{
+				if (it->second == false) continue;
+
+				// create thread
+				thread_info t_info;
+				t_info.thisPtr = this;
+				t_info.pos = { mTr->GetPosition().x, mTr->GetPosition().y };
+				t_info.radius = mTr->GetScale().x;
+				t_info.origin = it->first->bulletPos;
+				t_info.dir = it->first->bulletDir;
+
+				thread_ids.push_back(std::thread(Dodge, t_info));
+			}
 		}
 		// avoid bullet moving
-		if (dodgeMoving)
+		if (mRgbd != nullptr)
 		{
-			if (mRgbd != nullptr && mTimer.isPaused_ == true)
+			if (dodgeMoving && mTimer.isPaused_ == true)
 			{
 				// move away from bullet
 				mRgbd->AddForce({ mSpeed * Cos(dodgeAngle) * 30.0f, mSpeed * Sin(dodgeAngle) * 30.0f });
 				mTimer.Reset();
 				mTimer.Start();
 			}
-			else
+			// dodge for 0.5 seconds
+			else if (mTimer.GetTimeSinceStart() >= 0.5f)
 			{
-				// dodge for 1 second
-				if (mTimer.GetTimeSinceStart() >= 0.5f && mRgbd != nullptr)
-				{
-					// reset dodge force
-					mRgbd->mVelocity = { 0.0f, 0.0f, 0.0f };
-					mTimer.Reset();
-					mTimer.Pause();
-					dodgeMoving = false;
-				}
+				// reset dodge force
+				mRgbd->mVelocity = { 0.0f, 0.0f, 0.0f };
+				mTimer.Reset();
+				mTimer.Pause();
+				dodgeMoving = false;
 			}
 		}
 
@@ -141,20 +145,24 @@ namespace AEX
 		j["speed"] = mSpeed;
 	}
 
+	// FUNCTION READ IN MULTITHREDING
 	void Dodge(thread_info ti)
 	{
-		/*..........Can we dodge bullet moving away from it?..........*/
+		/*..........Is the bubble in danger?..........*/
 		AEVec2 result;	// dummy
-		float angle = 0.0f;
+		if (RayCastCircle(ti.origin, ti.dir, ti.pos, ti.radius + 20.0f, &result) == -1)
+			return;
+
+		/*..........Can we dodge bullet moving away from it?..........*/
 		// try to dodge in every directions
-		if (ti.thisPtr->dodgeMoving == false &&
-			RayCastCircle(ti.origin, ti.dir, ti.pos, ti.radius + 30.0f, &result) != -1)
+		if (ti.thisPtr->dodgeMoving == false)
 		{
 			// 8 loops
-			for (angle = 0.0f; angle < TWO_PI; angle += PI / 4.0f)
+			float angle = 0.0f;
+			for (angle; angle < TWO_PI; angle += PI / 4.0f)
 			{
 				// check ways to avoid collision
-				AEVec2 newPos(ti.pos.x + 60.0f * Cos(angle), ti.pos.y + 60.0f * Sin(angle));
+				AEVec2 newPos(ti.pos.x + 30.0f * Cos(angle), ti.pos.y + 30.0f * Sin(angle));
 				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
 				{
 					// dodge
@@ -186,6 +194,7 @@ namespace AEX
 			// check collision
 			if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) != -1)
 			{	// can dodge this way, then do it!
+
 				if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 
 				// in case this other bubble tries to join us

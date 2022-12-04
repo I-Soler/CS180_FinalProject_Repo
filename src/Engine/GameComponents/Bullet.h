@@ -3,6 +3,7 @@
 #include <Logic/AEXLogicSystem.h>				// LogicComp
 #include <Physics/RigidbodyComponent.h>		// RigidbodyComp
 #include <Platform/AEXTime.h>
+#include "Turret.h"
 
 namespace AEX
 {
@@ -18,6 +19,7 @@ namespace AEX
 		void Shutdown() override;
 		bool Edit() override;
 
+		TurretComp* gun;
 		TransformComp* tr;
 		AEXTimer timer;
 		AEVec2 dir;

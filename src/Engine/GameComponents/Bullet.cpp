@@ -19,21 +19,19 @@ namespace AEX
 	}
 	void BulletComp::Update()
 	{
-		// remember to bubbles that there is still at least 1 bullet on screen
-		BubbleComp::shotDone = true;
 
 		tr->Translate(dir);
 
 		if (timer.GetTimeSinceStart() >= 5)	// make bullet die in 5 seconds
 		{
-			Space* space = mOwner->mOwnerSpace;
-			space->DeleteObject(mOwner);
+			// this turret is no longer shooting
+			BubbleComp::turrets[gun] = false;
+			mOwner->mOwnerSpace->DeleteObject(mOwner);
 		}
 	}
 	void BulletComp::Shutdown()
 	{
 		RemoveFromSystem();
-		BubbleComp::shotDone = false;
 	}
 	bool BulletComp::Edit()
 	{
