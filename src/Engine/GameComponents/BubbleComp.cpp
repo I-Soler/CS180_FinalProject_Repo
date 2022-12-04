@@ -4,6 +4,7 @@
 #include <cstdlib>							// rand
 #include <Collisions/AEXCollisionSystem.h>	// Collider
 #include <Collisions/Raycast.h>
+#include "Graphics/Components/AEXGfxComps.h"
 //#include <Graphics/AEXTexture.h>				// Texture
 
 namespace AEX
@@ -28,6 +29,7 @@ namespace AEX
 			mRgbd = mOwner->NewComp<RigidbodyComp>();
 			mRgbd->AddToSystem();
 			mRgbd->OnCreate();
+			mRgbd->Initialize();
 		}
 		mRgbd->mHasGravity = false;
 
@@ -38,6 +40,7 @@ namespace AEX
 			mCol = mOwner->NewComp<Collider>();
 			mCol->AddToSystem();
 			mCol->OnCreate();
+			mCol->Initialize();
 
 			mCol->mColliderType = Collider::CT_CIRCLE;
 			mCol->Static = false;
@@ -60,7 +63,6 @@ namespace AEX
 			{
 				it->join();
 			}
-			//thread_infos.clear();
 			thread_ids.clear();
 		}
 
@@ -174,44 +176,82 @@ namespace AEX
 
 		/*..........Can we avoid bullet joining to another bubble?..........*/
 		// try to attach to another bubble
-		if(ti.thisPtr->canJoin)
-		for (auto it = BubbleComp::otherBubbles.begin(); it != BubbleComp::otherBubbles.end(); ++it)
+		if (ti.thisPtr->canJoin)
 		{
-			// not join to itself
-			if (*it == ti.thisPtr->GetOwner()) continue;
-			// other bubble too far away for joining
-			TransformComp* otherTr = (*it)->GetComp<TransformComp>();
-			if (otherTr == nullptr) return;
-			if ((otherTr->GetPosition() - ti.pos).LengthSq() >= MAX_DIST_SQ) continue;
+			unsigned size = BubbleComp::otherBubbles.size();
+			for (auto it = BubbleComp::otherBubbles.begin(); it != BubbleComp::otherBubbles.end(); ++it)
+			{
+				// restart (sanity check)
+				if (BubbleComp::otherBubbles.size() != size)
+				{
+					Dodge(ti);
+					return;
+				}
 
-			/* simulate what would happen if we joined this bubble */
+				// not join to itself
+				if (*it == ti.thisPtr->GetOwner()) continue;
+				// other bubble too far away for joining
+				TransformComp* otherTr = (*it)->GetComp<TransformComp>();
+				if (otherTr == nullptr) return;
+				if ((otherTr->GetPosition() - ti.pos).LengthSq() >= MAX_DIST_SQ) continue;
 
-			// midpoint between two bubbles
-			AEVec2 newPos = (AEVec2(otherTr->GetPosition().x, otherTr->GetPosition().y) + ti.pos) / 2.0f;
-			// radius of new joined circle
-			float newRadius = (otherTr->GetScale().x + ti.radius) * 0.8f;
-			// check collision
-			if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) != -1)
+				/* simulate what would happen if we joined this bubble */
+
+				// midpoint between two bubbles
+				AEVec2 newPos = (AEVec2(otherTr->GetPosition().x, otherTr->GetPosition().y) + ti.pos) / 2.0f;
+				// radius of new joined circle
+				float newRadius = (otherTr->GetScale().x + ti.radius) * 0.8f;
+				// check collision
+				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 10.0f, &result) != -1)
+				{	// can dodge this way, then do it!
+
+					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
+
+					// in case this other bubble tries to join us
+					(*it)->GetComp<BubbleComp>()->canJoin = false;
+
+					// delete other bubble
+					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
+					(*it)->mOwnerSpace->DeleteObject(*it);
+
+					// update this bubble as a union of both
+					auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
+					tr->SetScale({ newRadius, newRadius });
+					tr->SetPosition(newPos);
+
+					BubbleComp::otherBubbles.erase(it);
+					return;
+				}
+			}	// if this method fails, try something else
+
+			// perpendicular direction for mini twin bubbles
+			AEVec2 perpDir{ -ti.dir.y, ti.dir.x };
+			perpDir.NormalizeThis();
+			float miniRadius = ti.radius * 0.707f;
+			AEVec2 newPosLeft = ti.pos + perpDir * 100.0f;
+			AEVec2 newPosRight = ti.pos - perpDir * 100.0f;
+
+			if (RayCastCircle(ti.origin, ti.dir, newPosLeft, miniRadius + 10.0f, &result) == -1 &&
+				RayCastCircle(ti.origin, ti.dir, newPosRight, miniRadius + 10.0f, &result) == -1)
 			{	// can dodge this way, then do it!
 
-				if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
-
-				// in case this other bubble tries to join us
-				(*it)->GetComp<BubbleComp>()->canJoin = false;
-
-				// delete other bubble
-				if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
-				(*it)->mOwnerSpace->DeleteObject(*it);
-
-				// update this bubble as a union of both
+				// update this bubble as mini left bubble
 				auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
-				tr->SetScale({ newRadius, newRadius });
-				tr->SetPosition(newPos);
+				tr->SetScale({ miniRadius, miniRadius });
+				tr->SetPosition(newPosLeft);
 
-				BubbleComp::otherBubbles.erase(it);
-				break;
+				// create mini right bubble
+				GameObject* Obj = ti.thisPtr->GetOwnerSpace()->NewObject("bubble");	// create the bubble
+				tr = aexFactory->Create<TransformComp>();
+				tr->SetScale({ miniRadius, miniRadius });
+				tr->SetPosition(newPosRight);
+				Obj->AddComp(tr);
+				Obj->NewComp<Renderable>();
+				Obj->NewComp<BubbleComp>()->AddToSystem();
+				Obj->OnCreate();
+				Obj->Initialize();
 			}
-		}	// if this method fails, try something else
+		}
 
 		// pop
 	}
