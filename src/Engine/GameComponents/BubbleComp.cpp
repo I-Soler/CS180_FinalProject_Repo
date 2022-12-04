@@ -106,14 +106,13 @@ namespace AEX
 				mTimer.Pause();
 				dodgeMoving = false;
 			}
-		}
-
-		// add random force in both x and y
-		else if (mRgbd != nullptr)
-		{
-			float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f) / 10.0f;	// between 0 and 2PI
-			float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f) / 10.0f;	// between 0 and 2PI
-			mRgbd->AddForce( { x_dir, y_dir } );
+			// add random force in both x and y
+			else
+			{
+				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+				mRgbd->AddForce({ x_dir, y_dir });
+			}
 		}
 	}
 	void BubbleComp::Shutdown()
@@ -185,7 +184,7 @@ namespace AEX
 			if (otherTr == nullptr) return;
 			if ((otherTr->GetPosition() - ti.pos).LengthSq() >= MAX_DIST_SQ) continue;
 
-			// simulate what would happen if we joined this bubble 1.41
+			/* simulate what would happen if we joined this bubble */
 
 			// midpoint between two bubbles
 			AEVec2 newPos = (AEVec2(otherTr->GetPosition().x, otherTr->GetPosition().y) + ti.pos) / 2.0f;
@@ -212,7 +211,7 @@ namespace AEX
 				BubbleComp::otherBubbles.erase(it);
 				break;
 			}
-		}
+		}	// if this method fails, try something else
 
 		// pop
 	}

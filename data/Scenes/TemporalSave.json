@@ -54,8 +54,8 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    -334.66748046875,
-                                    -133.09719848632813,
+                                    0.0,
+                                    0.0,
                                     0.0
                                 ],
                                 "rotationZ": 0.0,
@@ -80,358 +80,37 @@
                             "textureatlas": "null"
                         },
                         {
-                            "_type": "TurretComp"
+                            "_type": "BubbleComp",
+                            "speed": 80.0
+                        },
+                        {
+                            "Drag": 1.0,
+                            "Gravity": 0.0,
+                            "InvMass": 1.0,
+                            "_type": "RigidbodyComp"
+                        },
+                        {
+                            "ColliderType": 4,
+                            "Ghost": false,
+                            "Owner": "New Object 0",
+                            "RigidBody": "",
+                            "Static": false,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
                         }
                     ],
                     "name": "New Object 0",
-                    "tag": 0,
-                    "uid": 4294967295
-                },
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    201.33348083496094,
-                                    -133.09719848632813,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    50.0,
-                                    50.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Renderable",
-                            "atlasregion": "",
-                            "model": "Quad.model",
-                            "modulationColor": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "shader": "TextureMap.shader",
-                            "texture": "Default.png",
-                            "textureatlas": "null"
-                        },
-                        {
-                            "_type": "TurretComp"
-                        }
-                    ],
-                    "name": "New Object 0 clone",
-                    "tag": 0,
-                    "uid": 4294967295
-                },
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    -62.66685485839844,
-                                    -133.09719848632813,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    50.0,
-                                    50.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Renderable",
-                            "atlasregion": "",
-                            "model": "Quad.model",
-                            "modulationColor": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "shader": "TextureMap.shader",
-                            "texture": "Default.png",
-                            "textureatlas": "null"
-                        },
-                        {
-                            "_type": "TurretComp"
-                        }
-                    ],
-                    "name": "New Object 0 clone",
-                    "tag": 0,
-                    "uid": 4294967295
-                },
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    -305.33319091796875,
-                                    -28.318458557128906,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    50.0,
-                                    50.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Renderable",
-                            "atlasregion": "",
-                            "model": "Quad.model",
-                            "modulationColor": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "shader": "TextureMap.shader",
-                            "texture": "Default.png",
-                            "textureatlas": "null"
-                        },
-                        {
-                            "_type": "BubbleComp",
-                            "speed": 80.0
-                        },
-                        {
-                            "Drag": 1.0,
-                            "Gravity": 0.0,
-                            "InvMass": 1.0,
-                            "_type": "RigidbodyComp"
-                        },
-                        {
-                            "ColliderType": 4,
-                            "Ghost": false,
-                            "Owner": "New Object 1",
-                            "RigidBody": "",
-                            "Static": false,
-                            "_type": "Collider",
-                            "local": {
-                                "position": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    1.0,
-                                    1.0
-                                ]
-                            }
-                        }
-                    ],
-                    "name": "New Object 1",
-                    "tag": 0,
-                    "uid": 4294967295
-                },
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    -45.33340072631836,
-                                    -51.681480407714844,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    50.0,
-                                    50.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Renderable",
-                            "atlasregion": "",
-                            "model": "Quad.model",
-                            "modulationColor": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "shader": "TextureMap.shader",
-                            "texture": "Default.png",
-                            "textureatlas": "null"
-                        },
-                        {
-                            "_type": "BubbleComp",
-                            "speed": 80.0
-                        },
-                        {
-                            "Drag": 1.0,
-                            "Gravity": 0.0,
-                            "InvMass": 1.0,
-                            "_type": "RigidbodyComp"
-                        },
-                        {
-                            "ColliderType": 4,
-                            "Ghost": false,
-                            "Owner": "New Object 1 clone",
-                            "RigidBody": "",
-                            "Static": false,
-                            "_type": "Collider",
-                            "local": {
-                                "position": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    1.0,
-                                    1.0
-                                ]
-                            }
-                        }
-                    ],
-                    "name": "New Object 1 clone",
-                    "tag": 0,
-                    "uid": 4294967295
-                },
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    42.66666793823242,
-                                    18.40705108642578,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    50.0,
-                                    50.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Renderable",
-                            "atlasregion": "",
-                            "model": "Quad.model",
-                            "modulationColor": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "shader": "TextureMap.shader",
-                            "texture": "Default.png",
-                            "textureatlas": "null"
-                        },
-                        {
-                            "_type": "BubbleComp",
-                            "speed": 80.0
-                        },
-                        {
-                            "Drag": 1.0,
-                            "Gravity": 0.0,
-                            "InvMass": 1.0,
-                            "_type": "RigidbodyComp"
-                        },
-                        {
-                            "ColliderType": 4,
-                            "Ghost": false,
-                            "Owner": "New Object 1 clone",
-                            "RigidBody": "",
-                            "Static": false,
-                            "_type": "Collider",
-                            "local": {
-                                "position": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    1.0,
-                                    1.0
-                                ]
-                            }
-                        }
-                    ],
-                    "name": "New Object 1 clone",
-                    "tag": 0,
-                    "uid": 4294967295
-                },
-                {
-                    "children": null,
-                    "components": [
-                        {
-                            "_type": "TransformComp",
-                            "local": {
-                                "position": [
-                                    202.66677856445313,
-                                    -66.54852294921875,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    50.0,
-                                    50.0
-                                ]
-                            }
-                        },
-                        {
-                            "_type": "Renderable",
-                            "atlasregion": "",
-                            "model": "Quad.model",
-                            "modulationColor": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "shader": "TextureMap.shader",
-                            "texture": "Default.png",
-                            "textureatlas": "null"
-                        },
-                        {
-                            "_type": "BubbleComp",
-                            "speed": 80.0
-                        },
-                        {
-                            "Drag": 1.0,
-                            "Gravity": 0.0,
-                            "InvMass": 1.0,
-                            "_type": "RigidbodyComp"
-                        },
-                        {
-                            "ColliderType": 4,
-                            "Ghost": false,
-                            "Owner": "New Object 1 clone",
-                            "RigidBody": "",
-                            "Static": false,
-                            "_type": "Collider",
-                            "local": {
-                                "position": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "rotationZ": 0.0,
-                                "scale": [
-                                    1.0,
-                                    1.0
-                                ]
-                            }
-                        }
-                    ],
-                    "name": "New Object 1 clone",
                     "tag": 0,
                     "uid": 4294967295
                 }
