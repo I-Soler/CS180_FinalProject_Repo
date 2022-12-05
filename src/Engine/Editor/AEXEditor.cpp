@@ -208,13 +208,13 @@ namespace AEX
 			//}
 			//
 			//// Clone selected objects
-			//if (ImGui::Button("Clone") && SelectedObjs.size())
-			//{
-			//	for (int it = 0; it < SelectedObjs.size(); it++)
-			//	{
-			//		GameObject* obj = SelectedObjs[it]->clone();
-			//	}
-			//}
+			if (ImGui::Button("Clone") && SelectedObjs.size())
+			{
+				for (int it = 0; it < SelectedObjs.size(); it++)
+				{
+					GameObject* obj = SelectedObjs[it]->clone();
+				}
+			}
 			//ImGui::SameLine();
 			//
 			//// Add a child to selected objects
