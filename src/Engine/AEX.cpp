@@ -19,7 +19,7 @@ namespace AEX{
 		if (!aexScene->Initialize())return false;
 		if (!aexLogic->Initialize())return false;
 		if (!aexGui->Initialize())return false;
-		if (!aexEditor->Initialize())return false;
+		//if (!aexEditor->Initialize())return false;
 
 		// Frame rate controller options.
 		aexTime->LockFrameRate(true);
@@ -32,7 +32,7 @@ namespace AEX{
 		resMgr->LoadFolder("data/Images", true);
 		resMgr->LoadFolder("EditorData", true);
 
-		//aexScene->LoadFile("data/Scenes/bubolScene.json", false);
+		aexScene->LoadFile("data/Scenes/bubolScene.json", false);
 
 		changeScene.HasToChange = false;
 		changeScene.newScene = " ";
@@ -78,8 +78,8 @@ namespace AEX{
 			// clean up previous frame dead objects
 			scene->DeleteAllSpaceDeadObjects();
 
-			//editor->SetEnabled(false);
-			editor->Update();
+			editor->SetEnabled(false);
+			//editor->Update();
 
 			//if(changeScene.HasToChange)
 			//{

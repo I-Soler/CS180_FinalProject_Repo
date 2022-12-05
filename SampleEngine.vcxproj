@@ -378,7 +378,6 @@
     <ClInclude Include="src\Engine\Logic\AEXLogicSystem.h" />
     <ClInclude Include="src\Engine\MessagingSystem\AEXMessagingSystem.h" />
     <ClInclude Include="src\Engine\MessagingSystem\IEvent.h" />
-    <ClInclude Include="src\Engine\MessagingSystem\EventList.h" />
     <ClInclude Include="src\Engine\Physics\AEXPhysicsSystem.h" />
     <ClInclude Include="src\Engine\Physics\RigidbodyComponent.h" />
     <ClInclude Include="src\Engine\Platform\AEXFilePath.h" />

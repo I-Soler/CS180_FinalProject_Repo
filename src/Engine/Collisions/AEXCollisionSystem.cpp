@@ -3,7 +3,6 @@
 #include "AEXCollisionSystem.h"
 #include "ContactCollisions.h"
 #include <Extern/imgui/imgui.h>
-#include "MessagingSystem/EventList.h"
 
 
 namespace AEX     // For the Collider class

@@ -594,9 +594,6 @@
     <ClInclude Include="src\Engine\MessagingSystem\IEvent.h">
       <Filter>Engine\MessagingSystem</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\MessagingSystem\EventList.h">
-      <Filter>Engine\MessagingSystem</Filter>
-    </ClInclude>
     <ClInclude Include="src\Extern\spine-cpp\include\spine\Animation.h">
       <Filter>Extern\spine-cpp</Filter>
     </ClInclude>
@@ -931,9 +928,6 @@
     </Filter>
     <Filter Include="Engine\ResourceMgr">
       <UniqueIdentifier>{d510305d-b1d3-4158-b1b5-2861e6029cc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\StateMechine">
-      <UniqueIdentifier>{c9dbef84-8b02-4f35-bcfa-869d7e007144}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Audio">
       <UniqueIdentifier>{74cc6326-ec11-4d44-b424-161aaa1d239f}</UniqueIdentifier>
