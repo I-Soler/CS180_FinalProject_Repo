@@ -282,8 +282,8 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    -87.01580810546875,
-                                    -3.2906150817871094,
+                                    -180.34915161132813,
+                                    21.488147735595703,
                                     0.0
                                 ],
                                 "rotationZ": 0.0,
@@ -503,6 +503,140 @@
                         }
                     ],
                     "name": "turret 4\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    50.317317962646484,
+                                    -108.77751922607422,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    51.436805725097656,
+                                    49.237205505371094
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "bubble_tex.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "ColliderType": 4,
+                            "Ghost": false,
+                            "Owner": "bubble clone",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    0.5,
+                                    0.5
+                                ]
+                            }
+                        },
+                        {
+                            "Drag": 1.0,
+                            "Gravity": 0.0,
+                            "InvMass": 1.0,
+                            "_type": "RigidbodyComp"
+                        },
+                        {
+                            "_type": "BubbleComp",
+                            "speed": 80.0
+                        }
+                    ],
+                    "name": "bubble clone",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -87.01580810546875,
+                                    -3.2906150817871094,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    51.436805725097656,
+                                    49.237205505371094
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "bubble_tex.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "ColliderType": 4,
+                            "Ghost": false,
+                            "Owner": "bubble clone clone",
+                            "RigidBody": "null",
+                            "Static": false,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    0.5,
+                                    0.5
+                                ]
+                            }
+                        },
+                        {
+                            "Drag": 1.0,
+                            "Gravity": 0.0,
+                            "InvMass": 1.0,
+                            "_type": "RigidbodyComp"
+                        },
+                        {
+                            "_type": "BubbleComp",
+                            "speed": 80.0
+                        }
+                    ],
+                    "name": "bubble clone clone",
                     "tag": 0,
                     "uid": 4294967295
                 }
