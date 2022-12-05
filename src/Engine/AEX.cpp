@@ -18,7 +18,6 @@ namespace AEX{
 		if (!aexPhysics->Initialize())return false;
 		if (!aexScene->Initialize())return false;
 		if (!aexLogic->Initialize())return false;
-		if (!aexAudio->Initialize())return false;
 		if (!aexGui->Initialize())return false;
 		if (!aexEditor->Initialize())return false;
 
@@ -63,11 +62,9 @@ namespace AEX{
 		auto input = aexInput;
 		auto gui = aexGui;
 		auto editor = aexEditor;
-		auto statemachine = aexStateMachine;
 		auto phx = aexPhysics;
 		auto gfx = aexGraphics;
 		auto collisions = aexCollision;
-		auto audio = aexAudio;
 
 		// run the game loop
 		while (input->KeyTriggered(Keys::Escape) == false &&
@@ -94,7 +91,6 @@ namespace AEX{
 			{
 				// update game logic
 				logic->Update();
-				statemachine->Update();
 
 				// physics system update
 				phx->Update();

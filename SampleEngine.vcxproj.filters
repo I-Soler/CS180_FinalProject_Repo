@@ -91,9 +91,6 @@
     <ClCompile Include="src\Engine\Platform\AEXSerialization.cpp">
       <Filter>Engine\Platform\File</Filter>
     </ClCompile>
-    <ClCompile Include="src\Demos\SerializationDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Logic\AEXLogicSystem.cpp">
       <Filter>Engine\Logic</Filter>
     </ClCompile>
@@ -117,15 +114,6 @@
     </ClCompile>
     <ClCompile Include="src\Engine\ResourceMgr\ResourceMgr.cpp">
       <Filter>Engine\ResourceMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\StateMachine\StateMachine.cpp">
-      <Filter>Engine\StateMechine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\StateMachine\AEXStateMachineSystem.cpp">
-      <Filter>Engine\StateMechine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\StateMachine\PlayerStates.cpp">
-      <Filter>Engine\StateMechine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Audio\Audio.cpp">
       <Filter>Engine\Audio</Filter>
@@ -151,32 +139,8 @@
     <ClCompile Include="src\Extern\imgui\ImGuizmo.cpp">
       <Filter>Extern\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Demos\SpaceDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\DemoColThings.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\DemoMartaLayers.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\EventSystemDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\FactoryDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\RenderableDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\SimpleDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Core\AEXFactoryRegisterAllTypes.cpp">
       <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Demos\DemoEditor.cpp">
-      <Filter>Demos</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Audio\AudioSourceComp.cpp">
       <Filter>Engine\Audio</Filter>
@@ -190,53 +154,14 @@
     <ClCompile Include="src\Engine\Scene\Scene.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Demos\DemoMarta.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\MessagingSystem\AEXMessagingSystem.cpp">
       <Filter>Engine\MessagingSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\MessagingSystem\IEvent.cpp">
       <Filter>Engine\MessagingSystem</Filter>
     </ClCompile>
-    <ClCompile Include="src\Demos\EngineDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
     <ClCompile Include="src\Demos\PrototypeDemo.cpp">
       <Filter>Demos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\Door.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Logic\DetachSoul.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\PressPuzzleController.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\PlayerAttack.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\PlayerMovement.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\EnemyHealth.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\PressurePlate.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Scene\SceneHandler.cpp">
-      <Filter>Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Scene\FadeInOut.cpp">
-      <Filter>Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\Key.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Extern\spine-cpp\src\spine\Animation.cpp">
       <Filter>Extern\spine-cpp</Filter>
@@ -427,18 +352,11 @@
     <ClCompile Include="src\Engine\Animation\SpineComps.cpp">
       <Filter>Engine\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="src\Demos\SpineDemo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Graphics\AEXTextureAtlas.h">
       <Filter>Engine\Graphics\Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Graphics\AEXTextureAtlas.cpp">
       <Filter>Engine\Graphics\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameComponents\InfoScreen.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\Button.cpp">
-      <Filter>Engine\Logic\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp">
       <Filter>Engine\Logic\GameComponents</Filter>
@@ -634,15 +552,6 @@
     <ClInclude Include="src\Engine\ResourceMgr\ResourceMgr.h">
       <Filter>Engine\ResourceMgr</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\StateMachine\StateMachine.h">
-      <Filter>Engine\StateMechine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\StateMachine\AEXStateMachineSystem.h">
-      <Filter>Engine\StateMechine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\StateMachine\PlayerStates.h">
-      <Filter>Engine\StateMechine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Audio\Audio.h">
       <Filter>Engine\Audio</Filter>
     </ClInclude>
@@ -687,39 +596,6 @@
     </ClInclude>
     <ClInclude Include="src\Engine\MessagingSystem\EventList.h">
       <Filter>Engine\MessagingSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\Door.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Logic\DetachSoul.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\PressPuzzleController.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\PlayerAttack.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\PlayerMovement.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\EnemyHealth.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\PressurePlate.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\BreakableComp.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Scene\SceneHandler.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Scene\FadeInOut.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\Key.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Extern\spine-cpp\include\spine\Animation.h">
       <Filter>Extern\spine-cpp</Filter>
@@ -975,10 +851,6 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Animation\SpineComps.h">
       <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameComponents\InfoScreen.h" />
-    <ClInclude Include="src\Engine\GameComponents\Button.h">
-      <Filter>Engine\Logic\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\GameComponents\BubbleComp.h">
       <Filter>Engine\Logic\GameComponents</Filter>

@@ -2,10 +2,6 @@
 #include "Demos.h"
 #include <iostream>
 #include "Composition/TransformComponent.h"
-#include "StateMachine/StateMachine.h"
-#include "StateMachine/PlayerStates.h"
-#include "GameComponents/PlayerMovement.h"
-#include "Logic/DetachSoul.h"
 #include "Audio/AudioSourceComp.h"
 
 using namespace AEX;

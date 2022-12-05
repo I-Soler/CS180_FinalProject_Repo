@@ -205,54 +205,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Demos\Commons.cpp" />
-    <ClCompile Include="src\Demos\DemoColThings.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\DemoEditor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\DemoMarta.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\DemoMartaLayers.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\EngineDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\EventSystemDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\FactoryDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\Demos\PrototypeDemo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\Demos\RenderableDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\SerializationDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\SimpleDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\SpaceDemo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Demos\SpineDemo.cpp" />
     <ClCompile Include="src\Engine\AEX.cpp" />
     <ClCompile Include="src\Engine\Animation\SpineComps.cpp" />
     <ClCompile Include="src\Engine\Audio\Audio.cpp" />
@@ -271,18 +226,8 @@
     <ClCompile Include="src\Engine\Debug\AEXCheckGLError.cpp" />
     <ClCompile Include="src\Engine\Debug\AEXDebug.cpp" />
     <ClCompile Include="src\Engine\Editor\AEXEditor.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\BreakableComp.cpp" />
     <ClCompile Include="src\Engine\GameComponents\BubbleComp.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Bullet.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\Button.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\InfoScreen.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\Key.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\PressurePlate.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\Door.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\EnemyHealth.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\PlayerAttack.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\PlayerMovement.cpp" />
-    <ClCompile Include="src\Engine\GameComponents\PressPuzzleController.cpp" />
     <ClCompile Include="src\Engine\GameComponents\Turret.cpp" />
     <ClCompile Include="src\Engine\Graphics\AEXColor.cpp" />
     <ClCompile Include="src\Engine\Graphics\AEXGfxSystem.cpp" />
@@ -299,9 +244,6 @@
     <ClCompile Include="src\Engine\Graphics\Components\AEXCamera.cpp" />
     <ClCompile Include="src\Engine\Graphics\Components\AEXRenderable.cpp" />
     <ClCompile Include="src\Engine\Logic\AEXLogicSystem.cpp" />
-    <ClCompile Include="src\Engine\Logic\DetachSoul.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\Engine\MessagingSystem\AEXMessagingSystem.cpp" />
     <ClCompile Include="src\Engine\MessagingSystem\IEvent.cpp" />
     <ClCompile Include="src\Engine\Physics\AEXPhysicsSystem.cpp" />
@@ -321,12 +263,7 @@
     </ClCompile>
     <ClCompile Include="src\Engine\ResourceMgr\ImporterFunctions.cpp" />
     <ClCompile Include="src\Engine\ResourceMgr\ResourceMgr.cpp" />
-    <ClCompile Include="src\Engine\Scene\FadeInOut.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
-    <ClCompile Include="src\Engine\Scene\SceneHandler.cpp" />
-    <ClCompile Include="src\Engine\StateMachine\AEXStateMachineSystem.cpp" />
-    <ClCompile Include="src\Engine\StateMachine\PlayerStates.cpp" />
-    <ClCompile Include="src\Engine\StateMachine\StateMachine.cpp" />
     <ClCompile Include="src\Extern\GL\glew.c" />
     <ClCompile Include="src\Extern\imgui\imgui.cpp" />
     <ClCompile Include="src\Extern\imgui\ImGuizmo.cpp" />
@@ -423,18 +360,8 @@
     <ClInclude Include="src\Engine\Debug\AEXCheckGLError.h" />
     <ClInclude Include="src\Engine\Debug\AEXDebug.h" />
     <ClInclude Include="src\Engine\Editor\AEXEditor.h" />
-    <ClInclude Include="src\Engine\GameComponents\BreakableComp.h" />
     <ClInclude Include="src\Engine\GameComponents\BubbleComp.h" />
     <ClInclude Include="src\Engine\GameComponents\Bullet.h" />
-    <ClInclude Include="src\Engine\GameComponents\Button.h" />
-    <ClInclude Include="src\Engine\GameComponents\InfoScreen.h" />
-    <ClInclude Include="src\Engine\GameComponents\Key.h" />
-    <ClInclude Include="src\Engine\GameComponents\PressurePlate.h" />
-    <ClInclude Include="src\Engine\GameComponents\Door.h" />
-    <ClInclude Include="src\Engine\GameComponents\EnemyHealth.h" />
-    <ClInclude Include="src\Engine\GameComponents\PlayerAttack.h" />
-    <ClInclude Include="src\Engine\GameComponents\PlayerMovement.h" />
-    <ClInclude Include="src\Engine\GameComponents\PressPuzzleController.h" />
     <ClInclude Include="src\Engine\GameComponents\Turret.h" />
     <ClInclude Include="src\Engine\Graphics\AEXColor.h" />
     <ClInclude Include="src\Engine\Graphics\AEXGfxSystem.h" />
@@ -449,9 +376,6 @@
     <ClInclude Include="src\Engine\Graphics\Components\AEXGfxComps.h" />
     <ClInclude Include="src\Engine\Logic\AEXGameState.h" />
     <ClInclude Include="src\Engine\Logic\AEXLogicSystem.h" />
-    <ClInclude Include="src\Engine\Logic\DetachSoul.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="src\Engine\MessagingSystem\AEXMessagingSystem.h" />
     <ClInclude Include="src\Engine\MessagingSystem\IEvent.h" />
     <ClInclude Include="src\Engine\MessagingSystem\EventList.h" />
@@ -465,12 +389,7 @@
     <ClInclude Include="src\Engine\Platform\AEXTime.h" />
     <ClInclude Include="src\Engine\Platform\AEXWindow.h" />
     <ClInclude Include="src\Engine\ResourceMgr\ResourceMgr.h" />
-    <ClInclude Include="src\Engine\Scene\FadeInOut.h" />
     <ClInclude Include="src\Engine\Scene\Scene.h" />
-    <ClInclude Include="src\Engine\Scene\SceneHandler.h" />
-    <ClInclude Include="src\Engine\StateMachine\AEXStateMachineSystem.h" />
-    <ClInclude Include="src\Engine\StateMachine\PlayerStates.h" />
-    <ClInclude Include="src\Engine\StateMachine\StateMachine.h" />
     <ClInclude Include="src\Extern\aexmath\aexmath\AEXIntersection.h" />
     <ClInclude Include="src\Extern\aexmath\aexmath\AEXMath.h" />
     <ClInclude Include="src\Extern\aexmath\aexmath\AEXMathDefs.h" />
