@@ -37,6 +37,8 @@ namespace AEX{
 		resMgr->LoadFolder("data/Prefabs", true);
 		resMgr->LoadFolder("EditorData", true);
 
+		//aexScene->LoadFile("data/Scenes/bubolScene.json", false);
+
 		changeScene.HasToChange = false;
 		changeScene.newScene = " ";
 
@@ -83,6 +85,7 @@ namespace AEX{
 			// clean up previous frame dead objects
 			scene->DeleteAllSpaceDeadObjects();
 
+			//editor->SetEnabled(false);
 			editor->Update();
 
 			if(changeScene.HasToChange)

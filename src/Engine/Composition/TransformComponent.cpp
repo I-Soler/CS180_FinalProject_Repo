@@ -65,7 +65,7 @@ namespace AEX
 	void TransformComp::Shutdown()
 	{
 		if (mParentTransform)
-			RemoveChildTransform(this);
+			mParentTransform->RemoveChildTransform(this);
 
 		RemoveFromSystem();
 	}
@@ -89,12 +89,12 @@ namespace AEX
 	void TransformComp::RemoveChildTransform(TransformComp* tr)
 	{
 		// todo
-		for (std::list<TransformComp*>::iterator it = mParentTransform->mChildren.begin();
-			it != mParentTransform->mChildren.end(); ++it)
+		for (std::list<TransformComp*>::iterator it = mChildren.begin();
+			it != mChildren.end(); ++it)
 			if (*it == tr)
 			{
 				tr->mParentTransform = nullptr;
-				mParentTransform->mChildren.erase(it);
+				mChildren.erase(it);
 				break;
 			}
 	}

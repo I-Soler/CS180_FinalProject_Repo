@@ -32,6 +32,6 @@ namespace AEX
 		float shootDelay = 0.0f;
 
 		bool RotClockWise = true;
-		AEXTimer RotTimer;
+		float AmountRotated = 45;
 	};
 }

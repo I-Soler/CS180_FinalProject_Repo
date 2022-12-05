@@ -132,7 +132,7 @@ namespace AEX
 		// register breakable collider to CollisionStayEvent for breaking it
 		std::string evName = typeid(CollisionEnterEvent).name();
 
-		mOwner->mEvents.unsubscribe(*mOwner->mEvents.AllEvents[evName][0], evName);
+		//mOwner->mEvents.unsubscribe(*mOwner->mEvents.AllEvents[evName][0], evName);
 		RemoveFromSystem();
 	}
 	bool BubbleComp::Edit()
@@ -152,8 +152,8 @@ namespace AEX
 
 	void BubbleComp::Die(const CollisionEnterEvent& collision)
 	{
-		if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
-			mOwner->mOwnerSpace->DeleteObject(mOwner);
+		//if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
+		//	mOwner->mOwnerSpace->DeleteObject(mOwner);
 	}
 
 	// FUNCTION READ IN MULTITHREDING
@@ -166,23 +166,23 @@ namespace AEX
 
 		/*..........Can we dodge bullet moving away from it?..........*/
 		// try to dodge in every directions
-		if (ti.thisPtr->dodgeMoving == false)
-		{
-			// 8 loops
-			float angle = 0.0f;
-			for (angle; angle < TWO_PI; angle += PI / 4.0f)
-			{
-				// check ways to avoid collision
-				AEVec2 newPos(ti.pos.x + 30.0f * Cos(angle), ti.pos.y + 30.0f * Sin(angle));
-				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
-				{
-					// dodge
-					ti.thisPtr->dodgeMoving = true;
-					ti.thisPtr->dodgeAngle = angle;
-					return;
-				}
-			}	// if no dodge angle was found, try something else
-		}
+		//if (ti.thisPtr->dodgeMoving == false)
+		//{
+		//	// 8 loops
+		//	float angle = 0.0f;
+		//	for (angle; angle < TWO_PI; angle += PI / 4.0f)
+		//	{
+		//		// check ways to avoid collision
+		//		AEVec2 newPos(ti.pos.x + 30.0f * Cos(angle), ti.pos.y + 30.0f * Sin(angle));
+		//		if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
+		//		{
+		//			// dodge
+		//			ti.thisPtr->dodgeMoving = true;
+		//			ti.thisPtr->dodgeAngle = angle;
+		//			return;
+		//		}
+		//	}	// if no dodge angle was found, try something else
+		//}
 
 		/*..........Can we avoid bullet joining to another bubble?..........*/
 		// try to attach to another bubble
