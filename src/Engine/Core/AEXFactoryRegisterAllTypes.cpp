@@ -27,39 +27,9 @@ namespace AEX
 		
 		//Logic Components
 		Register<LogicComp>();
-		Register<PlayerMovement>();
-		Register<PlayerAttack>();
-		//Register<DetachSoul>(); RIP
-		Register<SceneHandler>();
-		//Register<DetachSoul>();
-		Register<Door>();
-		Register<EnemyHealth>();
-		Register<PressurePlate>();
-		Register<PressPuzzleController>();
-		Register<BreakableComp>();
-		Register<InfoScreen>();
-		Register<Fade>();
-		Register<Button>();
 
 		Register<BubbleComp>();
 		Register<TurretComp>();
 		Register<BulletComp>();
-
-		//Audio Components and Resources
-		Register<Sound>();
-		Register<AudioSourceComp>();
-
-		//States Machine
-		Register<SuperStateComp>();
-		Register<PlayerHorizontalState>();
-		Register<PlayerIdleState>();
-		Register<PlayerVerticalUpState>();
-		Register<PlayerVerticalDownState>();
-		Register<DummyState>();
-
-		//Spine
-		Register<SkeletonAnimComp>();
-		Register<SkeletonRenderable>();
-		Register<TextureAtlas>();
 	}
 }

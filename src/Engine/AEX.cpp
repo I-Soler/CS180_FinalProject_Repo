@@ -31,10 +31,6 @@ namespace AEX{
 		resMgr->LoadFolder("data/Models", false);
 		resMgr->LoadFolder("data/Shaders", false);
 		resMgr->LoadFolder("data/Images", true);
-		resMgr->LoadFolder("data/Spine/Background", false);
-		resMgr->LoadFolder("data/Spine/spineboy", false);
-		resMgr->LoadFolder("data/Audio", false);
-		resMgr->LoadFolder("data/Prefabs", true);
 		resMgr->LoadFolder("EditorData", true);
 
 		//aexScene->LoadFile("data/Scenes/bubolScene.json", false);
@@ -88,11 +84,11 @@ namespace AEX{
 			//editor->SetEnabled(false);
 			editor->Update();
 
-			if(changeScene.HasToChange)
-			{
-				changeScene.HasToChange = false;
-				aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
-			}
+			//if(changeScene.HasToChange)
+			//{
+			//	changeScene.HasToChange = false;
+			//	aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
+			//}
 
 			if (!editor->Enabled())
 			{
@@ -126,7 +122,7 @@ namespace AEX{
 			gfx->Present();
 
 			// audio
-			audio->Update();
+			//audio->Update();
 
 			time->EndFrame();
 
