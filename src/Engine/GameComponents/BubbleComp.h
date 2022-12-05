@@ -54,6 +54,8 @@ namespace AEX
 		float dodgeAngle = 0.0f;
 		bool canJoin = true;	// sets to false if another bubble is going to join to this
 
+		bool DieOnContact = false;
+
 		// static interface
 		static std::list<GameObject*> otherBubbles;
 		static std::map<TurretComp*, bool> turrets;

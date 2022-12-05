@@ -31,6 +31,8 @@ namespace AEX
 		AEVec2 bulletDir;
 		float shootDelay = 0.0f;
 
+		float Recharge = 5.0f;
+
 		bool RotClockWise = true;
 		float AmountRotated = 45;
 	};

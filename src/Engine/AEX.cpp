@@ -32,8 +32,6 @@ namespace AEX{
 		resMgr->LoadFolder("data/Images", true);
 		resMgr->LoadFolder("EditorData", true);
 
-		aexScene->LoadFile("data/Scenes/bubolScene.json", false);
-
 		changeScene.HasToChange = false;
 		changeScene.newScene = " ";
 
@@ -65,7 +63,8 @@ namespace AEX{
 		auto phx = aexPhysics;
 		auto gfx = aexGraphics;
 		auto collisions = aexCollision;
-
+		
+		aexEditor->Initialize();
 		// run the game loop
 		while (input->KeyTriggered(Keys::Escape) == false &&
 			window->Exists())
@@ -78,14 +77,15 @@ namespace AEX{
 			// clean up previous frame dead objects
 			scene->DeleteAllSpaceDeadObjects();
 
-			editor->SetEnabled(false);
-			//editor->Update();
+			//editor->SetEnabled(false);
+			editor->Update();
 
 			//if(changeScene.HasToChange)
 			//{
 			//	changeScene.HasToChange = false;
 			//	aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
 			//}
+
 
 			if (!editor->Enabled())
 			{

@@ -43,7 +43,7 @@ namespace AEX
 		}
 
 
-		if (timer.GetTimeSinceStart() >= 5 + shootDelay)	// make a bullet each 5 seconds
+		if (timer.GetTimeSinceStart() >= Recharge + shootDelay)	// make a bullet each 5 seconds
 		{
 			shootDelay = 0;	// delay only affects first shot
 			Shoot();
@@ -93,7 +93,8 @@ namespace AEX
 	}
 	bool TurretComp::Edit()
 	{
-		ImGui::DragFloat("Delay", &shootDelay, 0, 4);
+		ImGui::DragFloat("Initial Delay", &shootDelay, 0.1, 0,4);
+		ImGui::DragFloat("Time between bullets", &Recharge, 0.1, 0.5, 8);
 		return false;
 	}
 }

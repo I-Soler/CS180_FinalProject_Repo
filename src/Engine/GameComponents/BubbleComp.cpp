@@ -138,6 +138,7 @@ namespace AEX
 	}
 	bool BubbleComp::Edit()
 	{
+		ImGui::Checkbox("Enable bubble Dying", &DieOnContact);
 		return true;
 	}
 
@@ -153,8 +154,10 @@ namespace AEX
 
 	void BubbleComp::Die(const CollisionEnterEvent& collision)
 	{
-		//if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
-		//	mOwner->mOwnerSpace->DeleteObject(mOwner);
+		if (!DieOnContact)
+			return;
+		if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
+			mOwner->mOwnerSpace->DeleteObject(mOwner);
 	}
 
 	// FUNCTION READ IN MULTITHREDING
