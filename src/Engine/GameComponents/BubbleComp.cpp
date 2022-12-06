@@ -115,8 +115,8 @@ namespace AEX
 			// add random force in both x and y
 			else
 			{
-				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
-				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 5.0f);	// between 0 and 2PI
+				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 5.0f);	// between 0 and 2PI
 				mRgbd->AddForce({ x_dir, y_dir });
 			}
 		}
@@ -178,8 +178,8 @@ namespace AEX
 			for (float angle = initAngle; angle < initAngle + TWO_PI; angle += PI / 4.0f)
 			{
 				// check ways to avoid collision
-				AEVec2 newPos(ti.pos.x + 30.0f * Cos(angle), ti.pos.y + 30.0f * Sin(angle));
-				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
+				AEVec2 newPos(ti.pos.x + 40.0f * Cos(angle), ti.pos.y + 40.0f * Sin(angle));
+				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result) == -1)
 				{
 					// dodge
 					ti.thisPtr->dodgeMoving = true;
@@ -217,7 +217,7 @@ namespace AEX
 				// radius of new joined circle
 				float newRadius = (otherTr->GetScale().x + ti.radius) * 0.8f;
 				// check collision
-				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 5.0f, &result) != -1)
+				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) != -1)
 				{	// can dodge this way, then do it!
 
 					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
@@ -269,6 +269,7 @@ namespace AEX
 				bc->AddToSystem();
 				bc->OnCreate();
 				bc->Initialize();
+				bc->DieOnContact = ti.thisPtr->DieOnContact;
 				Obj->OnCreate();
 				Obj->Initialize();
 			}

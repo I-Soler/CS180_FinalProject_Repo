@@ -10,7 +10,7 @@
 namespace AEX
 {
 	// maximum distance to join another bubble
-	#define	MAX_DIST_SQ 22500.0f	// 100 x 100
+	#define	MAX_DIST_SQ 40000.0f	// 200 x 100
 
 	class BubbleComp;
 	struct thread_info

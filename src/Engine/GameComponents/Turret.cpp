@@ -15,12 +15,15 @@ namespace AEX
 	void TurretComp::Initialize()
 	{
 		timer.Start();
+		timer.Reset();
 		ParentTr = mOwner->GetComp<TransformComp>();
 
 		BubbleComp::turrets[this] = false;
 	}
 	void TurretComp::Update()
 	{
+		BubbleComp::turrets[this] = false;
+
 		if (RotClockWise)
 		{
 			ParentTr->mLocal.mOrientation += 0.01;
