@@ -21,9 +21,9 @@ namespace AEX
 
 	bool Editor::Initialize()
 	{
-		aexScene->LoadFile("data/Scenes/Default Scene.json", false);
+		aexScene->LoadFile("data/Scenes/bubolScene.json", true);
 
-		InitEditorCamera();
+		InitEditorCamera();	// Init editor camera in the new scene	
 
 		timer.Start();
 		return true;
@@ -33,16 +33,6 @@ namespace AEX
 		if (aexInput->KeyTriggered(Keys::F5))
 			SetEnabled(!Enabled());
 
-		// Auto save every 5 mins
-		if (timer.GetTimeSinceStart() >= 60 * 5)
-		{
-			aexScene->SaveFile("data/Scenes/Auto saved scene.json");
-			timer.Reset();
-		}
-
-		// Ctrl + S
-		if (aexInput->KeyPressed(Keys::KeyCodes::Control) && aexInput->KeyPressed('S'))
-			aexScene->SaveFile(SceneName.c_str());
 
 		Menu();
 		GameObject* camera = mEditorCameras[currentSpace];
@@ -64,8 +54,8 @@ namespace AEX
 
 			ObjectManager();
 			Inspector();
-			ShowFiles("data");
-			Assets("data");
+			//ShowFiles("data");
+			//Assets("data");
 		}
 		else
 		{
@@ -73,64 +63,64 @@ namespace AEX
 				it->SetEnabled(true);
 
 			camera->SetEnabled(false);
-		}
+		}		
 	}
 	void Editor::Menu()
 	{
 		// Load and save scene
 		ImGui::BeginMainMenuBar();
 
-		if (ImGui::BeginMenu("File"))
-		{
-			if (ImGui::Button("New Scene"))
-			{
-				aexScene->SaveFile(SceneName.c_str());	// Save the scene we are working in
-				aexScene->LoadFile("data/Scenes/Default Scene.json");	// Loads the default scene
-				aexScene->SaveFile("data/Scenes/New Scene.json");		// Creates a new scene
-				SceneName = "data/Scenes/New Scene.json";
+		//if (ImGui::BeginMenu("File"))
+		//{
+		//	if (ImGui::Button("New Scene"))
+		//	{
+		//		aexScene->SaveFile(SceneName.c_str());	// Save the scene we are working in
+		//		aexScene->LoadFile("data/Scenes/Default Scene.json");	// Loads the default scene
+		//		aexScene->SaveFile("data/Scenes/New Scene.json");		// Creates a new scene
+		//		SceneName = "data/Scenes/New Scene.json";
 
-				SelectedObjs.clear();	// clean inspector
-				InitEditorCamera();	// Init editor camera in the new scene	
-			}
+		//		SelectedObjs.clear();	// clean inspector
+		//		InitEditorCamera();	// Init editor camera in the new scene	
+		//	}
 
-			ImGui::EndMenu();
-		}
+		//	ImGui::EndMenu();
+		//}
 
-		if (ImGui::BeginMenu("Load and Save"))
-		{
-			ImGui::Checkbox("Show Demo Window", &showImGuiDemoWindow);
+		//if (ImGui::BeginMenu("Load and Save"))
+		//{
+		//	ImGui::Checkbox("Show Demo Window", &showImGuiDemoWindow);
 
-			static char label[] = "";
-			ImGui::Text("Name of scene : "); ImGui::SameLine();
-			ImGui::Text(SceneName.c_str());
+		//	static char label[] = "";
+		//	ImGui::Text("Name of scene : "); ImGui::SameLine();
+		//	ImGui::Text(SceneName.c_str());
 
-			if (ImGui::InputText("Edit file name", label, 30))
-				SceneName = AddScenePath(label);
-			
-			if (ImGui::Button("Save"))
-				aexScene->SaveFile(SceneName.c_str());
-			
-			if (ImGui::Button("Load"))			// load file using OpenSaveFileDlg
-			{
-				OpenSaveFileDlg dlg;
-				if (dlg.Open("Select Scene File"))
-				{
-					std::string filename = dlg.GetFiles()[0];
-					SceneName = filename.c_str(); // Store the name
+		//	if (ImGui::InputText("Edit file name", label, 30))
+		//		SceneName = AddScenePath(label);
+		//	
+		//	if (ImGui::Button("Save"))
+		//		aexScene->SaveFile(SceneName.c_str());
+		//	
+		//	if (ImGui::Button("Load"))			// load file using OpenSaveFileDlg
+		//	{
+		//		OpenSaveFileDlg dlg;
+		//		if (dlg.Open("Select Scene File"))
+		//		{
+		//			std::string filename = dlg.GetFiles()[0];
+		//			SceneName = filename.c_str(); // Store the name
 
-					/*aexGraphics->ClearCameras();
-					aexGraphics->ClearRenderables();*/
-					for (auto& it : mEditorCameras)	// delete prev camera
-						it.second->Shutdown();
+		//			/*aexGraphics->ClearCameras();
+		//			aexGraphics->ClearRenderables();*/
+		//			for (auto& it : mEditorCameras)	// delete prev camera
+		//				it.second->Shutdown();
 
-					aexScene->LoadFile(filename.c_str());
-					SelectedObjs.clear();	// Clean inspector
+		//			aexScene->LoadFile(filename.c_str());
+		//			SelectedObjs.clear();	// Clean inspector
 
-					InitEditorCamera();	// Init editor camera in the new scene	
-				}
-			}
-			ImGui::EndMenu();
-		}
+		//			InitEditorCamera();	// Init editor camera in the new scene	
+		//		}
+		//	}
+		//	ImGui::EndMenu();
+		//}
 
 		// Start, pause and continue
 		if (ImGui::Button("Start"))
@@ -151,8 +141,8 @@ namespace AEX
 
 		if (ImGui::Button("Stop") && editing)
 		{
-			for (auto& it : mEditorCameras)	// delete prev camera
-				it.second->Shutdown();
+			//for (auto& it : mEditorCameras)	// delete prev camera
+			//	it.second->Shutdown();
 
 			aexScene->LoadFile("data/Scenes/TemporalSave.json", false);
 			editing = false;
@@ -176,39 +166,6 @@ namespace AEX
 			ImGui::Checkbox("Edit collider", &EditCollider);
 			ImGui::EndMenu();
 		}
-
-		if (ImGui::BeginMenu("Spaces"))
-		{
-			static char Spacelabel[20] = "Default";
-			ImGui::InputText("", Spacelabel, IM_ARRAYSIZE(Spacelabel));
-
-			if (ImGui::Button("Add Space"))
-			{
-
-				aexScene->NewSpace(Spacelabel);
-			}
-
-			ImGui::SameLine();
-			if (ImGui::Button("Delete Space"))
-			{
-				// Some spaces should be non deletable
-				if (strcmp(Spacelabel, "Main") != 0)
-					aexScene->DestroySpace(Spacelabel);
-				else
-					std::cout << "cant delete those spaces" << std::endl;
-			}
-
-			if (ImGui::CollapsingHeader("List of spaces"))
-			{
-				// Make currentSpace be changable here
-				for (auto& it : aexScene->GetAllSpaces())
-				{
-					if (ImGui::Button(it->GetName()))
-						currentSpace = it;
-				}
-			}
-			ImGui::EndMenu();
-		}
 		ImGui::EndMainMenuBar();
 
 		if (showImGuiDemoWindow)
@@ -220,37 +177,37 @@ namespace AEX
 		if (ImGui::Begin("Object Manager"))
 		{
 			// Create default Object 
-			if (ImGui::Button("Create Object"))
-			{
-				Space* mainSp = aexScene->GetMainSpace();				// Get space where object will be added
-
-				std::string objStr("New Object ");
-				objStr += std::to_string(GameObjCounter);				// Avoid object having the same name
-				GameObjCounter++;
-
-				GameObject* Obj = mainSp->NewObject(objStr.c_str());	// create the object
-
-				// Every object must have a Transform and a Renderable by default
-				TransformComp* tr = aexFactory->Create<TransformComp>();
-				tr->mLocal.mScale = AEVec2(50, 50);
-				Obj->AddComp(tr);	Obj->NewComp<Renderable>();
-				Obj->OnCreate(); Obj->Initialize();
-			}
-
-			ImGui::SameLine();
-
-			// Delete selected objects
-			if (ImGui::Button("Delete Object") && SelectedObjs.size())
-			{
-				for (int it = 0; it < SelectedObjs.size(); it++)
-				{
-					Space* objSpace = SelectedObjs[it]->mOwnerSpace;	// get space of object to be deleted
-					objSpace->DeleteObject(SelectedObjs[it]);
-				}
-				SelectedObjs.clear();
-			}
-
-			// Clone selected objects
+			//if (ImGui::Button("Create Object"))
+			//{
+			//	Space* mainSp = aexScene->GetMainSpace();				// Get space where object will be added
+			//
+			//	std::string objStr("New Object ");
+			//	objStr += std::to_string(GameObjCounter);				// Avoid object having the same name
+			//	GameObjCounter++;
+			//
+			//	GameObject* Obj = mainSp->NewObject(objStr.c_str());	// create the object
+			//
+			//	// Every object must have a Transform and a Renderable by default
+			//	TransformComp* tr = aexFactory->Create<TransformComp>();
+			//	tr->mLocal.mScale = AEVec2(50, 50);
+			//	Obj->AddComp(tr);	Obj->NewComp<Renderable>();
+			//	Obj->OnCreate(); Obj->Initialize();
+			//}
+			//
+			//ImGui::SameLine();
+			//
+			//// Delete selected objects
+			//if (ImGui::Button("Delete Object") && SelectedObjs.size())
+			//{
+			//	for (int it = 0; it < SelectedObjs.size(); it++)
+			//	{
+			//		Space* objSpace = SelectedObjs[it]->mOwnerSpace;	// get space of object to be deleted
+			//		objSpace->DeleteObject(SelectedObjs[it]);
+			//	}
+			//	SelectedObjs.clear();
+			//}
+			//
+			//// Clone selected objects
 			if (ImGui::Button("Clone") && SelectedObjs.size())
 			{
 				for (int it = 0; it < SelectedObjs.size(); it++)
@@ -258,29 +215,29 @@ namespace AEX
 					GameObject* obj = SelectedObjs[it]->clone();
 				}
 			}
-			ImGui::SameLine();
-
-			// Add a child to selected objects
-			if (ImGui::Button("Create child") && SelectedObjs.size())
-			{
-				for (int it = 0; it < SelectedObjs.size(); it++)
-				{
-					std::string objStr("Child");
-					objStr += std::to_string(GameObjCounter);	// Avoid object having the same name
-					GameObjCounter++;
-
-					Space* objSpace = SelectedObjs[it]->mOwnerSpace;			// get space from the parent
-					GameObject* Obj = objSpace->NewObject(objStr.c_str());	// create child in that space
-					SelectedObjs[it]->AddChild(Obj);
-
-					// Every object must have a Transform and a Renderable by default
-					TransformComp* tr = aexFactory->Create<TransformComp>();
-					tr->mLocal.mScale = AEVec2(1, 1);
-					Obj->AddComp(tr);
-					Obj->AddComp(aexFactory->Create<Renderable>());
-					Obj->OnCreate(); Obj->Initialize();// don't initialize when in edit mode only when launching the game
-				}
-			}
+			//ImGui::SameLine();
+			//
+			//// Add a child to selected objects
+			//if (ImGui::Button("Create child") && SelectedObjs.size())
+			//{
+			//	for (int it = 0; it < SelectedObjs.size(); it++)
+			//	{
+			//		std::string objStr("Child");
+			//		objStr += std::to_string(GameObjCounter);	// Avoid object having the same name
+			//		GameObjCounter++;
+			//
+			//		Space* objSpace = SelectedObjs[it]->mOwnerSpace;			// get space from the parent
+			//		GameObject* Obj = objSpace->NewObject(objStr.c_str());	// create child in that space
+			//		SelectedObjs[it]->AddChild(Obj);
+			//
+			//		// Every object must have a Transform and a Renderable by default
+			//		TransformComp* tr = aexFactory->Create<TransformComp>();
+			//		tr->mLocal.mScale = AEVec2(1, 1);
+			//		Obj->AddComp(tr);
+			//		Obj->AddComp(aexFactory->Create<Renderable>());
+			//		Obj->OnCreate(); Obj->Initialize();// don't initialize when in edit mode only when launching the game
+			//	}
+			//}
 
 			// Show all exisiting objects + children in the scene
 			for (auto& it : aexScene->GetAllSpaces())
@@ -308,36 +265,6 @@ namespace AEX
 			char* label = const_cast<char*>(SelectedObjs[0]->GetName());
 			ImGui::InputText("", label, 20);
 
-			// show object tag
-			ImGui::Text("tag:");
-			ImGui::SameLine();
-			ImGui::Text(tags[SelectedObjs[0]->mTag].c_str());
-
-			// set object tag
-			if (ImGui::CollapsingHeader("Set tag"))
-				for (std::map<unsigned, std::string>::iterator it = tags.begin(); it != tags.end(); ++it)
-					if (ImGui::Button(it->second.c_str()))
-						SelectedObjs[0]->mTag = it->first;
-
-			// Show the space of the object and allow changing space
-			ImGui::Text("Space"); ImGui::SameLine();
-			if (ImGui::TreeNode(SelectedObjs[0]->mOwnerSpace->GetName()))
-			{
-				for (auto& it : aexScene->GetAllSpaces())
-				{
-					if (ImGui::Button(it->GetName()))
-					{
-						Space* ObjSpace = SelectedObjs[0]->mOwnerSpace;
-						ObjSpace->RemoveChild(SelectedObjs[0]); // Remove object from old space
-
-						it->AddChild(SelectedObjs[0]);			// Add object to the new space
-					}
-				}
-				ImGui::TreePop();
-			}
-			ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();	// More visually apealing
-
-
 			// Show, Edit and Delete existing Components
 			std::vector<IComp*> SComp = SelectedObjs[0]->GetAllComp();
 			for (int it = 0; it < SComp.size(); it++)
@@ -356,13 +283,13 @@ namespace AEX
 					continue;
 				}
 
-				// Delete component
-				if (ImGui::Button(CompDelete.c_str()))
-				{
-					SelectedObjs[0]->RemoveComp(SComp[it]);
-					deleted = true;
-				}
-				ImGui::SameLine();
+				//// Delete component
+				//if (ImGui::Button(CompDelete.c_str()))
+				//{
+				//	SelectedObjs[0]->RemoveComp(SComp[it]);
+				//	deleted = true;
+				//}
+				//ImGui::SameLine();
 
 				if (!deleted)
 				{
@@ -373,36 +300,36 @@ namespace AEX
 				ImGui::PopID();
 			}
 
-			if (ImGui::TreeNode("Add Component"))
-			{
-				//Show all components avaliable to add
-				for (auto it = Rtti::GetAllTypes().begin(); it != Rtti::GetAllTypes().end(); ++it)
-				{
-					if (!it->second.IsDerivedFrom(IComp::TYPE()))
-						continue;
+			//if (ImGui::TreeNode("Add Component"))
+			//{
+			//	//Show all components avaliable to add
+			//	for (auto it = Rtti::GetAllTypes().begin(); it != Rtti::GetAllTypes().end(); ++it)
+			//	{
+			//		if (!it->second.IsDerivedFrom(IComp::TYPE()))
+			//			continue;
 
-					// avoid adding two components of the same type
-					// Exception for the collider, an object can have multiple of this
-					if (SelectedObjs[0]->GetComp(it->second.GetName().c_str()) != nullptr
-						&& it->second.GetName() != "Collider")
-						continue;
+			//		// avoid adding two components of the same type
+			//		// Exception for the collider, an object can have multiple of this
+			//		if (SelectedObjs[0]->GetComp(it->second.GetName().c_str()) != nullptr
+			//			&& it->second.GetName() != "Collider")
+			//			continue;
 
-					// Edge cases: 
-					// -Logic Comp is not a valid component 
-					// -TransformComp comes by default
-					if (it->second.GetName() == "LogicComp" || it->second.GetName() == "TransformComp")
-						continue;
+			//		// Edge cases: 
+			//		// -Logic Comp is not a valid component 
+			//		// -TransformComp comes by default
+			//		if (it->second.GetName() == "LogicComp" || it->second.GetName() == "TransformComp")
+			//			continue;
 
-					// Create and add the component
-					if (ImGui::Button(it->second.GetName().c_str()))
-					{
-						IComp* Comp = (IComp*)aexFactory->Create(it->second.GetName().c_str());
-						SelectedObjs[0]->AddComp(Comp);
-						Comp->AddToSystem(); Comp->OnCreate(); Comp->Initialize();
-					}
-				}
-				ImGui::TreePop();
-			}
+			//		// Create and add the component
+			//		if (ImGui::Button(it->second.GetName().c_str()))
+			//		{
+			//			IComp* Comp = (IComp*)aexFactory->Create(it->second.GetName().c_str());
+			//			SelectedObjs[0]->AddComp(Comp);
+			//			Comp->AddToSystem(); Comp->OnCreate(); Comp->Initialize();
+			//		}
+			//	}
+			//	ImGui::TreePop();
+			//}
 		}
 		ImGui::End();
 	}
@@ -692,23 +619,6 @@ namespace AEX
 		TransformComp* tr = camObj->GetComp<TransformComp>();
 
 		auto input = aexInput;
-
-		if (input->KeyPressed('W'))
-			tr->SetWorldPosition(tr->GetWorldPosition() + AEVec3(0, 1, 0));
-
-		if (input->KeyPressed('A'))
-			tr->SetWorldPosition(tr->GetWorldPosition() + AEVec3(-1, 0, 0));
-
-		if (input->KeyPressed('S'))
-			tr->SetWorldPosition(tr->GetWorldPosition() + AEVec3(0, -1, 0));
-
-		if (input->KeyPressed('D'))
-			tr->SetWorldPosition(tr->GetWorldPosition() + AEVec3(1, 0, 0));
-
-		if (input->GetMouseWheel() > 0)
-			cam->mViewRectangle *= 0.99f;
-		else if (input->GetMouseWheel() < 0)
-			cam->mViewRectangle *= 1.01f;
 
 		// Check click of the map
 		if (!input->MousePressed(0) || ImGuizmo::IsUsing())

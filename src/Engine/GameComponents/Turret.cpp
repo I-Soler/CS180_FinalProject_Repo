@@ -15,35 +15,42 @@ namespace AEX
 	void TurretComp::Initialize()
 	{
 		timer.Start();
-		RotTimer.Start();
+		timer.Reset();
 		ParentTr = mOwner->GetComp<TransformComp>();
 
 		BubbleComp::turrets[this] = false;
 	}
 	void TurretComp::Update()
 	{
+		BubbleComp::turrets[this] = false;
+
 		if (RotClockWise)
 		{
 			ParentTr->mLocal.mOrientation += 0.01;
-			if (RotTimer.GetTimeSinceStart() > 2)
+			AmountRotated += RadToDeg(0.01);
+			if (AmountRotated > 90)
 			{
 				RotClockWise = false;
-				RotTimer.Reset();
+				AmountRotated = 0;
 			}
 		}
 		else
 		{
 			ParentTr->mLocal.mOrientation -= 0.01;
-			if (RotTimer.GetTimeSinceStart() > 2)
+			AmountRotated += RadToDeg(0.01);
+			if (AmountRotated > 90)
 			{
 				RotClockWise = true;
-				RotTimer.Reset();
+				AmountRotated = 0;
 			}
 		}
 
 
-		if (timer.GetTimeSinceStart() >= 5 + shootDelay)	// make a bullet each 5 seconds
+		if (timer.GetTimeSinceStart() >= Recharge + shootDelay)	// make a bullet each 5 seconds
+		{
+			shootDelay = 0;	// delay only affects first shot
 			Shoot();
+		}
 		
 	}
 	void TurretComp::Shoot()
@@ -60,6 +67,9 @@ namespace AEX
 		tr->mLocal.mOrientation = ParentTr->mWorld.mOrientation;
 		Obj->AddComp(tr);	Obj->NewComp<BulletComp>()->gun = this;
 		Obj->NewComp<Renderable>();
+		auto col = Obj->NewComp<Collider>();
+		col->Ghost = true;
+		col->mColliderType = Collider::CT_CIRCLE;
 		Obj->OnCreate(); Obj->Initialize();
 
 		bulletPos = tr->mLocal.mTranslation;
@@ -86,7 +96,8 @@ namespace AEX
 	}
 	bool TurretComp::Edit()
 	{
-		ImGui::DragFloat("Delay", &shootDelay, 0, 4);
+		ImGui::DragFloat("Initial Delay", &shootDelay, 0.1, 0,4);
+		ImGui::DragFloat("Time between bullets", &Recharge, 0.1, 0.5, 8);
 		return false;
 	}
 }

@@ -46,9 +46,6 @@ namespace AEX {
 	}
 	bool Renderable::Edit()
 	{
-		ImGui::ColorEdit4("Color", &mModulationColor.x);
-		ImGui::Checkbox("Is Isometric?", &mbIsIsometric);
-
 		if(ImGui::CollapsingHeader("Set texture"))	// Needs to check if the resource can be set
 		{
 			if (aexEditor->getResource<Texture>(&mpTexture))
@@ -60,43 +57,7 @@ namespace AEX {
 				return true;
 			}
 		}
-		if (ImGui::CollapsingHeader("Set Shader"))	// Needs to check if the resource can be set
-		{
-			if (aexEditor->getResource<ShaderProgram>(&mpShader))
-				return true;
-		}
-		if (ImGui::CollapsingHeader("Set Model"))	// Needs to check if the resource can be set
-		{
-			if (aexEditor->getResource<Model>(&mpModel))
-				return true;
-		}
-		
-		if (ImGui::CollapsingHeader("Set Atlas"))	// Needs to check if the resource can be set
-		{
-			TResource<TextureAtlas>* temp = nullptr;
-			
-			if (aexEditor->getResource<TextureAtlas>(&mpTexAtlas))
-			{
-				mpTexture = nullptr;
-			}	
-			if (mpTexAtlas && mpTexAtlas->get())
-			{
-				if (ImGui::CollapsingHeader("Choose Region"))
-				{
-					auto regionNames = mpTexAtlas->get()->GetAllRegionNames();
-					for (auto& rn : regionNames) {
-						if (ImGui::Selectable(rn.c_str())) {
-							mAtlasRegionName = rn;
-
-							auto sz = mpTexAtlas->get()->GetRegionSize(rn);
-							transform->SetWorldScale(sz);
-
-							break;
-						}
-					}
-				}
-			}
-		}
+	
 		return true;
 	}
 

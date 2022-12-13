@@ -3,7 +3,6 @@
 #include "AEXCollisionSystem.h"
 #include "ContactCollisions.h"
 #include <Extern/imgui/imgui.h>
-#include "MessagingSystem/EventList.h"
 
 
 namespace AEX     // For the Collider class
@@ -44,6 +43,8 @@ namespace AEX     // For the Collider class
 	}
 	void Collider::Update()
 	{
+		DrawColliders();
+
 		// If rigidBody is created after collider, add it here
 		if (mRigidBody == nullptr && mOwner->GetComp<RigidbodyComp>() != nullptr)
 			mRigidBody = mOwner->GetComp<RigidbodyComp>();
@@ -416,11 +417,11 @@ namespace AEX     // For the Collision System class
 		}
 
 		// all the remaining contacts in prevContacts didn't occur again this frame 
-		for (auto& it : *mPrevContacts)
-		{
-			it.obj[0]->GetOwner()->mEvents.trigger_event(CollisionExitEvent(it.obj[1]->GetOwner(), it));
-			it.obj[1]->GetOwner()->mEvents.trigger_event(CollisionExitEvent(it.obj[0]->GetOwner(), it));
-		}
+		//for (auto& it : *mPrevContacts)
+		//{
+		//	it.obj[0]->GetOwner()->mEvents.trigger_event(CollisionExitEvent(it.obj[1]->GetOwner(), it));
+		//	it.obj[1]->GetOwner()->mEvents.trigger_event(CollisionExitEvent(it.obj[0]->GetOwner(), it));
+		//}
 
 		/*
 			loop to find the new contact in the previous frame contact

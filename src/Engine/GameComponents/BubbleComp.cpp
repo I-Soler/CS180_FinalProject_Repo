@@ -17,6 +17,7 @@ namespace AEX
 		mSpeed = 80.0f;
 		mRgbd = nullptr;
 		mTimer.Pause();
+		otherBubbles.remove(mOwner);	// avoid dups
 		otherBubbles.push_back(mOwner);
 		turrets.clear();
 	}
@@ -47,6 +48,7 @@ namespace AEX
 			mCol->mColliderType = Collider::CT_CIRCLE;
 			mCol->Static = false;
 		}
+		mCol->SetScale({ 0.5f, 0.5f });
 		mCol->mRigidBody = mRgbd;
 		mCol->Ghost = false;
 
@@ -97,12 +99,12 @@ namespace AEX
 			if (dodgeMoving && mTimer.isPaused_ == true)
 			{
 				// move away from bullet
-				mRgbd->AddForce({ mSpeed * Cos(dodgeAngle) * 30.0f, mSpeed * Sin(dodgeAngle) * 30.0f });
+				mRgbd->AddForce({ mSpeed * Cos(dodgeAngle) * 20.0f, mSpeed * Sin(dodgeAngle) * 20.0f });
 				mTimer.Reset();
 				mTimer.Start();
 			}
 			// dodge for 0.5 seconds
-			else if (mTimer.GetTimeSinceStart() >= 0.5f)
+			else if (mTimer.GetTimeSinceStart() >= 0.4f)
 			{
 				// reset dodge force
 				mRgbd->mVelocity = { 0.0f, 0.0f, 0.0f };
@@ -113,8 +115,8 @@ namespace AEX
 			// add random force in both x and y
 			else
 			{
-				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
-				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 5.0f);	// between 0 and 2PI
+				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 5.0f);	// between 0 and 2PI
 				mRgbd->AddForce({ x_dir, y_dir });
 			}
 		}
@@ -132,11 +134,12 @@ namespace AEX
 		// register breakable collider to CollisionStayEvent for breaking it
 		std::string evName = typeid(CollisionEnterEvent).name();
 
-		mOwner->mEvents.unsubscribe(*mOwner->mEvents.AllEvents[evName][0], evName);
+		//mOwner->mEvents.unsubscribe(*mOwner->mEvents.AllEvents[evName][0], evName);
 		RemoveFromSystem();
 	}
 	bool BubbleComp::Edit()
 	{
+		ImGui::Checkbox("Enable bubble Dying", &DieOnContact);
 		return true;
 	}
 
@@ -152,6 +155,8 @@ namespace AEX
 
 	void BubbleComp::Die(const CollisionEnterEvent& collision)
 	{
+		if (!DieOnContact)
+			return;
 		if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
 			mOwner->mOwnerSpace->DeleteObject(mOwner);
 	}
@@ -161,7 +166,7 @@ namespace AEX
 	{
 		/*..........Is the bubble in danger?..........*/
 		AEVec2 result;	// dummy
-		if (RayCastCircle(ti.origin, ti.dir, ti.pos, ti.radius + 20.0f, &result) == -1)
+		if (RayCastCircle(ti.origin, ti.dir, ti.pos, ti.radius + 50.0f, &result) == -1)
 			return;
 
 		/*..........Can we dodge bullet moving away from it?..........*/
@@ -169,12 +174,12 @@ namespace AEX
 		if (ti.thisPtr->dodgeMoving == false)
 		{
 			// 8 loops
-			float angle = 0.0f;
-			for (angle; angle < TWO_PI; angle += PI / 4.0f)
+			float initAngle = (float)(rand() % 8) * PI / 4.0f;
+			for (float angle = initAngle; angle < initAngle + TWO_PI; angle += PI / 4.0f)
 			{
 				// check ways to avoid collision
-				AEVec2 newPos(ti.pos.x + 30.0f * Cos(angle), ti.pos.y + 30.0f * Sin(angle));
-				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius, &result) == -1)
+				AEVec2 newPos(ti.pos.x + 40.0f * Cos(angle), ti.pos.y + 40.0f * Sin(angle));
+				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result) == -1)
 				{
 					// dodge
 					ti.thisPtr->dodgeMoving = true;
@@ -191,6 +196,8 @@ namespace AEX
 			unsigned size = BubbleComp::otherBubbles.size();
 			for (auto it = BubbleComp::otherBubbles.begin(); it != BubbleComp::otherBubbles.end(); ++it)
 			{
+				// not join to itself
+				if (*it == ti.thisPtr->GetOwner()) continue;
 				// restart (sanity check)
 				if (BubbleComp::otherBubbles.size() != size)
 				{
@@ -198,8 +205,6 @@ namespace AEX
 					return;
 				}
 
-				// not join to itself
-				if (*it == ti.thisPtr->GetOwner()) continue;
 				// other bubble too far away for joining
 				TransformComp* otherTr = (*it)->GetComp<TransformComp>();
 				if (otherTr == nullptr) return;
@@ -212,13 +217,16 @@ namespace AEX
 				// radius of new joined circle
 				float newRadius = (otherTr->GetScale().x + ti.radius) * 0.8f;
 				// check collision
-				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 10.0f, &result) != -1)
+				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) != -1)
 				{	// can dodge this way, then do it!
 
 					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 
 					// in case this other bubble tries to join us
-					(*it)->GetComp<BubbleComp>()->canJoin = false;
+
+					for (auto it2 = BubbleComp::otherBubbles.begin(); it2 != BubbleComp::otherBubbles.end(); ++it2)
+						if (*it2 != *it)
+							(*it2)->GetComp<BubbleComp>()->canJoin = false;
 
 					// delete other bubble
 					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
@@ -256,8 +264,12 @@ namespace AEX
 				tr->SetScale({ miniRadius, miniRadius });
 				tr->SetPosition(newPosRight);
 				Obj->AddComp(tr);
-				Obj->NewComp<Renderable>();
-				Obj->NewComp<BubbleComp>()->AddToSystem();
+				Obj->NewComp<Renderable>()->AddToSystem();
+				auto bc = Obj->NewComp<BubbleComp>();
+				bc->AddToSystem();
+				bc->OnCreate();
+				bc->Initialize();
+				bc->DieOnContact = ti.thisPtr->DieOnContact;
 				Obj->OnCreate();
 				Obj->Initialize();
 			}

@@ -18,9 +18,8 @@ namespace AEX{
 		if (!aexPhysics->Initialize())return false;
 		if (!aexScene->Initialize())return false;
 		if (!aexLogic->Initialize())return false;
-		if (!aexAudio->Initialize())return false;
 		if (!aexGui->Initialize())return false;
-		if (!aexEditor->Initialize())return false;
+		//if (!aexEditor->Initialize())return false;
 
 		// Frame rate controller options.
 		aexTime->LockFrameRate(true);
@@ -31,10 +30,6 @@ namespace AEX{
 		resMgr->LoadFolder("data/Models", false);
 		resMgr->LoadFolder("data/Shaders", false);
 		resMgr->LoadFolder("data/Images", true);
-		resMgr->LoadFolder("data/Spine/Background", false);
-		resMgr->LoadFolder("data/Spine/spineboy", false);
-		resMgr->LoadFolder("data/Audio", false);
-		resMgr->LoadFolder("data/Prefabs", true);
 		resMgr->LoadFolder("EditorData", true);
 
 		changeScene.HasToChange = false;
@@ -65,12 +60,11 @@ namespace AEX{
 		auto input = aexInput;
 		auto gui = aexGui;
 		auto editor = aexEditor;
-		auto statemachine = aexStateMachine;
 		auto phx = aexPhysics;
 		auto gfx = aexGraphics;
 		auto collisions = aexCollision;
-		auto audio = aexAudio;
-
+		
+		aexEditor->Initialize();
 		// run the game loop
 		while (input->KeyTriggered(Keys::Escape) == false &&
 			window->Exists())
@@ -83,19 +77,20 @@ namespace AEX{
 			// clean up previous frame dead objects
 			scene->DeleteAllSpaceDeadObjects();
 
+			//editor->SetEnabled(false);
 			editor->Update();
 
-			if(changeScene.HasToChange)
-			{
-				changeScene.HasToChange = false;
-				aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
-			}
+			//if(changeScene.HasToChange)
+			//{
+			//	changeScene.HasToChange = false;
+			//	aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
+			//}
+
 
 			if (!editor->Enabled())
 			{
 				// update game logic
 				logic->Update();
-				statemachine->Update();
 
 				// physics system update
 				phx->Update();
@@ -123,7 +118,7 @@ namespace AEX{
 			gfx->Present();
 
 			// audio
-			audio->Update();
+			//audio->Update();
 
 			time->EndFrame();
 

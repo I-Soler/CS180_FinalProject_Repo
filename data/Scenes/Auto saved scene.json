@@ -44,6 +44,7 @@
                         }
                     ],
                     "name": "Camera",
+                    "tag": 0,
                     "uid": 4294967295
                 },
                 {
@@ -53,20 +54,20 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    -63.24616241455078,
-                                    -33.32328414916992,
-                                    33.32328414916992
+                                    -388.457275390625,
+                                    -4.552436828613281,
+                                    0.0
                                 ],
                                 "rotationZ": 0.0,
                                 "scale": [
-                                    630.0,
-                                    270.0
+                                    68.69853973388672,
+                                    620.3305053710938
                                 ]
                             }
                         },
                         {
                             "_type": "Renderable",
-                            "atlasregion": "barandilla esq 2",
+                            "atlasregion": "",
                             "model": "Quad.model",
                             "modulationColor": [
                                 1.0,
@@ -75,30 +76,21 @@
                                 1.0
                             ],
                             "shader": "TextureMap.shader",
-                            "texture": "null",
-                            "textureatlas": "Boss_room.atlas"
-                        }
-                    ],
-                    "name": "New Object 0",
-                    "uid": 4294967295
-                }
-            ],
-            "components": null,
-            "name": "Main",
-            "uid": 4294967295
-        },
-        {
-            "children": [
-                {
-                    "children": null,
-                    "components": [
+                            "texture": "Default.jpg",
+                            "textureatlas": "null"
+                        },
                         {
-                            "_type": "TransformComp",
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "wall 1",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
                             "local": {
                                 "position": [
                                     0.0,
-                                    -14.0,
-                                    500.0
+                                    0.0,
+                                    0.0
                                 ],
                                 "rotationZ": 0.0,
                                 "scale": [
@@ -106,30 +98,10 @@
                                     1.0
                                 ]
                             }
-                        },
-                        {
-                            "_type": "Camera",
-                            "drawOrder": 0,
-                            "viewRectangle": [
-                                1305.72802734375,
-                                734.4719848632813
-                            ],
-                            "viewport": [
-                                0.0,
-                                0.0,
-                                1.0,
-                                1.0
-                            ],
-                            "viewportClear": true,
-                            "viewportColor": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ]
                         }
                     ],
-                    "name": "Editor Camera",
+                    "name": "wall 1\u0000\u0000\u0000\u0000\u0000\u0000",
+                    "tag": 0,
                     "uid": 4294967295
                 },
                 {
@@ -139,9 +111,43 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
+                                    -53.05262756347656,
+                                    271.48846435546875,
+                                    0.0
+                                ],
+                                "rotationZ": 1.5707963705062866,
+                                "scale": [
+                                    68.69853973388672,
+                                    605.6987915039063
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "wall 2",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
                                     0.0,
                                     0.0,
-                                    500.0
+                                    0.0
                                 ],
                                 "rotationZ": 0.0,
                                 "scale": [
@@ -149,35 +155,361 @@
                                     1.0
                                 ]
                             }
+                        }
+                    ],
+                    "name": "wall 2\u0000ect 0 clone",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    285.84039306640625,
+                                    -5.006683349609375,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    68.69853973388672,
+                                    619.6904907226563
+                                ]
+                            }
                         },
                         {
-                            "_type": "Camera",
-                            "drawOrder": 0,
-                            "viewRectangle": [
-                                1280.0,
-                                720.0
-                            ],
-                            "viewport": [
-                                0.0,
-                                0.0,
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
                                 1.0,
                                 1.0
                             ],
-                            "viewportClear": true,
-                            "viewportColor": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ]
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "wall 3",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
                         }
                     ],
-                    "name": "Editor Camera",
+                    "name": "wall 3\u0000ect 0 clone",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -47.669647216796875,
+                                    -281.25079345703125,
+                                    0.0
+                                ],
+                                "rotationZ": 1.5707963705062866,
+                                "scale": [
+                                    59.960670471191406,
+                                    666.59619140625
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "Default.jpg",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "wall 4",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "wall 4\u0000ect 0 clone",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -87.01580810546875,
+                                    -3.2906150817871094,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    51.436805725097656,
+                                    49.237205505371094
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "bubble_tex.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "ColliderType": 4,
+                            "Ghost": false,
+                            "Owner": "bubble",
+                            "RigidBody": "",
+                            "Static": false,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    0.5,
+                                    0.5
+                                ]
+                            }
+                        },
+                        {
+                            "Drag": 1.0,
+                            "Gravity": 0.0,
+                            "InvMass": 1.0,
+                            "_type": "RigidbodyComp"
+                        },
+                        {
+                            "_type": "BubbleComp",
+                            "speed": 80.0
+                        }
+                    ],
+                    "name": "bubble\u0000ect 1",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    178.84353637695313,
+                                    170.38128662109375,
+                                    0.0
+                                ],
+                                "rotationZ": 2.1754775047302246,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp",
+                            "shootDelay": 0.0
+                        }
+                    ],
+                    "name": "turret\u0000ect 0",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -291.3179931640625,
+                                    173.9561767578125,
+                                    0.0
+                                ],
+                                "rotationZ": -2.535595178604126,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp",
+                            "shootDelay": 2.0
+                        }
+                    ],
+                    "name": "turret 2\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    186.14202880859375,
+                                    -194.12754821777344,
+                                    0.0
+                                ],
+                                "rotationZ": 0.966836154460907,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp",
+                            "shootDelay": 4.0
+                        }
+                    ],
+                    "name": "turret 3\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -292.2742919921875,
+                                    -196.08872985839844,
+                                    0.0
+                                ],
+                                "rotationZ": -0.7825163006782532,
+                                "scale": [
+                                    100.0,
+                                    100.0
+                                ]
+                            }
+                        },
+                        {
+                            "_type": "Renderable",
+                            "atlasregion": "",
+                            "model": "Quad.model",
+                            "modulationColor": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "shader": "TextureMap.shader",
+                            "texture": "turret.png",
+                            "textureatlas": "null"
+                        },
+                        {
+                            "_type": "TurretComp",
+                            "shootDelay": 6.0
+                        }
+                    ],
+                    "name": "turret 4\u0000\u0000\u0000\u0000",
+                    "tag": 0,
                     "uid": 4294967295
                 }
             ],
             "components": null,
-            "name": "Editor Space",
+            "name": "Main",
+            "tag": 0,
             "uid": 4294967295
         }
     ]
