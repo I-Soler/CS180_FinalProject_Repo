@@ -7,6 +7,8 @@
 #include <sstream>
 #include <Extern/imgui/imgui.h>
 
+#include <thread>
+
 namespace AEX
 {
 	bool ResourceManager::Initialize()
@@ -115,11 +117,15 @@ namespace AEX
 	// load folder /// loads data folder (usually)
 	void ResourceManager::LoadFolder(const char* folderPath, bool softLoad, bool forceReload)
 	{
+		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
+		bool multithreaded = true;
+
 		const std::filesystem::path data{ folderPath };
 
 		// directory_iterator can be iterated using a range-for loop
 		for (auto const& dir_entry : std::filesystem::directory_iterator{ data })
 		{
+
 			if (dir_entry.is_directory())
 			{
 				std::string po = dir_entry.path().u8string();
@@ -141,11 +147,23 @@ namespace AEX
 					continue;
 				}
 
-				LoadResource(pe.c_str(), softLoad, forceReload);
+				if (multithreaded)
+				{
+					STDthread_IDs.push_back(std::thread([this, pe, softLoad, forceReload] 
+					{ this->LoadResource(pe.c_str(), softLoad, forceReload); }));
+				}
+				else
+					LoadResource(pe.c_str(), softLoad, forceReload);
 
 				//std::cout << dir_entry.path() << '\n';
 			}
 		}
+
+		if (!multithreaded)	
+			return;
+
+		for (size_t i = 0; i < STDthread_IDs.size(); ++i)	// join the threads
+			STDthread_IDs[i].join();
 	}
 
 	void ResourceManager::RegisterImporter(const char* extension, IResourceImporter* importer) {
