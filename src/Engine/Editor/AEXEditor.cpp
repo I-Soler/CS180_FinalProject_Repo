@@ -21,7 +21,7 @@ namespace AEX
 
 	bool Editor::Initialize()
 	{
-		aexScene->LoadFile("data/Scenes/bubolScene.json", true);
+		aexScene->LoadFile("data/Scenes/FinalDemo.json", true);
 
 		InitEditorCamera();	// Init editor camera in the new scene	
 
@@ -70,57 +70,42 @@ namespace AEX
 		// Load and save scene
 		ImGui::BeginMainMenuBar();
 
-		//if (ImGui::BeginMenu("File"))
-		//{
-		//	if (ImGui::Button("New Scene"))
-		//	{
-		//		aexScene->SaveFile(SceneName.c_str());	// Save the scene we are working in
-		//		aexScene->LoadFile("data/Scenes/Default Scene.json");	// Loads the default scene
-		//		aexScene->SaveFile("data/Scenes/New Scene.json");		// Creates a new scene
-		//		SceneName = "data/Scenes/New Scene.json";
+		// Coment for josu
+		if (ImGui::BeginMenu("Load and Save"))
+		{
+			ImGui::Checkbox("Show Demo Window", &showImGuiDemoWindow);
 
-		//		SelectedObjs.clear();	// clean inspector
-		//		InitEditorCamera();	// Init editor camera in the new scene	
-		//	}
+			static char label[] = "";
+			ImGui::Text("Name of scene : "); ImGui::SameLine();
+			ImGui::Text(SceneName.c_str());
 
-		//	ImGui::EndMenu();
-		//}
+			if (ImGui::InputText("Edit file name", label, 30))
+				SceneName = AddScenePath(label);
+			
+			if (ImGui::Button("Save"))
+				aexScene->SaveFile(SceneName.c_str());
+			
+			if (ImGui::Button("Load"))			// load file using OpenSaveFileDlg
+			{
+				OpenSaveFileDlg dlg;
+				if (dlg.Open("Select Scene File"))
+				{
+					std::string filename = dlg.GetFiles()[0];
+					SceneName = filename.c_str(); // Store the name
 
-		//if (ImGui::BeginMenu("Load and Save"))
-		//{
-		//	ImGui::Checkbox("Show Demo Window", &showImGuiDemoWindow);
+					/*aexGraphics->ClearCameras();
+					aexGraphics->ClearRenderables();*/
+					for (auto& it : mEditorCameras)	// delete prev camera
+						it.second->Shutdown();
 
-		//	static char label[] = "";
-		//	ImGui::Text("Name of scene : "); ImGui::SameLine();
-		//	ImGui::Text(SceneName.c_str());
+					aexScene->LoadFile(filename.c_str());
+					SelectedObjs.clear();	// Clean inspector
 
-		//	if (ImGui::InputText("Edit file name", label, 30))
-		//		SceneName = AddScenePath(label);
-		//	
-		//	if (ImGui::Button("Save"))
-		//		aexScene->SaveFile(SceneName.c_str());
-		//	
-		//	if (ImGui::Button("Load"))			// load file using OpenSaveFileDlg
-		//	{
-		//		OpenSaveFileDlg dlg;
-		//		if (dlg.Open("Select Scene File"))
-		//		{
-		//			std::string filename = dlg.GetFiles()[0];
-		//			SceneName = filename.c_str(); // Store the name
-
-		//			/*aexGraphics->ClearCameras();
-		//			aexGraphics->ClearRenderables();*/
-		//			for (auto& it : mEditorCameras)	// delete prev camera
-		//				it.second->Shutdown();
-
-		//			aexScene->LoadFile(filename.c_str());
-		//			SelectedObjs.clear();	// Clean inspector
-
-		//			InitEditorCamera();	// Init editor camera in the new scene	
-		//		}
-		//	}
-		//	ImGui::EndMenu();
-		//}
+					InitEditorCamera();	// Init editor camera in the new scene	
+				}
+			}
+			ImGui::EndMenu();
+		}
 
 		// Start, pause and continue
 		if (ImGui::Button("Start"))
@@ -177,25 +162,26 @@ namespace AEX
 		if (ImGui::Begin("Object Manager"))
 		{
 			// Create default Object 
-			//if (ImGui::Button("Create Object"))
-			//{
-			//	Space* mainSp = aexScene->GetMainSpace();				// Get space where object will be added
-			//
-			//	std::string objStr("New Object ");
-			//	objStr += std::to_string(GameObjCounter);				// Avoid object having the same name
-			//	GameObjCounter++;
-			//
-			//	GameObject* Obj = mainSp->NewObject(objStr.c_str());	// create the object
-			//
-			//	// Every object must have a Transform and a Renderable by default
-			//	TransformComp* tr = aexFactory->Create<TransformComp>();
-			//	tr->mLocal.mScale = AEVec2(50, 50);
-			//	Obj->AddComp(tr);	Obj->NewComp<Renderable>();
-			//	Obj->OnCreate(); Obj->Initialize();
-			//}
-			//
-			//ImGui::SameLine();
-			//
+							// Coment for josu
+			if (ImGui::Button("Create Object"))
+			{
+				Space* mainSp = aexScene->GetMainSpace();				// Get space where object will be added
+			
+				std::string objStr("New Object ");
+				objStr += std::to_string(GameObjCounter);				// Avoid object having the same name
+				GameObjCounter++;
+			
+				GameObject* Obj = mainSp->NewObject(objStr.c_str());	// create the object
+			
+				// Every object must have a Transform and a Renderable by default
+				TransformComp* tr = aexFactory->Create<TransformComp>();
+				tr->mLocal.mScale = AEVec2(50, 50);
+				Obj->AddComp(tr);	Obj->NewComp<Renderable>();
+				Obj->OnCreate(); Obj->Initialize();
+			}
+			
+			ImGui::SameLine();
+			
 			//// Delete selected objects
 			//if (ImGui::Button("Delete Object") && SelectedObjs.size())
 			//{
@@ -283,13 +269,14 @@ namespace AEX
 					continue;
 				}
 
-				//// Delete component
-				//if (ImGui::Button(CompDelete.c_str()))
-				//{
-				//	SelectedObjs[0]->RemoveComp(SComp[it]);
-				//	deleted = true;
-				//}
-				//ImGui::SameLine();
+				// Delete component
+				// Coment for josu
+				if (ImGui::Button(CompDelete.c_str()))
+				{
+					SelectedObjs[0]->RemoveComp(SComp[it]);
+					deleted = true;
+				}
+				ImGui::SameLine();
 
 				if (!deleted)
 				{
@@ -300,36 +287,37 @@ namespace AEX
 				ImGui::PopID();
 			}
 
-			//if (ImGui::TreeNode("Add Component"))
-			//{
-			//	//Show all components avaliable to add
-			//	for (auto it = Rtti::GetAllTypes().begin(); it != Rtti::GetAllTypes().end(); ++it)
-			//	{
-			//		if (!it->second.IsDerivedFrom(IComp::TYPE()))
-			//			continue;
+			// Coment for josu
+			if (ImGui::TreeNode("Add Component"))
+			{
+				//Show all components avaliable to add
+				for (auto it = Rtti::GetAllTypes().begin(); it != Rtti::GetAllTypes().end(); ++it)
+				{
+					if (!it->second.IsDerivedFrom(IComp::TYPE()))
+						continue;
 
-			//		// avoid adding two components of the same type
-			//		// Exception for the collider, an object can have multiple of this
-			//		if (SelectedObjs[0]->GetComp(it->second.GetName().c_str()) != nullptr
-			//			&& it->second.GetName() != "Collider")
-			//			continue;
+					// avoid adding two components of the same type
+					// Exception for the collider, an object can have multiple of this
+					if (SelectedObjs[0]->GetComp(it->second.GetName().c_str()) != nullptr
+						&& it->second.GetName() != "Collider")
+						continue;
 
-			//		// Edge cases: 
-			//		// -Logic Comp is not a valid component 
-			//		// -TransformComp comes by default
-			//		if (it->second.GetName() == "LogicComp" || it->second.GetName() == "TransformComp")
-			//			continue;
+					// Edge cases: 
+					// -Logic Comp is not a valid component 
+					// -TransformComp comes by default
+					if (it->second.GetName() == "LogicComp" || it->second.GetName() == "TransformComp")
+						continue;
 
-			//		// Create and add the component
-			//		if (ImGui::Button(it->second.GetName().c_str()))
-			//		{
-			//			IComp* Comp = (IComp*)aexFactory->Create(it->second.GetName().c_str());
-			//			SelectedObjs[0]->AddComp(Comp);
-			//			Comp->AddToSystem(); Comp->OnCreate(); Comp->Initialize();
-			//		}
-			//	}
-			//	ImGui::TreePop();
-			//}
+					// Create and add the component
+					if (ImGui::Button(it->second.GetName().c_str()))
+					{
+						IComp* Comp = (IComp*)aexFactory->Create(it->second.GetName().c_str());
+						SelectedObjs[0]->AddComp(Comp);
+						Comp->AddToSystem(); Comp->OnCreate(); Comp->Initialize();
+					}
+				}
+				ImGui::TreePop();
+			}
 		}
 		ImGui::End();
 	}

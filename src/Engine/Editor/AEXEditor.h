@@ -59,7 +59,7 @@ namespace AEX
 		SelectedFolder selecFolder;
 
 		std::vector<GameObject*> SelectedObjs;						// Handle selecting objects
-		std::string SceneName = "data/Scenes/New Scene.json";	// Know what's the name of this scene
+		std::string SceneName = "data/Scenes/FinalDemo.json";	// Know what's the name of this scene
 		Space* currentSpace;
 
 		std::unordered_map<Space*, GameObject*> mEditorCameras;
