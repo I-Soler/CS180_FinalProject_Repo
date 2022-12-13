@@ -3,10 +3,13 @@
 #include "AEXCollisionSystem.h"
 #include "ContactCollisions.h"
 #include <Extern/imgui/imgui.h>
-
+#include <GameComponents/BubbleComp.h>
+#include <mutex>
 
 namespace AEX     // For the Collider class
 {
+	std::mutex mutex;
+
 	Collider::Collider()
 	{
 		mOwner = NULL;
@@ -222,6 +225,7 @@ namespace AEX     // For the Collision System class
 
 	void CollisionSystem::Update()
 	{
+		mutex.lock();
 		// Update colliders
 		for (auto it : mDynamicCollider)
 			if (it->GetOwner()->Enabled())
@@ -230,6 +234,7 @@ namespace AEX     // For the Collision System class
 		for (auto it : mStaticCollider)
 			if (it->GetOwner()->Enabled())
 				it->Update();
+		mutex.unlock();
 		
 
 		// Get collisions
