@@ -6,6 +6,7 @@
 #include <Collisions/Raycast.h>
 #include "Graphics/Components/AEXGfxComps.h"
 #include "Bullet.h"
+#include <mutex>
 
 namespace AEX
 {
@@ -222,14 +223,12 @@ namespace AEX
 
 					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 
-					// in case this other bubble tries to join us
-
+					// in case this other bubble tries to join us, only one join at a time
 					for (auto it2 = BubbleComp::otherBubbles.begin(); it2 != BubbleComp::otherBubbles.end(); ++it2)
 						if (*it2 != *it)
 							(*it2)->GetComp<BubbleComp>()->canJoin = false;
 
 					// delete other bubble
-					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 					(*it)->mOwnerSpace->DeleteObject(*it);
 
 					// update this bubble as a union of both

@@ -26,7 +26,7 @@ namespace AEX
 
 		if (RotClockWise)
 		{
-			ParentTr->mLocal.mOrientation += 0.01;
+			//ParentTr->mLocal.mOrientation += 0.01;
 			AmountRotated += RadToDeg(0.01);
 			if (AmountRotated > 90)
 			{
