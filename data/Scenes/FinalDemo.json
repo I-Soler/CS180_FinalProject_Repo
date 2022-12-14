@@ -168,8 +168,8 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    285.84039306640625,
-                                    -5.006683349609375,
+                                    283.8403625488281,
+                                    -4.32806396484375,
                                     0.0
                                 ],
                                 "rotationZ": 0.0,
@@ -311,7 +311,7 @@
                             "ColliderType": 4,
                             "Ghost": false,
                             "Owner": "bubble",
-                            "RigidBody": "",
+                            "RigidBody": "null",
                             "Static": false,
                             "_type": "Collider",
                             "local": {

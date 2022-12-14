@@ -30,7 +30,7 @@ namespace AEX{
 		resMgr->LoadFolder("data/Models", false);
 		resMgr->LoadFolder("data/Shaders", false);
 		resMgr->LoadFolder("data/Images", true);
-		resMgr->LoadFolder("data/SuperHeavy", false);	
+		//resMgr->LoadFolder("data/SuperHeavy", false);	
 		resMgr->LoadFolder("EditorData", true);
 
 		changeScene.HasToChange = false;

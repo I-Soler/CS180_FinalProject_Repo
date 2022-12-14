@@ -118,7 +118,7 @@ namespace AEX
 	void ResourceManager::LoadFolder(const char* folderPath, bool softLoad, bool forceReload)
 	{
 		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
-		bool multithreaded = true;
+		bool multithreaded = false;
 
 		const std::filesystem::path data{ folderPath };
 

@@ -6,6 +6,7 @@
 #include "BubbleComp.h"
 #include "Graphics/Components/AEXGfxComps.h"
 #include "imgui/imgui.h"
+#include <iostream>
 
 namespace AEX
 {
@@ -24,30 +25,21 @@ namespace AEX
 	{
 		BubbleComp::turrets[this] = false;
 
-		if (RotClockWise)
-		{
-			ParentTr->mLocal.mOrientation += 0.01;
-			AmountRotated += RadToDeg(0.01);
-			if (AmountRotated > 90)
-			{
-				RotClockWise = false;
-				AmountRotated = 0;
-			}
-		}
-		else
-		{
-			ParentTr->mLocal.mOrientation -= 0.01;
-			AmountRotated += RadToDeg(0.01);
-			if (AmountRotated > 90)
-			{
-				RotClockWise = true;
-				AmountRotated = 0;
-			}
-		}
-
-
 		if (timer.GetTimeSinceStart() >= Recharge + shootDelay)	// make a bullet each 5 seconds
 		{
+			int randomBubble = (rand() % BubbleComp::otherBubbles.size());	// get random buble to shoot at
+
+			int pos = 0;
+			AEVec2 dir;
+			for (auto it : BubbleComp::otherBubbles)	// search bubble
+			{
+				if (pos == randomBubble)
+					dir = it->GetComp<TransformComp>()->mLocal.mTranslation - ParentTr->mLocal.mTranslation;
+				pos++;
+			}
+			dir.NormalizeThis();
+
+			ParentTr->mLocal.mOrientation = atan2(dir.y, dir.x) - (PI/2);
 			shootDelay = 0;	// delay only affects first shot
 			Shoot();
 		}
@@ -63,8 +55,8 @@ namespace AEX
 		TransformComp* tr = aexFactory->Create<TransformComp>();
 
 		tr->mLocal.mScale = AEVec2(10, 10);
-		tr->mLocal.mTranslation = ParentTr->mWorld.mTranslation;
-		tr->mLocal.mOrientation = ParentTr->mWorld.mOrientation;
+		tr->mLocal.mTranslation = ParentTr->mLocal.mTranslation;
+		tr->mLocal.mOrientation = ParentTr->mLocal.mOrientation;
 		Obj->AddComp(tr);	Obj->NewComp<BulletComp>()->gun = this;
 		Obj->NewComp<Renderable>();
 		auto col = Obj->NewComp<Collider>();
