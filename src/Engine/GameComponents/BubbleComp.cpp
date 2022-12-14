@@ -200,7 +200,7 @@ namespace AEX
 	{
 		if (!DieOnContact)
 			return;
-		if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
+		if (collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
 			mOwner->mOwnerSpace->DeleteObject(mOwner);
 	}
 
@@ -298,31 +298,8 @@ namespace AEX
 			RayCastCircle(ti.origin, ti.dir, newPosRight, miniRadius + 10.0f, &result) == -1)
 		{	// can dodge this way, then do it!
 
-				Pop(ti,miniRadius,newPosLeft,newPosRight);
-			}
-			// update this bubble as mini left bubble
-			auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
-			tr->SetScale({ miniRadius, miniRadius });
-			tr->SetPosition(newPosLeft);
+			Pop(ti, miniRadius, newPosLeft, newPosRight);
 
-			// create mini right bubble
-			mtx.lock();
-
-			GameObject* Obj = ti.thisPtr->GetOwnerSpace()->NewObject("bubble");	// create the bubble
-			tr = aexFactory->Create<TransformComp>();
-			tr->SetScale({ miniRadius, miniRadius });
-			tr->SetPosition(newPosRight);
-			Obj->AddComp(tr);
-			Obj->NewComp<Renderable>()->AddToSystem();
-			auto bc = Obj->NewComp<BubbleComp>();
-			bc->AddToSystem();
-			bc->OnCreate();
-			bc->Initialize();
-			bc->DieOnContact = ti.thisPtr->DieOnContact;
-			Obj->OnCreate();
-			Obj->Initialize();
-
-			mtx.unlock();
 		}
 
 		// pop
@@ -335,6 +312,8 @@ namespace AEX
 		tr->SetPosition(newPosLeft);
 
 		// create mini right bubble
+		mtx.lock();
+
 		GameObject* Obj = ti.thisPtr->GetOwnerSpace()->NewObject("bubble");	// create the bubble
 		tr = aexFactory->Create<TransformComp>();
 		tr->SetScale({ miniRadius, miniRadius });
@@ -347,6 +326,8 @@ namespace AEX
 		bc->Initialize();
 		bc->DieOnContact = ti.thisPtr->DieOnContact;
 		Obj->OnCreate();
-		Obj->Initialize();	
+		Obj->Initialize();
+
+		mtx.unlock();
 	}
 }
