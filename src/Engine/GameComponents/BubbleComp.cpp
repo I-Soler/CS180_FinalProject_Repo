@@ -6,9 +6,12 @@
 #include <Collisions/Raycast.h>
 #include "Graphics/Components/AEXGfxComps.h"
 #include "Bullet.h"
+#include <mutex>
 
 namespace AEX
 {
+	std::mutex mtx;
+
 	std::list<GameObject*> BubbleComp::otherBubbles;
 	std::map<TurretComp*, bool> BubbleComp::turrets;
 
@@ -19,7 +22,7 @@ namespace AEX
 		mTimer.Pause();
 		otherBubbles.remove(mOwner);	// avoid dups
 		otherBubbles.push_back(mOwner);
-		turrets.clear();
+		//turrets.clear();
 	}
 	void BubbleComp::Initialize()
 	{
@@ -153,8 +156,8 @@ namespace AEX
 			// add random force in both x and y
 			else
 			{
-				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 5.0f);	// between 0 and 2PI
-				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 5.0f);	// between 0 and 2PI
+				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
 				mRgbd->AddForce({ x_dir, y_dir });
 			}
 		}
@@ -206,12 +209,12 @@ namespace AEX
 	// FUNCTION READ IN MULTITHREDING
 	void Dodge(thread_info ti)
 	{
-		/*..........Is the bubble in danger?..........*/
+		/*...................Is the bubble in danger?...................*/
 		AEVec2 result;	// dummy
 		if (RayCastCircle(ti.origin, ti.dir, ti.pos, ti.radius + 50.0f, &result) == -1)
 			return;
 
-		/*..........Can we dodge bullet moving away from it?..........*/
+		/*...........Can we dodge bullet moving away from it?...........*/
 		// try to dodge in every directions
 		if (ti.thisPtr->dodgeMoving == false)
 		{
@@ -221,7 +224,7 @@ namespace AEX
 			{
 				// check ways to avoid collision
 				AEVec2 newPos(ti.pos.x + 40.0f * Cos(angle), ti.pos.y + 40.0f * Sin(angle));
-				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result) == -1)
+				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 30.0f, &result) == -1)
 				{
 					// dodge
 					ti.thisPtr->dodgeMoving = true;
@@ -259,19 +262,17 @@ namespace AEX
 				// radius of new joined circle
 				float newRadius = (otherTr->GetScale().x + ti.radius) * 0.8f;
 				// check collision
-				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) != -1)
+				if (RayCastCircle(ti.origin, ti.dir, newPos, newRadius + 0.0f, &result) == -1)
 				{	// can dodge this way, then do it!
 
 					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 
-					// in case this other bubble tries to join us
-
+					// in case this other bubble tries to join us, only one join at a time
 					for (auto it2 = BubbleComp::otherBubbles.begin(); it2 != BubbleComp::otherBubbles.end(); ++it2)
 						if (*it2 != *it)
 							(*it2)->GetComp<BubbleComp>()->canJoin = false;
 
 					// delete other bubble
-					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 					(*it)->mOwnerSpace->DeleteObject(*it);
 
 					// update this bubble as a union of both
@@ -282,21 +283,46 @@ namespace AEX
 					BubbleComp::otherBubbles.erase(it);
 					return;
 				}
-			}	// if this method fails, try something else
+			}
+		}	// if this method fails, try something else
 
-			// perpendicular direction for mini twin bubbles
-			AEVec2 perpDir{ -ti.dir.y, ti.dir.x };
-			perpDir.NormalizeThis();
-			float miniRadius = ti.radius * 0.707f;
-			AEVec2 newPosLeft = ti.pos + perpDir * 100.0f;
-			AEVec2 newPosRight = ti.pos - perpDir * 100.0f;
+		/*..........Can we avoid bullet joining to another bubble?..........*/
+		// perpendicular direction for mini twin bubbles
+		AEVec2 perpDir{ -ti.dir.y, ti.dir.x };
+		perpDir.NormalizeThis();
+		float miniRadius = ti.radius * 0.707f;
+		AEVec2 newPosLeft = ti.pos + perpDir * 100.0f;
+		AEVec2 newPosRight = ti.pos - perpDir * 100.0f;
 
-			if (RayCastCircle(ti.origin, ti.dir, newPosLeft, miniRadius + 10.0f, &result) == -1 &&
-				RayCastCircle(ti.origin, ti.dir, newPosRight, miniRadius + 10.0f, &result) == -1)
-			{	// can dodge this way, then do it!
+		if (RayCastCircle(ti.origin, ti.dir, newPosLeft, miniRadius + 10.0f, &result) == -1 &&
+			RayCastCircle(ti.origin, ti.dir, newPosRight, miniRadius + 10.0f, &result) == -1)
+		{	// can dodge this way, then do it!
 
 				Pop(ti,miniRadius,newPosLeft,newPosRight);
 			}
+			// update this bubble as mini left bubble
+			auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
+			tr->SetScale({ miniRadius, miniRadius });
+			tr->SetPosition(newPosLeft);
+
+			// create mini right bubble
+			mtx.lock();
+
+			GameObject* Obj = ti.thisPtr->GetOwnerSpace()->NewObject("bubble");	// create the bubble
+			tr = aexFactory->Create<TransformComp>();
+			tr->SetScale({ miniRadius, miniRadius });
+			tr->SetPosition(newPosRight);
+			Obj->AddComp(tr);
+			Obj->NewComp<Renderable>()->AddToSystem();
+			auto bc = Obj->NewComp<BubbleComp>();
+			bc->AddToSystem();
+			bc->OnCreate();
+			bc->Initialize();
+			bc->DieOnContact = ti.thisPtr->DieOnContact;
+			Obj->OnCreate();
+			Obj->Initialize();
+
+			mtx.unlock();
 		}
 
 		// pop
