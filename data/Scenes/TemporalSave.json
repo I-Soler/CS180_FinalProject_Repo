@@ -282,8 +282,8 @@
                             "_type": "TransformComp",
                             "local": {
                                 "position": [
-                                    6.317371368408203,
-                                    -30.9013729095459,
+                                    91.65087890625,
+                                    101.4881820678711,
                                     0.0
                                 ],
                                 "rotationZ": 0.0,
@@ -503,6 +503,178 @@
                         }
                     ],
                     "name": "turret 4\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -288.66650390625,
+                                    178.4733428955078,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    129.8736572265625,
+                                    117.28998565673828
+                                ]
+                            }
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "TurretCol",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "TurretCol\u0000 0",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    185.33351135253906,
+                                    178.4733428955078,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    129.8736572265625,
+                                    117.28998565673828
+                                ]
+                            }
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "TurretCol 2",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "TurretCol 2\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    -288.66650390625,
+                                    -192.04502868652344,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    129.8736572265625,
+                                    117.28998565673828
+                                ]
+                            }
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "TurretCol 3",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "TurretCol 3\u0000\u0000\u0000\u0000",
+                    "tag": 0,
+                    "uid": 4294967295
+                },
+                {
+                    "children": null,
+                    "components": [
+                        {
+                            "_type": "TransformComp",
+                            "local": {
+                                "position": [
+                                    185.33351135253906,
+                                    -192.72364807128906,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    129.8736572265625,
+                                    117.28998565673828
+                                ]
+                            }
+                        },
+                        {
+                            "ColliderType": 8,
+                            "Ghost": false,
+                            "Owner": "TurretCol 4",
+                            "RigidBody": "null",
+                            "Static": true,
+                            "_type": "Collider",
+                            "local": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "rotationZ": 0.0,
+                                "scale": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "TurretCol 4\u0000one",
                     "tag": 0,
                     "uid": 4294967295
                 },
