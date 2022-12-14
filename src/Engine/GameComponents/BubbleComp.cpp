@@ -1,4 +1,5 @@
 #include "BubbleComp.h"
+#include "AEX.h"
 #include "imgui/imgui.h"					// Edit fn
 #include "Editor/AEXEditor.h"				// aexEditor
 #include <cstdlib>							// rand
@@ -26,6 +27,7 @@ namespace AEX
 	}
 	void BubbleComp::Initialize()
 	{
+		multitheaded = aexEngine->Multithreaded;
 		cooldown.Start();
 
 		mOwner->mEvents.subscribe<CollisionEnterEvent, BubbleComp>(this, &BubbleComp::Die);
@@ -95,7 +97,10 @@ namespace AEX
 				t_info.origin = it->first->bulletPos;
 				t_info.dir = it->first->bulletDir;
 
-				thread_ids.push_back(std::thread(Dodge, t_info));
+				if (multitheaded)
+					thread_ids.push_back(std::thread(Dodge, t_info));
+				else
+					Dodge(t_info);
 			}
 		}
 
@@ -109,8 +114,6 @@ namespace AEX
 				break;
 
 			float dist = mTr->mLocal.mTranslation.Distance(it->mLocal.mTranslation);
-
-			std::cout << dist << std::endl;
 
 			if (dist < 60)		// last avoiding resort
 			{

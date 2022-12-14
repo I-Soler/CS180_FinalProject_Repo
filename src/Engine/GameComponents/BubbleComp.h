@@ -62,6 +62,7 @@ namespace AEX
 		static std::map<TurretComp*, bool> turrets;
 
 		AEXTimer cooldown;
+		bool multitheaded;
 	};
 
 	void Dodge(thread_info);

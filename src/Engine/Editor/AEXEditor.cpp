@@ -152,10 +152,13 @@ namespace AEX
 			ImGui::Checkbox("Edit collider", &EditCollider);
 			ImGui::EndMenu();
 		}
+		ImGui::Checkbox("Enable Multithreading", &aexEngine->Multithreaded);
+
 		ImGui::EndMainMenuBar();
 
 		if (showImGuiDemoWindow)
 			ImGui::ShowDemoWindow();
+
 	}
 
 	void Editor::ObjectManager()
