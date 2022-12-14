@@ -96,8 +96,12 @@ namespace AEX
 			}
 		}
 
+		bool SepararLasBurbujasSiDemasiadoCerca = false;
+
 		for (auto& it : BulletComp::AllBullets)
 		{
+			if (!SepararLasBurbujasSiDemasiadoCerca)
+				break;
 			if (cooldown.GetTimeSinceStart() < 3)
 				break;
 
