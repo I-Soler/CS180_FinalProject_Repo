@@ -104,7 +104,7 @@ namespace AEX
 			}
 		}
 
-		bool SepararLasBurbujasSiDemasiadoCerca = false;
+		bool SepararLasBurbujasSiDemasiadoCerca = true;
 
 		for (auto& it : BulletComp::AllBullets)
 		{

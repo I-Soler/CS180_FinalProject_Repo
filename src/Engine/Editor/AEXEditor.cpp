@@ -153,6 +153,7 @@ namespace AEX
 			ImGui::EndMenu();
 		}
 		ImGui::Checkbox("Enable Multithreading", &aexEngine->Multithreaded);
+		aexCollision->multithreaded = aexEngine->Multithreaded;
 
 		ImGui::EndMainMenuBar();
 

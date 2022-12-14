@@ -1,3 +1,4 @@
+#include "AEX.h"
 #include "Graphics/AEXGfxSystem.h"
 #include <Physics/RigidbodyComponent.h>
 #include "AEXCollisionSystem.h"
@@ -5,6 +6,7 @@
 #include <Extern/imgui/imgui.h>
 #include <GameComponents/BubbleComp.h>
 #include <mutex>
+
 
 namespace AEX     // For the Collider class
 {
@@ -46,8 +48,6 @@ namespace AEX     // For the Collider class
 	}
 	void Collider::Update()
 	{
-		DrawColliders();
-
 		// just do the world update
 		TransformComp::Update();
 
@@ -220,6 +220,8 @@ namespace AEX     // For the Collision System class
 		mFrameContacts = &mContacts[0];
 		mPrevContacts = &mContacts[1];
 
+		multithreaded = aexEngine->Multithreaded;
+
 		return true;
 	}
 
@@ -271,28 +273,41 @@ namespace AEX     // For the Collision System class
 
 	void CollisionSystem::NarrowPhaseCollision(std::list<ContactInfo>& CollisionList)
 	{
+		// clear previous threads
+		thread_ids.clear();
+
 		ContactInfo info ;
+		std::mutex mtx;
 
 		for (auto& d1 : mDynamicCollider)
 		{
 			if (!d1->GetOwner()->Enabled() || !d1->Enabled())
 				continue;
 
-			for (auto & d2 : mDynamicCollider)
+			//multithreaded
+			if (false)
 			{
-				if (!d2->GetOwner()->Enabled() || !d2->Enabled())
-					continue;
-
-				if (d1 == d2 || d1->GetOwner() == d2->GetOwner()) // ignore itself and same owner
-					continue;
-				
-				if (d1->GetOwner()->mOwnerSpace != d2->GetOwner()->mOwnerSpace) // Ignore other spaces
-					continue;
-
-				if (mCollisionLibrary[d1->mColliderType | d2->mColliderType](d1, d2, &info))
-					CollisionList.push_back(ContactInfo(d1, d2, info.mNormal, info.mImpactPoint, info.mPenetration));
+				thread_ids.push_back(std::thread([&, d1] {
+					CollisionSystem::MultithreadedCollisionChecking(&CollisionList, d1); }));
+				continue;
 			}
+			else
+			{
+				for (auto& d2 : mDynamicCollider)
+				{
+					if (!d2->GetOwner()->Enabled() || !d2->Enabled())
+						continue;
 
+					if (d1 == d2 || d1->GetOwner() == d2->GetOwner()) // ignore itself and same owner
+						continue;
+
+					if (d1->GetOwner()->mOwnerSpace != d2->GetOwner()->mOwnerSpace) // Ignore other spaces
+						continue;
+
+					if (mCollisionLibrary[d1->mColliderType | d2->mColliderType](d1, d2, &info))
+						CollisionList.push_back(ContactInfo(d1, d2, info.mNormal, info.mImpactPoint, info.mPenetration));
+				}
+			}
 			for (auto &s : mStaticCollider)
 			{
 				if (!s->GetOwner()->Enabled())
@@ -302,7 +317,39 @@ namespace AEX     // For the Collision System class
 					continue;
 
 				if (mCollisionLibrary[d1->mColliderType | s->mColliderType](d1, s, &info))
+				{
+					mtx.lock();
 					CollisionList.push_back(ContactInfo(d1, s, info.mNormal, info.mImpactPoint, info.mPenetration));
+					mtx.unlock();
+				}
+			}
+		}
+
+		for (size_t it = 0; it < thread_ids.size(); it++)
+			thread_ids[it].join();
+	}
+
+	void CollisionSystem::MultithreadedCollisionChecking(std::list<ContactInfo>* CollisionList, Collider* d1)
+	{
+		ContactInfo info;
+		std::mutex mtx;
+
+		for (auto& d2 : mDynamicCollider)
+		{
+			if (!d2->GetOwner()->Enabled() || !d2->Enabled())
+				continue;
+
+			if (d1 == d2 || d1->GetOwner() == d2->GetOwner()) // ignore itself and same owner
+				continue;
+
+			if (d1->GetOwner()->mOwnerSpace != d2->GetOwner()->mOwnerSpace) // Ignore other spaces
+				continue;
+
+			if (mCollisionLibrary[d1->mColliderType | d2->mColliderType](d1, d2, &info))
+			{
+				mtx.lock();
+				CollisionList->push_back(ContactInfo(d1, d2, info.mNormal, info.mImpactPoint, info.mPenetration));
+				mtx.unlock();
 			}
 		}
 	}
