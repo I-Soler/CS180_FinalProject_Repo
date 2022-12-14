@@ -34,12 +34,15 @@ namespace AEX
 			for (auto it : BubbleComp::otherBubbles)	// search bubble
 			{
 				if (pos == randomBubble)
+				{
 					dir = it->GetComp<TransformComp>()->mLocal.mTranslation - ParentTr->mLocal.mTranslation;
+					break;
+				}
 				pos++;
 			}
 			dir.NormalizeThis();
 
-			ParentTr->mLocal.mOrientation = atan2(dir.y, dir.x) - (PI/2);
+			ParentTr->mLocal.mOrientation = atan2(dir.y, dir.x) - (PI/2);	// Look at bubble
 			shootDelay = 0;	// delay only affects first shot
 			Shoot();
 		}

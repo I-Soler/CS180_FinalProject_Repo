@@ -8,6 +8,8 @@
 
 namespace AEX
 {
+	std::list<TransformComp*> BulletComp::AllBullets;
+
 	void BulletComp::OnCreate()
 	{
 	}
@@ -16,6 +18,8 @@ namespace AEX
 		timer.Start();
 		tr = mOwner->GetComp<TransformComp>();
 		dir = AEVec2(2.5 * sin(-tr->mLocal.mOrientation), 2.5 * cos(-tr->mLocal.mOrientation));
+
+		AllBullets.push_back(tr);
 	}
 	void BulletComp::Update()
 	{
@@ -31,6 +35,7 @@ namespace AEX
 	}
 	void BulletComp::Shutdown()
 	{
+		AllBullets.remove(tr);
 		RemoveFromSystem();
 	}
 	bool BulletComp::Edit()

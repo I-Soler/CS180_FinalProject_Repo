@@ -43,6 +43,7 @@ namespace AEX
 
 		void Die(const CollisionEnterEvent& collision);
 
+
 		float mSpeed;
 		RigidbodyComp* mRgbd;
 		TransformComp* mTr;
@@ -59,8 +60,11 @@ namespace AEX
 		// static interface
 		static std::list<GameObject*> otherBubbles;
 		static std::map<TurretComp*, bool> turrets;
+
+		AEXTimer cooldown;
 	};
 
 	void Dodge(thread_info);
+	void Pop(thread_info& ti, float miniRadius, AEVec2 newPosLeft, AEVec2 newPosRight);
 
 }

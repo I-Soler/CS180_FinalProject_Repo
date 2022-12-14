@@ -62,6 +62,7 @@ namespace AEX
 			for (auto& it : aexGraphics->mCameras)
 				it->SetEnabled(true);
 
+
 			camera->SetEnabled(false);
 		}		
 	}
@@ -126,8 +127,8 @@ namespace AEX
 
 		if (ImGui::Button("Stop") && editing)
 		{
-			//for (auto& it : mEditorCameras)	// delete prev camera
-			//	it.second->Shutdown();
+			for (auto& it : mEditorCameras)	// delete prev camera
+				it.second->Shutdown();
 
 			aexScene->LoadFile("data/Scenes/TemporalSave.json", false);
 			editing = false;
@@ -588,7 +589,7 @@ namespace AEX
 			tr->SetWorldPosition(AEVec3(tr->GetWorldPosition().x, tr->GetWorldPosition().y, 500));
 
 			auto cam = camObj->NewComp<Camera>();
-			cam->mViewRectangle = { 1280,720 };
+			cam->mViewRectangle = { 1280 * 1.7, 720 * 1.7 };
 			cam->mViewport = { 0,0, 1, 1 };
 			camObj->OnCreate();
 

@@ -45,14 +45,6 @@ namespace AEX     // For the Collider class
 	{
 		DrawColliders();
 
-		// If rigidBody is created after collider, add it here
-		if (mRigidBody == nullptr && mOwner->GetComp<RigidbodyComp>() != nullptr)
-			mRigidBody = mOwner->GetComp<RigidbodyComp>();
-
-		// If rigidbody is deleted, become null
-		if (mOwner->GetComp<RigidbodyComp>() == nullptr)
-			mRigidBody = nullptr;
-
 		// just do the world update
 		TransformComp::Update();
 
@@ -66,6 +58,14 @@ namespace AEX     // For the Collider class
 		DrawColliders();
 
 		Update();
+
+		// If rigidBody is created after collider, add it here
+		if (mRigidBody == nullptr && mOwner->GetComp<RigidbodyComp>() != nullptr)
+			mRigidBody = mOwner->GetComp<RigidbodyComp>();
+
+		// If rigidbody is deleted, become null
+		if (mOwner->GetComp<RigidbodyComp>() == nullptr)
+			mRigidBody = nullptr;
 
 		// divide by 8 so the editor shows the correct RadioButton
 		int e = mColliderType / 8;	

@@ -23,5 +23,7 @@ namespace AEX
 		TransformComp* tr;
 		AEXTimer timer;
 		AEVec2 dir;
+
+		static std::list<TransformComp*> AllBullets;
 	};
 }

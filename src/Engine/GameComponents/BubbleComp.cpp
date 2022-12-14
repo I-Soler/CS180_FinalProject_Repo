@@ -23,6 +23,8 @@ namespace AEX
 	}
 	void BubbleComp::Initialize()
 	{
+		cooldown.Start();
+
 		mOwner->mEvents.subscribe<CollisionEnterEvent, BubbleComp>(this, &BubbleComp::Die);
 
 		// rigidbody for collisions and movement
@@ -93,6 +95,38 @@ namespace AEX
 				thread_ids.push_back(std::thread(Dodge, t_info));
 			}
 		}
+
+		for (auto& it : BulletComp::AllBullets)
+		{
+			if (cooldown.GetTimeSinceStart() < 3)
+				break;
+
+			float dist = mTr->mLocal.mTranslation.Distance(it->mLocal.mTranslation);
+
+			std::cout << dist << std::endl;
+
+			if (dist < 60)		// last avoiding resort
+			{
+				cooldown.Reset();
+
+				thread_info t_info;
+				t_info.thisPtr = this;
+				t_info.pos = { mTr->GetPosition().x, mTr->GetPosition().y };
+				t_info.radius = mTr->GetScale().x;
+				t_info.dir = it->GetOwner()->GetComp<BulletComp>()->dir;
+
+				AEVec2 perpDir{ -t_info.dir.y, t_info.dir.x };
+				perpDir.NormalizeThis();
+				float miniRadius = t_info.radius * 0.707f;
+				AEVec2 newPosLeft = t_info.pos + perpDir * 100.0f;
+				AEVec2 newPosRight = t_info.pos - perpDir * 100.0f;
+
+				Pop(t_info, miniRadius, newPosLeft, newPosRight);
+
+				cooldown.Start();
+			}
+		}
+
 		// avoid bullet moving
 		if (mRgbd != nullptr)
 		{
@@ -136,6 +170,8 @@ namespace AEX
 
 		//mOwner->mEvents.unsubscribe(*mOwner->mEvents.AllEvents[evName][0], evName);
 		RemoveFromSystem();
+
+		otherBubbles.remove(mOwner);
 	}
 	bool BubbleComp::Edit()
 	{
@@ -160,6 +196,8 @@ namespace AEX
 		if(collision.otherObject->GetComp<BulletComp>())	// if it has collided with a bullet
 			mOwner->mOwnerSpace->DeleteObject(mOwner);
 	}
+
+
 
 	// FUNCTION READ IN MULTITHREDING
 	void Dodge(thread_info ti)
@@ -253,28 +291,32 @@ namespace AEX
 				RayCastCircle(ti.origin, ti.dir, newPosRight, miniRadius + 10.0f, &result) == -1)
 			{	// can dodge this way, then do it!
 
-				// update this bubble as mini left bubble
-				auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
-				tr->SetScale({ miniRadius, miniRadius });
-				tr->SetPosition(newPosLeft);
-
-				// create mini right bubble
-				GameObject* Obj = ti.thisPtr->GetOwnerSpace()->NewObject("bubble");	// create the bubble
-				tr = aexFactory->Create<TransformComp>();
-				tr->SetScale({ miniRadius, miniRadius });
-				tr->SetPosition(newPosRight);
-				Obj->AddComp(tr);
-				Obj->NewComp<Renderable>()->AddToSystem();
-				auto bc = Obj->NewComp<BubbleComp>();
-				bc->AddToSystem();
-				bc->OnCreate();
-				bc->Initialize();
-				bc->DieOnContact = ti.thisPtr->DieOnContact;
-				Obj->OnCreate();
-				Obj->Initialize();
+				Pop(ti,miniRadius,newPosLeft,newPosRight);
 			}
 		}
 
 		// pop
+	}
+	void Pop(thread_info& ti, float miniRadius, AEVec2 newPosLeft, AEVec2 newPosRight)
+	{
+		// update this bubble as mini left bubble
+		auto tr = ti.thisPtr->GetOwner()->GetComp<TransformComp>();
+		tr->SetScale({ miniRadius, miniRadius });
+		tr->SetPosition(newPosLeft);
+
+		// create mini right bubble
+		GameObject* Obj = ti.thisPtr->GetOwnerSpace()->NewObject("bubble");	// create the bubble
+		tr = aexFactory->Create<TransformComp>();
+		tr->SetScale({ miniRadius, miniRadius });
+		tr->SetPosition(newPosRight);
+		Obj->AddComp(tr);
+		Obj->NewComp<Renderable>()->AddToSystem();
+		auto bc = Obj->NewComp<BubbleComp>();
+		bc->AddToSystem();
+		bc->OnCreate();
+		bc->Initialize();
+		bc->DieOnContact = ti.thisPtr->DieOnContact;
+		Obj->OnCreate();
+		Obj->Initialize();	
 	}
 }
