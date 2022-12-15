@@ -23,8 +23,7 @@ namespace AEX
 	}
 	void BulletComp::Update()
 	{
-
-		tr->Translate(dir);
+		tr->Translate(dir * 1.5);
 
 		if (timer.GetTimeSinceStart() >= 5)	// make bullet die in 5 seconds
 		{

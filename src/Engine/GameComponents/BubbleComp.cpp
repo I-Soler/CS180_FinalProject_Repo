@@ -104,13 +104,13 @@ namespace AEX
 			}
 		}
 
-		bool SepararLasBurbujasSiDemasiadoCerca = true;
+		bool SepararLasBurbujasSiDemasiadoCerca = false;
 
 		for (auto& it : BulletComp::AllBullets)
 		{
 			if (!SepararLasBurbujasSiDemasiadoCerca)
 				break;
-			if (cooldown.GetTimeSinceStart() < 3)
+			if (cooldown.GetTimeSinceStart() < 2)
 				break;
 
 			float dist = mTr->mLocal.mTranslation.Distance(it->mLocal.mTranslation);

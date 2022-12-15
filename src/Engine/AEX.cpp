@@ -33,9 +33,6 @@ namespace AEX{
 		//resMgr->LoadFolder("data/SuperHeavy", false);	
 		resMgr->LoadFolder("EditorData", true);
 
-		changeScene.HasToChange = false;
-		changeScene.newScene = " ";
-
 		// all good -> return true
 		return true;
 	}
@@ -81,13 +78,6 @@ namespace AEX{
 			//editor->SetEnabled(false);
 			editor->Update();
 
-			//if(changeScene.HasToChange)
-			//{
-			//	changeScene.HasToChange = false;
-			//	aexScene->LoadFile(AddScenePath(changeScene.newScene).c_str());
-			//}
-
-
 			if (!editor->Enabled())
 			{
 				// update game logic
@@ -100,13 +90,6 @@ namespace AEX{
 				// collision system update
 				collisions->Update();
 				scene->UpdateAllSpaceHierarchies(); // Optimization (update the hierarchies of the collided objects only).
-				
-				// poor man's reset
-				//if (input->KeyPressed('R'))		// NOT WORKING, CHECK LATER
-				//{
-				//	gameState->Shutdown();
-				//	gameState->Initialize();
-				//}
 			}
 			else
 			{
@@ -118,19 +101,9 @@ namespace AEX{
 			gui->EndFrame();
 			gfx->Present();
 
-			// audio
-			//audio->Update();
 
 			time->EndFrame();
-
-			// poor man's reset
-			//if (aexInput->KeyPressed('R'))		// NOT WORKING, CHECK LATER
-			//{
-			//	gameState->Shutdown();
-			//	gameState->Initialize();
-			//}
 		}
-
 
 		gameState->Shutdown();
 
