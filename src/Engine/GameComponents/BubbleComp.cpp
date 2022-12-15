@@ -159,14 +159,19 @@ namespace AEX
 			// add random force in both x and y
 			else
 			{
+				// keep bubble far from edges
 				float x_dir = 0.0f;
-				if (mTr->GetPosition().x > 400.0f)	x_dir = -80.0f;
-				if (mTr->GetPosition().x < -400.0f)	x_dir = 80.0f;
+				if (mTr->GetWorldPosition().x > 300.0f)
+					x_dir = -80.0f;
+				if (mTr->GetWorldPosition().x < -300.0f)
+					x_dir = 80.0f;
 				else x_dir = 80.0f * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
 
 				float y_dir = 0.0f;
-				if (mTr->GetPosition().y > 200.0f)	y_dir = -80.0f;
-				if (mTr->GetPosition().y < -200.0f)	y_dir = 80.0f;
+				if (mTr->GetWorldPosition().y > 150.0f)
+					y_dir = -80.0f;
+				if (mTr->GetWorldPosition().y < -150.0f)
+					y_dir = 80.0f;
 				else y_dir = 80.0f * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
 
 				mRgbd->AddForce({ x_dir, y_dir });
@@ -250,7 +255,7 @@ namespace AEX
 			for (float angle = initAngle; angle < initAngle + TWO_PI; angle += PI / 4.0f)
 			{
 				// check ways to avoid collision
-				AEVec2 newPos(ti.pos.x + 80.0f * Cos(angle), ti.pos.y + 80.0f * Sin(angle));
+				AEVec2 newPos(ti.pos.x + 100.0f * Cos(angle), ti.pos.y + 80.0f * Sin(angle));
 				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result);
 
 				// this is for far bubbles, if they are close to turrets don't dodge this way
@@ -317,6 +322,10 @@ namespace AEX
 					tr->SetPosition(newPos);
 
 					BubbleComp::otherBubbles.erase(it);
+
+					for (auto it2 = BubbleComp::otherBubbles.begin(); it2 != BubbleComp::otherBubbles.end(); ++it2)
+							(*it2)->GetComp<BubbleComp>()->canJoin = true;
+
 					mtx.unlock();
 					return;
 				}
