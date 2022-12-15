@@ -9,6 +9,7 @@
 
 void main()
 {
+	//std::cin >> aexEngine->Multithreaded;
 	aexEngine->Initialize();
 	aexEngine->Run(new PrototypeDemo);
 	//aexEngine->Run(new DemoMarta);

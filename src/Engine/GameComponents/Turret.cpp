@@ -7,6 +7,7 @@
 #include "Graphics/Components/AEXGfxComps.h"
 #include "imgui/imgui.h"
 #include <iostream>
+#include "ResourceMgr/ResourceMgr.h"
 
 namespace AEX
 {
@@ -23,6 +24,9 @@ namespace AEX
 	}
 	void TurretComp::Update()
 	{
+		if (BubbleComp::otherBubbles.size() == 0)
+			return; 
+
 		BubbleComp::turrets[this] = false;
 
 		if (timer.GetTimeSinceStart() >= Recharge + shootDelay)	// make a bullet each 5 seconds
@@ -62,7 +66,8 @@ namespace AEX
 		tr->mLocal.mTranslation = ParentTr->mLocal.mTranslation;
 		tr->mLocal.mOrientation = ParentTr->mLocal.mOrientation;
 		Obj->AddComp(tr);	Obj->NewComp<BulletComp>()->gun = this;
-		Obj->NewComp<Renderable>();
+		auto ren = Obj->NewComp<Renderable>();
+		ren->mpTexture = aexResources->GetResource<Texture>("bullet.png");
 		auto col = Obj->NewComp<Collider>();
 		col->Ghost = true;
 		col->mColliderType = Collider::CT_CIRCLE;
