@@ -115,6 +115,7 @@ namespace AEX
 	// load folder /// loads data folder (usually)
 	void ResourceManager::LoadFolder(const char* folderPath, bool softLoad, bool forceReload)
 	{
+<<<<<<< HEAD
 		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
 <<<<<<< HEAD
 		bool multithreaded = false;
@@ -122,6 +123,8 @@ namespace AEX
 		bool multithreaded = true;
 >>>>>>> main
 
+=======
+>>>>>>> AssetsMultithread
 		const std::filesystem::path data{ folderPath };
 
 		// directory_iterator can be iterated using a range-for loop
@@ -153,6 +156,7 @@ namespace AEX
 				}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				LoadResource(pe.c_str(), softLoad, forceReload);
 =======
 				if (multithreaded)
@@ -163,19 +167,73 @@ namespace AEX
 				else
 					LoadResource(pe.c_str(), softLoad, forceReload);
 >>>>>>> main
+=======
+				LoadResource(pe.c_str(), softLoad, forceReload);
+>>>>>>> AssetsMultithread
 
 				//std::cout << dir_entry.path() << '\n';
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+	}
 
-		if (!multithreaded)
-			return;
+	void ResourceManager::LoadFolderMultithreaded(const char* folderPath)
+	{
+		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
+		int textureID = 0;
+		const std::filesystem::path data{ folderPath };
+
+		// directory_iterator can be iterated using a range-for loop
+		for (auto const& dir_entry : std::filesystem::directory_iterator{ data })
+		{
+
+			if (dir_entry.is_directory())
+			{
+				std::string po = dir_entry.path().u8string();
+
+				if (po.c_str() == "Scenes")
+				{
+					continue;
+				}
+
+				LoadFolder(po.c_str());
+			}
+			else
+			{
+				std::string pe = dir_entry.path().u8string();
+>>>>>>> AssetsMultithread
+
+				if (dir_entry.path().extension() == ".json")
+				{
+					continue;
+				}
+
+				// Create texture with openGL from main thread
+				TexturePool.push_back(aexFactory->Create<Texture>()); 
+
+				STDthread_IDs.push_back(std::thread([this, pe, textureID]
+					{ this->LoadResourceMultithreaded(pe.c_str(), false, textureID, false); }));
+
+				textureID++;
+			}
+		}
 
 		for (size_t i = 0; i < STDthread_IDs.size(); ++i)	// join the threads
 			STDthread_IDs[i].join();
+<<<<<<< HEAD
 >>>>>>> main
+=======
+
+		// Upload to Open gl
+		for (auto& it : TexturePool)
+		{
+			it->CreateOpenGLTexture();
+			it->UploadToGPU();
+		}
+>>>>>>> AssetsMultithread
 	}
 
 	void ResourceManager::RegisterImporter(const char* extension, IResourceImporter* importer) {
@@ -227,7 +285,6 @@ namespace AEX
 		{
 			// set the resource to return
 			resource = resIt->second;
-
 			if (forceReload)
 			{
 				IResource* newRes = importer->ImportFromFile(filename, softLoad);
@@ -264,6 +321,66 @@ namespace AEX
 		// return the resource
 		return resource;
 	}
+
+	// resource loading
+	IResource* ResourceManager::LoadResourceMultithreaded(const char* filename, bool softLoad, int textureID, bool forceReload)
+	{
+		// get the filepaht
+
+		FilePath fp(filename);
+
+		// get the importer corresponding to the extension
+		auto importerIt = mImporters.find(fp.mExtension);
+
+		if (importerIt == mImporters.end()) {
+			DebugPrint("ResourceManager Loading Error: %s . Extension not recognized", (fp.mFilename + fp.mExtension).c_str());
+			return nullptr;
+		}
+
+		// importer is known get pointer to it and load the resource
+		auto importer = importerIt->second;
+
+
+		// now that we know the importer, we have a way to look for it by its type
+		auto resTypename = importer->GetResourceTypeName();
+		auto& resMap = mAllResources[resTypename];
+
+		// see if the resource exists (find by name)
+		auto resName = fp.mFilename + fp.mExtension;
+		auto resIt = resMap.find(resName);
+
+		IResource* resource = nullptr;
+
+		// resource exists -> replace the raw resource
+		// with the new loaded resource
+		if (resIt != resMap.end())
+		{
+			// set the resource to return
+			resource = resIt->second;
+		}
+
+		// resource doesn't exists yet, simply register it on our map
+		else
+		{
+			// store the resource so we can return it after.
+			resource = importer->ImportFromFileMultithread(filename, TexturePool[textureID], softLoad);
+
+			// register it
+			resMap[resName] = resource;
+		}
+
+		// set the resource metada
+		resource->SetName(resName.c_str());
+		resource->mFilepath = fp;
+		resource->mLastWriteTime = fp.GetLastWriteTime();
+
+		// TODO:
+		// broadcast a resource loaded event. 
+
+		// return the resource
+		return resource;
+	}
+
 
 	const std::map <std::string, std::map<std::string, IResource*>>& ResourceManager::GetAllResources()
 	{

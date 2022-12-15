@@ -29,9 +29,12 @@ namespace AEX{
 		auto resMgr = aexResources;
 		resMgr->LoadFolder("data/Models", false);
 		resMgr->LoadFolder("data/Shaders", false);
-		resMgr->LoadFolder("data/Images", true);
-		//resMgr->LoadFolder("data/SuperHeavy", false);	
 		resMgr->LoadFolder("EditorData", true);
+		resMgr->LoadFolder("data/Images", true);
+
+
+		//resMgr->LoadFolder("data/SuperHeavy", false);
+		resMgr->LoadFolderMultithreaded("data/SuperHeavy");
 
 		// all good -> return true
 		return true;

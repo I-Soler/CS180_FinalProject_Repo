@@ -166,8 +166,8 @@ namespace AEX
 				mTimer.Reset();
 				mTimer.Start();
 			}
-			// dodge for 0.5 seconds
-			else if (mTimer.GetTimeSinceStart() >= 0.4f)
+			// dodge for 0.5 or 1 second
+			else if (mTimer.GetTimeSinceStart() >= mDodgeTime)
 			{
 				// reset dodge force
 				mRgbd->mVelocity = { 0.0f, 0.0f, 0.0f };
@@ -178,8 +178,21 @@ namespace AEX
 			// add random force in both x and y
 			else
 			{
-				float x_dir = mSpeed * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
-				float y_dir = mSpeed * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+				// keep bubble far from edges
+				float x_dir = 0.0f;
+				if (mTr->GetWorldPosition().x > 300.0f)
+					x_dir = -80.0f;
+				if (mTr->GetWorldPosition().x < -300.0f)
+					x_dir = 80.0f;
+				else x_dir = 80.0f * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+
+				float y_dir = 0.0f;
+				if (mTr->GetWorldPosition().y > 150.0f)
+					y_dir = -80.0f;
+				if (mTr->GetWorldPosition().y < -150.0f)
+					y_dir = 80.0f;
+				else y_dir = 80.0f * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
+
 				mRgbd->AddForce({ x_dir, y_dir });
 			}
 		}
@@ -249,12 +262,34 @@ namespace AEX
 			for (float angle = initAngle; angle < initAngle + TWO_PI; angle += PI / 4.0f)
 			{
 				// check ways to avoid collision
-				AEVec2 newPos(ti.pos.x + 40.0f * Cos(angle), ti.pos.y + 40.0f * Sin(angle));
-				if (RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 30.0f, &result) == -1)
+				AEVec2 newPos(ti.pos.x + 50.0f * Cos(angle), ti.pos.y + 50.0f * Sin(angle));
+				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result);
+				if (ray == -1)
 				{
 					// dodge
 					ti.thisPtr->dodgeMoving = true;
 					ti.thisPtr->dodgeAngle = angle;
+					float& speed = ti.thisPtr->mSpeed;
+					ti.thisPtr->mDodgeTime = 0.5f;
+					return;
+				}
+			}
+			// if no dodge angle was found, check for bubble far from turret to dodge moving faster
+			for (float angle = initAngle; angle < initAngle + TWO_PI; angle += PI / 4.0f)
+			{
+				// check ways to avoid collision
+				AEVec2 newPos(ti.pos.x + 100.0f * Cos(angle), ti.pos.y + 80.0f * Sin(angle));
+				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result);
+
+				// this is for far bubbles, if they are close to turrets don't dodge this way
+				if (ray < 600000)
+					break;
+				else if (ray == -1)
+				{
+					// dodge
+					ti.thisPtr->dodgeMoving = true;
+					ti.thisPtr->dodgeAngle = angle;
+					ti.thisPtr->mDodgeTime = 0.8f;
 					return;
 				}
 			}	// if no dodge angle was found, try something else
@@ -262,7 +297,7 @@ namespace AEX
 
 		/*..........Can we avoid bullet joining to another bubble?..........*/
 		// try to attach to another bubble
-		if (ti.thisPtr->canJoin)
+		if (ti.radius < MAX_RADIUS && ti.thisPtr->canJoin)
 		{
 			unsigned size = BubbleComp::otherBubbles.size();
 			for (auto it = BubbleComp::otherBubbles.begin(); it != BubbleComp::otherBubbles.end(); ++it)
@@ -275,11 +310,13 @@ namespace AEX
 					Dodge(ti);
 					return;
 				}
-
 				// other bubble too far away for joining
 				TransformComp* otherTr = (*it)->GetComp<TransformComp>();
 				if (otherTr == nullptr) return;
-				if ((otherTr->GetPosition() - ti.pos).LengthSq() >= MAX_DIST_SQ) continue;
+				// check other's distance and scale
+				if ((otherTr->GetPosition() - ti.pos).LengthSq() > MAX_DIST_SQ
+					|| otherTr->GetScale().x > MAX_RADIUS)
+					continue;
 
 				/* simulate what would happen if we joined this bubble */
 
@@ -293,6 +330,7 @@ namespace AEX
 
 					if (ti.thisPtr->canJoin == false) return;	// more multithreaded sanity checks
 
+					mtx.lock();
 					// in case this other bubble tries to join us, only one join at a time
 					for (auto it2 = BubbleComp::otherBubbles.begin(); it2 != BubbleComp::otherBubbles.end(); ++it2)
 						if (*it2 != *it)
@@ -307,12 +345,17 @@ namespace AEX
 					tr->SetPosition(newPos);
 
 					BubbleComp::otherBubbles.erase(it);
+
+					for (auto it2 = BubbleComp::otherBubbles.begin(); it2 != BubbleComp::otherBubbles.end(); ++it2)
+							(*it2)->GetComp<BubbleComp>()->canJoin = true;
+
+					mtx.unlock();
 					return;
 				}
 			}
 		}	// if this method fails, try something else
 
-		/*..........Can we avoid bullet joining to another bubble?..........*/
+		/*.............Can we avoid bullet splitting the bubble?.............*/
 		// perpendicular direction for mini twin bubbles
 		AEVec2 perpDir{ -ti.dir.y, ti.dir.x };
 		perpDir.NormalizeThis();
@@ -320,9 +363,11 @@ namespace AEX
 		AEVec2 newPosLeft = ti.pos + perpDir * 100.0f;
 		AEVec2 newPosRight = ti.pos - perpDir * 100.0f;
 
-		if (RayCastCircle(ti.origin, ti.dir, newPosLeft, miniRadius + 10.0f, &result) == -1 &&
+		if (ti.radius > MIN_RADIUS &&
+			RayCastCircle(ti.origin, ti.dir, newPosLeft, miniRadius + 10.0f, &result) == -1 &&
 			RayCastCircle(ti.origin, ti.dir, newPosRight, miniRadius + 10.0f, &result) == -1)
 		{	// can dodge this way, then do it!
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 				Pop(ti,miniRadius,newPosLeft,newPosRight);
@@ -354,6 +399,9 @@ namespace AEX
 			Pop(ti, miniRadius, newPosLeft, newPosRight);
 
 >>>>>>> main
+=======
+			Pop(ti, miniRadius, newPosLeft, newPosRight);
+>>>>>>> AssetsMultithread
 		}
 
 		// pop

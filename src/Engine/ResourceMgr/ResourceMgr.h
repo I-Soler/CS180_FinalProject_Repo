@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <aexmath/AEXMath.h>
+#include "Graphics/AEXTexture.h"
 
 namespace AEX
 {
@@ -77,6 +78,7 @@ namespace AEX
 		IResourceImporter() {}
 		virtual ~IResourceImporter() {}
 		virtual IResource* ImportFromFile(const char* filename, bool softLoad = false) = 0;
+		virtual IResource* ImportFromFileMultithread(const char* filename, Texture* tex, bool softLoad = false) { return nullptr; }
 		virtual const char* GetResourceTypeName() = 0;
 	};
 
@@ -84,6 +86,7 @@ namespace AEX
 	{
 		AEX_RTTI_DECL(TextureImporter, IResourceImporter);
 		IResource* ImportFromFile(const char* filename, bool softLoad = false) override;
+		IResource* ImportFromFileMultithread(const char* filename, Texture* tex, bool softLoad = false) override;
 		const char* GetResourceTypeName() override;
 	};
 
@@ -152,6 +155,7 @@ namespace AEX
 		bool mouse = false;
 		bool drag = false;
 		std::list<std::string> dragdropfiles;
+		std::vector<Texture*> TexturePool;
 
 		bool Initialize();
 
@@ -169,6 +173,7 @@ namespace AEX
 
 		// load folder /// loads data folder (usually)
 		void LoadFolder(const char* folderPath, bool softload = false, bool forceReload = false);
+		void LoadFolderMultithreaded(const char* folderPath);
 
 		void RegisterImporter(const char* extension, IResourceImporter* importer);
 
@@ -177,6 +182,7 @@ namespace AEX
 
 		// resource loading
 		IResource* LoadResource(const char* filename, bool softLoad, bool forceReload = false);
+		IResource* LoadResourceMultithreaded(const char* filename, bool softLoad, int textureID, bool forceReload = false);
 
 		//void Save(Scene*);
 

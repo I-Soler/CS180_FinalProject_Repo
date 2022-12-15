@@ -71,6 +71,21 @@ namespace AEX
 		}
 	}
 
+	void Texture::LoadFromFileMultithread(const char* filename)
+	{
+		if (!filename)
+			return;
+
+		// delete pixels if any
+		FreeData();
+
+		bool res = AEX::LoadImageFromFile(filename, mPixels, mWidth, mHeight);
+		if (!res)// success
+		{
+			return;
+		}
+	}
+
 	// Upload the texture data to openGL
 	void Texture::UploadToGPU()
 	{

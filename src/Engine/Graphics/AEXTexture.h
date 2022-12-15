@@ -25,7 +25,6 @@ namespace AEX
 		u32	mGLHandle;// openGL handle
 
 		// Creates the texture in OpenGL
-		void CreateOpenGLTexture();
 		void FreeData();
 
 		// --------------------------------------------------------------------
@@ -42,6 +41,8 @@ namespace AEX
 
 		// Load from file
 		void LoadFromFile(const char *filename);
+		void LoadFromFileMultithread(const char *filename);
+		void CreateOpenGLTexture();
 
 		// Upload the texture data to openGL
 		void UploadToGPU();
