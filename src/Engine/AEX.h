@@ -42,6 +42,7 @@ namespace AEX{
 		void Run(IGameState*gameState = nullptr);
 
 		ChangeScene changeScene;
+		bool Multithreaded = true;
 	};
 }
 

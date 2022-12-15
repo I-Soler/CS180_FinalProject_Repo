@@ -1,6 +1,7 @@
 #pragma once
 #include "..\Core\AEXCore.h"
 #include "Composition/TransformComponent.h"
+#include <thread>
 
 // ----------------------------------------------------------------------------
 #define DFLT_COLLISION_RESTITUTION 0.908f
@@ -91,10 +92,15 @@ namespace AEX
 		void ResolveCollision(std::list<ContactInfo>& Contacts);
 		void BroadCast(std::list<ContactInfo>& Contacts);
 
+		void MultithreadedCollisionChecking(std::list<ContactInfo>* CollisionList, Collider* d1);
+
 		void clearContacts();
 
+		bool multithreaded;
 	protected:
-		// Rigid bodise
+		std::vector<std::thread> thread_ids;
+
+		// Rigid bodies
 		AEX_PTR_LIST(Collider) mDynamicCollider;
 		AEX_PTR_LIST(Collider) mStaticCollider;
 

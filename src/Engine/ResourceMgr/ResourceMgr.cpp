@@ -116,13 +116,21 @@ namespace AEX
 	void ResourceManager::LoadFolder(const char* folderPath, bool softLoad, bool forceReload)
 	{
 		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
+<<<<<<< HEAD
 		bool multithreaded = false;
+=======
+		bool multithreaded = true;
+>>>>>>> main
 
 		const std::filesystem::path data{ folderPath };
 
 		// directory_iterator can be iterated using a range-for loop
 		for (auto const& dir_entry : std::filesystem::directory_iterator{ data })
 		{
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 			if (dir_entry.is_directory())
 			{
 				std::string po = dir_entry.path().u8string();
@@ -144,11 +152,30 @@ namespace AEX
 					continue;
 				}
 
+<<<<<<< HEAD
 				LoadResource(pe.c_str(), softLoad, forceReload);
+=======
+				if (multithreaded)
+				{
+					STDthread_IDs.push_back(std::thread([this, pe, softLoad, forceReload]
+						{ this->LoadResource(pe.c_str(), softLoad, forceReload); }));
+				}
+				else
+					LoadResource(pe.c_str(), softLoad, forceReload);
+>>>>>>> main
 
 				//std::cout << dir_entry.path() << '\n';
 			}
 		}
+<<<<<<< HEAD
+=======
+
+		if (!multithreaded)
+			return;
+
+		for (size_t i = 0; i < STDthread_IDs.size(); ++i)	// join the threads
+			STDthread_IDs[i].join();
+>>>>>>> main
 	}
 
 	void ResourceManager::RegisterImporter(const char* extension, IResourceImporter* importer) {
