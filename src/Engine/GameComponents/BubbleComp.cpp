@@ -163,14 +163,14 @@ namespace AEX
 				float x_dir = 0.0f;
 				if (mTr->GetWorldPosition().x > 300.0f)
 					x_dir = -80.0f;
-				if (mTr->GetWorldPosition().x < -300.0f)
+				else if (mTr->GetWorldPosition().x < -300.0f)
 					x_dir = 80.0f;
 				else x_dir = 80.0f * Cos((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
 
 				float y_dir = 0.0f;
 				if (mTr->GetWorldPosition().y > 150.0f)
 					y_dir = -80.0f;
-				if (mTr->GetWorldPosition().y < -150.0f)
+				else if (mTr->GetWorldPosition().y < -150.0f)
 					y_dir = 80.0f;
 				else y_dir = 80.0f * Sin((float)(rand() % 10) * TWO_PI / 10.0f);	// between 0 and 2PI
 
