@@ -10,7 +10,9 @@
 namespace AEX
 {
 	// maximum distance to join another bubble
-	#define	MAX_DIST_SQ 40000.0f	// 200 x 100
+	#define	MAX_DIST_SQ 62500.0f	// 250 x 250
+	#define	MIN_RADIUS	10.0f
+	#define	MAX_RADIUS	300.0f
 
 	class BubbleComp;
 	struct thread_info
@@ -45,6 +47,7 @@ namespace AEX
 
 
 		float mSpeed;
+		float mDodgeTime = 0.5f;
 		RigidbodyComp* mRgbd;
 		TransformComp* mTr;
 
@@ -62,7 +65,7 @@ namespace AEX
 		static std::map<TurretComp*, bool> turrets;
 
 		AEXTimer cooldown;
-		bool multitheaded;
+		bool multitheaded = true;
 	};
 
 	void Dodge(thread_info);
