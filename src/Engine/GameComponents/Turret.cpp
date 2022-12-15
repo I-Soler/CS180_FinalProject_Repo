@@ -27,12 +27,6 @@ namespace AEX
 
 		if (timer.GetTimeSinceStart() >= Recharge + shootDelay)	// make a bullet each 5 seconds
 		{
-<<<<<<< HEAD
-			//ParentTr->mLocal.mOrientation += 0.01;
-			AmountRotated += RadToDeg(0.01);
-			if (AmountRotated > 90)
-=======
->>>>>>> main
 			int randomBubble = (rand() % BubbleComp::otherBubbles.size());	// get random buble to shoot at
 
 			int pos = 0;
@@ -46,21 +40,7 @@ namespace AEX
 				}
 				pos++;
 			}
-<<<<<<< HEAD
-		}
-		else
-		{
-			//ParentTr->mLocal.mOrientation -= 0.01;
-			AmountRotated += RadToDeg(0.01);
-			if (AmountRotated > 90)
-			{
-				RotClockWise = true;
-				AmountRotated = 0;
-			}
-		}
-=======
 		
->>>>>>> main
 			dir.NormalizeThis();
 
 			ParentTr->mLocal.mOrientation = atan2(dir.y, dir.x) - (PI/2);	// Look at bubble

@@ -115,25 +115,12 @@ namespace AEX
 	// load folder /// loads data folder (usually)
 	void ResourceManager::LoadFolder(const char* folderPath, bool softLoad, bool forceReload)
 	{
-<<<<<<< HEAD
-		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
-<<<<<<< HEAD
-		bool multithreaded = false;
-=======
-		bool multithreaded = true;
->>>>>>> main
-
-=======
->>>>>>> AssetsMultithread
 		const std::filesystem::path data{ folderPath };
 
 		// directory_iterator can be iterated using a range-for loop
 		for (auto const& dir_entry : std::filesystem::directory_iterator{ data })
 		{
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 			if (dir_entry.is_directory())
 			{
 				std::string po = dir_entry.path().u8string();
@@ -155,29 +142,11 @@ namespace AEX
 					continue;
 				}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 				LoadResource(pe.c_str(), softLoad, forceReload);
-=======
-				if (multithreaded)
-				{
-					STDthread_IDs.push_back(std::thread([this, pe, softLoad, forceReload]
-						{ this->LoadResource(pe.c_str(), softLoad, forceReload); }));
-				}
-				else
-					LoadResource(pe.c_str(), softLoad, forceReload);
->>>>>>> main
-=======
-				LoadResource(pe.c_str(), softLoad, forceReload);
->>>>>>> AssetsMultithread
 
 				//std::cout << dir_entry.path() << '\n';
 			}
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
 	}
 
 	void ResourceManager::LoadFolderMultithreaded(const char* folderPath)
@@ -204,7 +173,6 @@ namespace AEX
 			else
 			{
 				std::string pe = dir_entry.path().u8string();
->>>>>>> AssetsMultithread
 
 				if (dir_entry.path().extension() == ".json")
 				{
@@ -223,9 +191,6 @@ namespace AEX
 
 		for (size_t i = 0; i < STDthread_IDs.size(); ++i)	// join the threads
 			STDthread_IDs[i].join();
-<<<<<<< HEAD
->>>>>>> main
-=======
 
 		// Upload to Open gl
 		for (auto& it : TexturePool)
@@ -233,7 +198,6 @@ namespace AEX
 			it->CreateOpenGLTexture();
 			it->UploadToGPU();
 		}
->>>>>>> AssetsMultithread
 	}
 
 	void ResourceManager::RegisterImporter(const char* extension, IResourceImporter* importer) {
