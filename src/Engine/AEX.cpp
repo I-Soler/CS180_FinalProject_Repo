@@ -33,16 +33,16 @@ namespace AEX{
 
 		if (Multithreaded)
 		{
-			resMgr->LoadFolderMultithreaded("EditorData");
 			resMgr->LoadFolderMultithreaded("data/Images");
+			resMgr->LoadFolderMultithreaded("EditorData");
 			resMgr->LoadFolderMultithreaded("data/SuperHeavy");
 		}
 
 		else
 		{
+			resMgr->LoadFolder("data/SuperHeavy", false);
 			resMgr->LoadFolder("EditorData", true);
 			resMgr->LoadFolder("data/Images", true);
-			resMgr->LoadFolder("data/SuperHeavy", false);
 		}
 
 		// all good -> return true

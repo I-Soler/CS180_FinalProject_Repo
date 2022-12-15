@@ -9,7 +9,9 @@
 
 void main()
 {
-	//std::cin >> aexEngine->Multithreaded;
+	std::cout << "Enable multithreaded assets loader? \n";
+	std::cout << "1-Yes, 0-No \n";
+	std::cin >> aexEngine->Multithreaded;
 	aexEngine->Initialize();
 	aexEngine->Run(new PrototypeDemo);
 	//aexEngine->Run(new DemoMarta);

@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <sstream>
 #include <Extern/imgui/imgui.h>
+#include <mutex>
 
 namespace AEX
 {
@@ -152,7 +153,7 @@ namespace AEX
 	void ResourceManager::LoadFolderMultithreaded(const char* folderPath)
 	{
 		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
-		int textureID = 0;
+		static int textureID = 0;
 		const std::filesystem::path data{ folderPath };
 
 		// directory_iterator can be iterated using a range-for loop
@@ -181,9 +182,9 @@ namespace AEX
 
 				// Create texture with openGL from main thread
 				TexturePool.push_back(aexFactory->Create<Texture>()); 
-
-				STDthread_IDs.push_back(std::thread([this, pe, textureID]
-					{ this->LoadResourceMultithreaded(pe.c_str(), false, textureID, false); }));
+				int nonStaticID = textureID;
+				STDthread_IDs.push_back(std::thread([this, pe, nonStaticID]
+					{ this->LoadResourceMultithreaded(pe.c_str(), false, nonStaticID, false); }));
 
 				textureID++;
 			}
@@ -290,7 +291,6 @@ namespace AEX
 	IResource* ResourceManager::LoadResourceMultithreaded(const char* filename, bool softLoad, int textureID, bool forceReload)
 	{
 		// get the filepaht
-
 		FilePath fp(filename);
 
 		// get the importer corresponding to the extension
