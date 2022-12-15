@@ -249,6 +249,19 @@ namespace AEX
 		{
 			// set the resource to return
 			resource = resIt->second;
+			if (forceReload)
+			{
+				IResource* newRes = importer->ImportFromFile(filename, softLoad);
+
+				// set the new resource using the newly created resource
+				resource->SetRawResource(newRes->GetRawResource(), true);
+
+				// delete the resource loaded by the importer
+				// but first make sure that we don't delete it by setting thre raw 
+				// resource to null
+				newRes->SetRawResource(nullptr, false);
+				delete newRes;
+			}
 		}
 
 		// resource doesn't exists yet, simply register it on our map

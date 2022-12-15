@@ -43,7 +43,6 @@ namespace AEX{
 
 		ChangeScene changeScene;
 		bool Multithreaded = false;
-		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
 	};
 }
 
