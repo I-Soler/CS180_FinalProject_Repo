@@ -13,10 +13,10 @@ namespace AEX
 {
 	void TurretComp::OnCreate()
 	{
+		timer.Start();
 	}
 	void TurretComp::Initialize()
 	{
-		timer.Start();
 		timer.Reset();
 		ParentTr = mOwner->GetComp<TransformComp>();
 

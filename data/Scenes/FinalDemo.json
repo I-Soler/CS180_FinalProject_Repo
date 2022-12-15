@@ -417,7 +417,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 2.0
+                            "shootDelay": 1.0
                         }
                     ],
                     "name": "turret 2\u0000\u0000\u0000\u0000",
@@ -458,7 +458,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 4.0
+                            "shootDelay": 2.0
                         }
                     ],
                     "name": "turret 3\u0000\u0000\u0000\u0000",
@@ -499,7 +499,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 6.0
+                            "shootDelay": 3.0
                         }
                     ],
                     "name": "turret 4\u0000\u0000\u0000\u0000",
@@ -712,7 +712,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 1.0
+                            "shootDelay": 0.5
                         }
                     ],
                     "name": "turret 5\u0000\u0000\u0000\u0000",
@@ -753,7 +753,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 3.0
+                            "shootDelay": 1.5
                         }
                     ],
                     "name": "turret 6\u0000\u0000\u0000\u0000",
@@ -794,7 +794,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 5.0
+                            "shootDelay": 2.5
                         }
                     ],
                     "name": "turret 7\u0000\u0000\u0000\u0000",
@@ -835,7 +835,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 7.0
+                            "shootDelay": 3.5
                         }
                     ],
                     "name": "turret 8\u0000\u0000\u0000\u0000",
