@@ -38,6 +38,24 @@ namespace AEX
 		return newRes;
 
 	}
+	IResource* TextureImporter::ImportFromFileMultithread(const char* filename,Texture* tex, bool softLoad)
+	{
+		// create the resource
+		TResource<Texture>* newRes = aexFactory->Create<TResource<Texture>>();
+
+		if (!softLoad)
+		{
+			if (tex)
+			{
+				tex->LoadFromFileMultithread(filename);
+
+				newRes->SetRawResource(tex, false);
+			}
+		}
+
+		//return it
+		return newRes;
+	}
 	const char* TextureImporter::GetResourceTypeName()
 	{
 		return Texture::TYPE().GetName().c_str();

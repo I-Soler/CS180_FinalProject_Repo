@@ -42,7 +42,8 @@ namespace AEX{
 		void Run(IGameState*gameState = nullptr);
 
 		ChangeScene changeScene;
-		bool Multithreaded = true;
+		bool Multithreaded = false;
+		std::vector<std::thread> STDthread_IDs;	/* array of ID of each thread    */
 	};
 }
 
