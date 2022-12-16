@@ -66,7 +66,7 @@ namespace AEX
 
         sWinHandle = CreateWindow(
             sWinClassName,            // the name of the window class application
-            "Anima Silvarum",                    // the title of our window
+            "Crazy Bubbles",          // the title of our window
             mWindowStyle,             // the type or style of the window -> title bar + borders
             10, 10,                   // position of the window
             1280, 720,                // size of the window. 
