@@ -31,6 +31,6 @@ namespace AEX
 		AEVec2 bulletDir;
 		float shootDelay = 0.0f;
 
-		float Recharge = 5.0f;
+		float Recharge = 16.0f;
 	};
 }

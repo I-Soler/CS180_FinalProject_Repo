@@ -240,7 +240,7 @@ namespace AEX
 			{
 				// check ways to avoid collision
 				AEVec2 newPos(ti.pos.x + 50.0f * Cos(angle), ti.pos.y + 50.0f * Sin(angle));
-				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result);
+				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 20.0f, &result);
 				if (ray == -1)
 				{
 					// dodge
@@ -256,7 +256,7 @@ namespace AEX
 			{
 				// check ways to avoid collision
 				AEVec2 newPos(ti.pos.x + 100.0f * Cos(angle), ti.pos.y + 80.0f * Sin(angle));
-				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 10.0f, &result);
+				unsigned ray = RayCastCircle(ti.origin, ti.dir, newPos, ti.radius + 20.0f, &result);
 
 				// this is for far bubbles, if they are close to turrets don't dodge this way
 				if (ray < 600000)

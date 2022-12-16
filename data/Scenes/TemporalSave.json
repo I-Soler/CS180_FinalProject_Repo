@@ -712,7 +712,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 1.0
+                            "shootDelay": 8.0
                         }
                     ],
                     "name": "turret 5\u0000\u0000\u0000\u0000",
@@ -753,7 +753,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 3.0
+                            "shootDelay": 10.0
                         }
                     ],
                     "name": "turret 6\u0000\u0000\u0000\u0000",
@@ -794,7 +794,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 5.0
+                            "shootDelay": 12.800000190734863
                         }
                     ],
                     "name": "turret 7\u0000\u0000\u0000\u0000",
@@ -835,7 +835,7 @@
                         },
                         {
                             "_type": "TurretComp",
-                            "shootDelay": 7.0
+                            "shootDelay": 14.0
                         }
                     ],
                     "name": "turret 8\u0000\u0000\u0000\u0000",

@@ -97,8 +97,8 @@ namespace AEX
 	}
 	bool TurretComp::Edit()
 	{
-		ImGui::DragFloat("Initial Delay", &shootDelay, 0.1, 0,4);
-		ImGui::DragFloat("Time between bullets", &Recharge, 0.1, 0.5, 8);
+		ImGui::DragFloat("Initial Delay", &shootDelay, 0.1, 0, 18);
+		ImGui::DragFloat("Time between bullets", &Recharge, 0.1, 0.5, 16);
 		return false;
 	}
 }

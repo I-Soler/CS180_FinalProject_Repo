@@ -47,7 +47,7 @@ namespace AEX
 
 
 		float mSpeed;
-		float mDodgeTime = 0.5f;
+		float mDodgeTime = 0.6f;
 		RigidbodyComp* mRgbd;
 		TransformComp* mTr;
 
