@@ -32,5 +32,7 @@ namespace AEX
 		float shootDelay = 0.0f;
 
 		float Recharge = 16.0f;
+
+		bool firstShot;
 	};
 }

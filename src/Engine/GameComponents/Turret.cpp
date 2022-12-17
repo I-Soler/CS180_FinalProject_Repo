@@ -17,6 +17,7 @@ namespace AEX
 	}
 	void TurretComp::Initialize()
 	{
+		firstShot = true;
 		timer.Reset();
 		ParentTr = mOwner->GetComp<TransformComp>();
 
@@ -29,8 +30,10 @@ namespace AEX
 
 		BubbleComp::turrets[this] = false;
 
-		if (timer.GetTimeSinceStart() >= Recharge + shootDelay)	// make a bullet each 5 seconds
+
+		if (timer.GetTimeSinceStart() >= Recharge + shootDelay || (firstShot && timer.GetTimeSinceStart() >= shootDelay))	// make a bullet each 5 seconds
 		{
+			firstShot = false;
 			int randomBubble = (rand() % BubbleComp::otherBubbles.size());	// get random buble to shoot at
 
 			int pos = 0;
